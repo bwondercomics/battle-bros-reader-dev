@@ -26,6 +26,7 @@ These agents work together to create features that are both delightful and techn
 - ⚡ Fullscreen reading mode
 - 🎯 Edge-zone navigation
 - 🎨 Animated page transitions
+- 🔄 Dynamic chapter loading from admin panel
 
 ## Usage
 
@@ -43,10 +44,27 @@ Simply open `index.html` in a web browser to start reading. The reader automatic
 
 This is a static HTML/CSS/JavaScript application with no build process required. All assets are served directly.
 
+### Chapter Data Management
+
+The reader loads chapter data dynamically from `admin/data.json`. When you update chapters in the admin panel, changes are immediately reflected in the reader - no code changes needed!
+
+**Data Structure:**
+```json
+{
+  "chapters": {
+    "Chapter 1": ["chapters/01/01.png", "chapters/01/02.png"],
+    "Chapter 2": ["chapters/02/01.png"]
+  }
+}
+```
+
+### Contributing
+
 To contribute or modify:
 1. Edit `index.html` for structure and logic
-2. Comic pages are organized in `/chapters/` directory
-3. Test across different browsers and devices
+2. Use the admin panel to manage chapter data (or edit `admin/data.json` directly)
+3. Comic pages are organized in `/chapters/` directory
+4. Test across different browsers and devices
 
 For questions about UX/design improvements, consult **ComicBot**.  
 For technical implementation or performance questions, consult **TechAdvisor**.
