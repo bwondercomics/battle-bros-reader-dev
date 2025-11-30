@@ -1,40 +1,41 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
-<title>BWonderComics | Read Battle Bros Comics</title>
-<meta name="description" content="BWonderComics official website, and Battle Bros comic reader" />
-<meta name="keywords" content="battle bros, comic reader, online comics, free comics, webcomic, manga reader" />
-<meta name="author" content="Battle Bros Comics" />
-<meta name="theme-color" content="#00d9ff" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+  <title>BWonderComics | Read Battle Bros Comics</title>
+  <meta name="description" content="BWonderComics official website, and Battle Bros comic reader" />
+  <meta name="keywords" content="battle bros, comic reader, online comics, free comics, webcomic, manga reader" />
+  <meta name="author" content="Battle Bros Comics" />
+  <meta name="theme-color" content="#00d9ff" />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://bwondercomics.com/" />
-<meta property="og:title" content="BWonderComics - Free Online Comic Reader" />
-<meta property="og:description" content="BWonderComics official website, and Battle Bros comic reader" />
-<meta property="og:image" content="https://bwondercomics.com/banner1.png" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bwondercomics.com/" />
+  <meta property="og:title" content="BWonderComics - Free Online Comic Reader" />
+  <meta property="og:description" content="BWonderComics official website, and Battle Bros comic reader" />
+  <meta property="og:image" content="https://bwondercomics.com/banner1.png" />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://bwondercomics.com/" />
-<meta property="twitter:title" content="BWonderComics - Free Online Comic Reader" />
-<meta property="twitter:description" content="BWonderComics official website, and Battle Bros comic reader" />
-<meta property="twitter:image" content="https://bwondercomics.com/banner1.png" />
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://bwondercomics.com/" />
+  <meta property="twitter:title" content="BWonderComics - Free Online Comic Reader" />
+  <meta property="twitter:description" content="BWonderComics official website, and Battle Bros comic reader" />
+  <meta property="twitter:image" content="https://bwondercomics.com/banner1.png" />
 
-<!-- Favicons -->
-<link rel="icon" type="image/png" sizes="32x32" href="panel.png" />
-<link rel="apple-touch-icon" href="panel.png" />
-<link rel="manifest" href="manifest.json" />
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="panel.png" />
+  <link rel="apple-touch-icon" href="panel.png" />
+  <link rel="manifest" href="manifest.json" />
 
-<!-- Performance optimizations -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <!-- Performance optimizations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&display=swap" rel="stylesheet" />
 
-<!-- Schema.org structured data for SEO -->
-<script type="application/ld+json">
+  <!-- Schema.org structured data for SEO -->
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -48,2728 +49,2788 @@
 }
 </script>
 
-<style>
-/* ==================== CSS VARIABLES ==================== */
-:root {
-  --primary: #00d9ff;
-  --secondary: #ff00ea;
-  --accent: #ffed00;
-  --bg-dark: #0a0a12;
-  --bg-panel: #1a1a2e;
-  --text: #ffffff;
-  --danger: #ff3838;
-}
-
-/* ==================== RESET ==================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* ==================== ANIMATIONS ==================== */
-@keyframes glitchText {
-  0%, 100% { text-shadow: 2px 2px 0 var(--primary), -2px -2px 0 var(--secondary); }
-  25% { text-shadow: -2px 2px 0 var(--secondary), 2px -2px 0 var(--primary); }
-  50% { text-shadow: 2px -2px 0 var(--primary), -2px 2px 0 var(--secondary); }
-  75% { text-shadow: -2px -2px 0 var(--secondary), 2px 2px 0 var(--primary); }
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-@keyframes neonPulse {
-  0%, 100% { box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary); }
-  50% { box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
-}
-
-@keyframes pixelShift {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(2px, 0); }
-  50% { transform: translate(0, 2px); }
-  75% { transform: translate(-2px, 0); }
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* ==================== BASE LAYOUT ==================== */
-html, body {
-  height: 100%;
-  font-family: 'Righteous', sans-serif;
-  background: var(--bg-dark);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 72px);
-  overflow: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: 
-    repeating-linear-gradient(
-      0deg, 
-      transparent 0px, 
-      transparent 2px,
-      rgba(0,217,255,0.02) 2px, 
-      rgba(0,217,255,0.02) 4px
-    ),
-    radial-gradient(circle at 20% 80%, rgba(255,237,0,0.05), transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(255,0,234,0.05), transparent 40%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(transparent 50%, rgba(0,0,0,0.05) 50%);
-  background-size: 100% 3px;
-  pointer-events: none;
-  z-index: 1;
-  animation: scanline 6s linear infinite;
-  opacity: 0.4;
-}
-
-/* ==================== HEADER ==================== */
-header.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  background: linear-gradient(135deg, rgba(10,10,18,0.95), rgba(26,26,46,0.95));
-  border-bottom: 3px solid var(--primary);
-  position: sticky;
-  top: 0;
-  z-index: 60;
-  backdrop-filter: blur(8px);
-}
-
-.brand {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.logo {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--bg-panel), var(--bg-dark));
-  border: 3px solid var(--accent);
-  color: var(--primary);
-  font-family: 'Bebas Neue';
-  font-weight: 900;
-  font-size: 28px;
-  box-shadow: 0 0 10px rgba(0,217,255,0.12);
-  transition: transform 0.25s;
-  animation: neonPulse 6s ease-in-out infinite;
-}
-
-.logo:hover {
-  transform: scale(1.06);
-  animation: glitchText 8s infinite;
-}
-
-.title h1 {
-  margin: 0;
-  font-size: 28px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 8px rgba(0,217,255,0.35));
-  animation: pixelShift 12s linear infinite, glitchText 8s ease-in-out infinite;
-}
-
-.title .subtitle {
-  margin: 0;
-  font-size: 10px;
-  color: var(--accent);
-  letter-spacing: 2px;
-  opacity: 1;
-}
-
-/* ==================== CHAPTER SELECT ==================== */
-select#chapter {
-  background: linear-gradient(135deg, rgba(0,217,255,0.15), rgba(255,0,234,0.15));
-  color: var(--text);
-  border: 3px solid var(--accent);
-  padding: 10px 16px;
-  min-width: 180px;
-  font-size: 14px;
-  font-weight: 900;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-transform: uppercase;
-  font-family: 'Bebas Neue', sans-serif;
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.3),
-    0 0 15px rgba(255,237,0,0.3);
-  position: relative;
-}
-
-select#chapter:hover {
-  background: linear-gradient(135deg, rgba(0,217,255,0.25), rgba(255,0,234,0.25));
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.3),
-    0 0 25px rgba(255,237,0,0.6);
-  transform: translateY(-2px);
-}
-
-select#chapter:active {
-  transform: translateY(0);
-  box-shadow: 
-    0 2px 0 rgba(0,0,0,0.3),
-    0 0 15px rgba(255,237,0,0.3);
-}
-
-select#chapter option {
-  background: var(--bg-panel);
-  color: var(--text);
-  padding: 8px;
-}
-
-/* ==================== VIEWER LAYOUT ==================== */
-.viewerWrap {
-  display: flex;
-  gap: 12px;
-  align-items: stretch;
-  justify-content: center;
-  width: 100%;
-  max-width: 2000px;
-  margin: 0 auto;
-  padding: 16px 12px 0 12px;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.viewer-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: hidden;
-}
-
-/* ==================== SIDE PANELS ==================== */
-.side-panel {
-  flex: 0 0 auto;
-  width: 20vw;
-  min-width: 250px;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(180deg, rgba(26,26,46,0.95), rgba(10,10,18,0.95));
-  border: 4px solid var(--primary);
-  box-shadow: 
-    0 0 20px rgba(0,217,255,0.4),
-    inset 0 4px 0 rgba(0,217,255,0.1),
-    0 8px 0 rgba(0,0,0,0.3);
-  color: var(--text);
-  overflow: hidden;
-  z-index: 10;
-  position: relative;
-}
-
-.side-panel::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
-  z-index: 1;
-}
-
-.side-panel.left,
-.side-panel.right {
-  height: 100%;
-}
-
-.side-panel.left .left-panel-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 20px;
-  gap: 16px;
-}
-
-.side-panel.left .left-panel-text-top,
-.side-panel.left .left-panel-text-bottom {
-  font-family: 'Bebas Neue', sans-serif;
-  text-align: center;
-  color: var(--text);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  line-height: 1.3;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-}
-
-.side-panel.left .left-panel-text-top {
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--accent);
-  text-shadow: 
-    2px 2px 0 rgba(0,0,0,0.5),
-    0 0 15px rgba(255,237,0,0.6);
-}
-
-.side-panel.left .left-panel-text-bottom {
-  font-size: 16px;
-  font-weight: 500;
-  max-width: 100%;
-  word-wrap: break-word;
-}
-
-.side-panel.left .preview {
-  /*flex: 1 1 auto;*/
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  min-height: 0;
-}
-
-.side-panel.left .preview .panel-preview-img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  border: 3px solid rgba(0,217,255,0.3);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-  cursor: pointer;
-  transition: transform 0.3s, border-color 0.3s;
-}
-
-.side-panel.left .preview .panel-preview-img:hover {
-  transform: scale(1.05);
-  border-color: var(--accent);
-}
-
-/* ==================== EMAIL SIGNUP SECTION ==================== */
-.email-signup-section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.email-signup-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-}
-
-.email-signup-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-}
-
-.email-input {
-  width: 100%;
-  max-width: 280px;
-  padding: 10px 12px;
-  background: rgba(26,26,46,0.8);
-  border: 3px solid var(--primary);
-  color: var(--text);
-  font-family: 'Righteous', sans-serif;
-  font-size: 14px;
-  text-align: center;
-  transition: all 0.2s;
-  box-shadow: 
-    0 0 10px rgba(0,217,255,0.3),
-    inset 0 2px 4px rgba(0,0,0,0.4);
-}
-
-.email-input::placeholder {
-  color: rgba(255,255,255,0.4);
-  font-size: 13px;
-}
-
-.email-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 
-    0 0 20px rgba(255,237,0,0.5),
-    inset 0 2px 4px rgba(0,0,0,0.4);
-  background: rgba(26,26,46,0.95);
-}
-
-.email-submit-btn {
-  padding: 10px 32px;
-  background: linear-gradient(135deg, var(--accent), var(--primary));
-  border: 3px solid var(--accent);
-  color: var(--bg-dark);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.5),
-    0 0 20px rgba(255,237,0,0.4);
-  position: relative;
-}
-
-.email-submit-btn:hover {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  transform: translateY(-2px);
-  box-shadow: 
-    0 6px 0 rgba(0,0,0,0.5),
-    0 0 30px rgba(255,237,0,0.7);
-}
-
-.email-submit-btn:active {
-  transform: translateY(0);
-  box-shadow: 
-    0 2px 0 rgba(0,0,0,0.5),
-    0 0 15px rgba(255,237,0,0.4);
-}
-
-.email-submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.email-signup-cta {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-align: center;
-  text-shadow: 
-    2px 2px 0 rgba(0,0,0,0.5),
-    0 0 10px rgba(255,237,0,0.4);
-}
-
-.email-form-message {
-  font-family: 'Righteous', sans-serif;
-  font-size: 14px;
-  text-align: center;
-  padding: 8px 12px;
-  border-radius: 4px;
-  margin-top: 8px;
-  max-width: 280px;
-}
-
-.email-form-message.success {
-  background: rgba(0,217,255,0.2);
-  border: 2px solid var(--primary);
-  color: var(--primary);
-}
-
-.email-form-message.error {
-  background: rgba(255,56,56,0.2);
-  border: 2px solid var(--danger);
-  color: var(--danger);
-}
-
-.side-panel.right {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-}
-
-.side-panel.right .preview {
-  flex: 0 0 auto;
-  width: 100%;
-  max-height: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-}
-
-.side-panel.right .preview .panel-preview-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-  border: 3px solid rgba(0,217,255,0.3);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-  transition: transform 0.3s;
-  cursor: pointer;
-}
-
-.side-panel.right .preview .panel-preview-img:hover {
-  transform: scale(1.05);
-  border-color: var(--accent);
-}
-
-.panel-buttons {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  justify-content: center;
-  padding: 8px 0;
-  min-height: 0;
-}
-
-.panel-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px;
-  background: linear-gradient(135deg, rgba(0,217,255,0.12), rgba(255,0,234,0.08));
-  border: 3px solid var(--primary);
-  border-radius: 0;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-decoration: none;
-  color: var(--text);
-  position: relative;
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.3),
-    0 0 10px rgba(0,217,255,0.2);
-}
-
-.panel-btn::before {
-  content: "▶";
-  position: absolute;
-  left: -10px;
-  color: var(--accent);
-  opacity: 0;
-  transition: all 0.2s;
-  font-size: 20px;
-  text-shadow: 0 0 10px var(--accent);
-}
-
-.panel-btn:hover {
-  background: linear-gradient(135deg, rgba(0,217,255,0.2), rgba(255,0,234,0.15));
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.4),
-    0 0 20px rgba(0,217,255,0.5);
-  transform: translateX(8px);
-  border-color: var(--accent);
-}
-
-.panel-btn:hover::before {
-  opacity: 1;
-  left: -15px;
-  animation: pixelBounce 0.6s ease-in-out infinite;
-}
-
-.panel-btn:active {
-  transform: translateX(8px) translateY(2px);
-  box-shadow: 
-    0 2px 0 rgba(0,0,0,0.4),
-    0 0 15px rgba(0,217,255,0.4);
-}
-
-.panel-btn-icon {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border: 3px solid var(--accent);
-  font-size: 28px;
-  color: var(--bg-dark);
-  font-weight: bold;
-  box-shadow: 
-    0 3px 0 rgba(0,0,0,0.4),
-    inset 0 2px 0 rgba(255,255,255,0.3);
-  position: relative;
-}
-
-.panel-btn-icon::after {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
-}
-
-.panel-btn-text {
-  flex: 1;
-  font-family: 'Bebas Neue';
-  font-size: 20px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--text);
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-  font-weight: 900;
-}
-
-/* ==================== VIEWPORT ==================== */
-.viewport {
-  flex: 1 1 auto;
-  min-height: 0;
-  min-width: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: linear-gradient(180deg, rgba(26,26,46,0.8), rgba(10,10,18,0.9));
-  border: 4px solid var(--primary);
-  box-shadow: 
-    0 0 30px rgba(0,217,255,0.3),
-    inset 0 4px 0 rgba(0,217,255,0.1),
-    0 8px 0 rgba(0,0,0,0.3);
-  overflow: hidden;
-  touch-action: none;
-  z-index: 5;
-  max-height: 100%;
-  position: relative;
-}
-
-.viewport::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
-  z-index: 10;
-}
-
-body.fullscreen-active .viewport {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  clip-path: none !important;
-  border: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-  background: #000;
-  z-index: 200;
-}
-
-body.fullscreen-active .side-panel {
-  display: none !important;
-}
-
-body.fullscreen-active main {
-  height: 100vh;
-}
-
-/* ==================== STAGE & PAGES ==================== */
-.stageWrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  will-change: transform;
-  z-index: 6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stage {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  transform-origin: 50% 50%;
-  will-change: transform;
-  cursor: grab;
-  touch-action: none;
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-  position: relative;
-  overflow: hidden;
-  border: 3px solid rgba(0,217,255,0.2);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.7);
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.page img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: calc(100vh - 150px);
-  object-fit: contain;
-  -webkit-user-drag: none;
-  pointer-events: none;
-  user-select: none;
-}
-
-.spinner {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border: 4px solid transparent;
-  border-top: 4px solid var(--primary);
-  border-right: 4px solid var(--secondary);
-  border-bottom: 4px solid var(--accent);
-  animation: spin 0.8s linear infinite;
-  box-shadow: 0 0 20px rgba(0,217,255,0.5);
-}
-
-/* ==================== PAGE TRANSITIONS ==================== */
-.flashOverlay {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background: #000;
-  opacity: 0;
-  transition: opacity 140ms linear;
-  z-index: 25;
-}
-
-.slide-out-left {
-  transition: transform 160ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  transform: translateX(-18px);
-}
-
-.slide-out-right {
-  transition: transform 160ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  transform: translateX(18px);
-}
-
-.slide-in-left {
-  transition: transform 200ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  transform: translateX(0);
-}
-
-.slide-in-right {
-  transition: transform 200ms cubic-bezier(0.2, 0.9, 0.2, 1);
-  transform: translateX(0);
-}
-
-/* ==================== EDGE ZONES ==================== */
-.edgeZone {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 12%;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 120ms;
-}
-
-.edgeZone.active {
-  pointer-events: auto;
-  opacity: 1;
-}
-
-.edgeZone.left {
-  left: 0;
-}
-
-.edgeZone.right {
-  right: 0;
-}
-
-.edgeArrow {
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border: 4px solid var(--accent);
-  color: var(--bg-dark);
-  cursor: pointer;
-  user-select: none;
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.5),
-    0 0 20px rgba(0,217,255,0.6);
-  transition: all 0.15s;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.edgeArrow:hover {
-  transform: scale(1.1);
-  box-shadow: 
-    0 6px 0 rgba(0,0,0,0.5),
-    0 0 30px rgba(0,217,255,0.9);
-  animation: pixelBounce 0.6s ease-in-out infinite;
-}
-
-.edgeArrow:active {
-  transform: scale(1.05) translateY(2px);
-  box-shadow: 
-    0 2px 0 rgba(0,0,0,0.5),
-    0 0 20px rgba(0,217,255,0.6);
-}
-
-/* ==================== CONTROLS ==================== */
-.controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  margin: 12px auto 16px auto;
-  max-width: 2000px;
-  width: 100%;
-  background: linear-gradient(180deg, rgba(26,26,46,0.98), rgba(10,10,18,0.98));
-  border: 4px solid var(--primary);
-  box-shadow: 
-    0 0 25px rgba(0,217,255,0.3),
-    inset 0 4px 0 rgba(0,217,255,0.1),
-    0 8px 0 rgba(0,0,0,0.3);
-  z-index: 70;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.controls::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
-}
-
-.controls .left,
-.controls .right {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.btn {
-  height: 48px;
-  min-width: 48px;
-  padding: 0 16px;
-  border: 3px solid var(--primary);
-  background: linear-gradient(135deg, rgba(0,217,255,0.12), rgba(255,0,234,0.08));
-  color: var(--text);
-  cursor: pointer;
-  font-family: 'Bebas Neue';
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: 16px;
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.3),
-    0 0 10px rgba(0,217,255,0.2);
-  transition: all 0.15s;
-}
-
-.btn:hover {
-  background: linear-gradient(135deg, rgba(0,217,255,0.2), rgba(255,0,234,0.15));
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.4),
-    0 0 20px rgba(0,217,255,0.5);
-  transform: translateY(-2px);
-  border-color: var(--accent);
-}
-
-.btn:active {
-  transform: translateY(0);
-  box-shadow: 
-    0 2px 0 rgba(0,0,0,0.4),
-    0 0 15px rgba(0,217,255,0.3);
-}
-
-.btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn.primary {
-  font-size: 18px;
-  line-height: 1;
-  padding: 8px 20px;
-  border: 3px solid var(--accent);
-  color: var(--bg-dark);
-  background: linear-gradient(135deg, var(--accent), var(--primary));
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.4),
-    0 0 20px rgba(255,237,0,0.6),
-    inset 0 2px 0 rgba(255,255,255,0.3);
-  position: relative;
-  overflow: hidden;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
-  font-weight: 900;
-}
-
-.btn.primary::after {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.2));
-  pointer-events: none;
-}
-
-.btn.primary:hover {
-  animation: arcadePulse 1s ease-in-out infinite;
-}
-
-body.fullscreen-active header.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 210;
-  transition: transform 0.28s ease, opacity 0.28s ease;
-  will-change: transform, opacity;
-  background: linear-gradient(135deg, rgba(10,10,18,0.9), rgba(26,26,46,0.9));
-}
-
-body.fullscreen-active .controls {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 210;
-  transition: transform 0.28s ease, opacity 0.28s ease;
-  will-change: transform, opacity;
-  margin: 0;
-}
-
-body.fullscreen-active header.topbar.hidden {
-  transform: translateY(-110%);
-  opacity: 0;
-}
-
-body.fullscreen-active .controls.hidden {
-  transform: translateX(-50%) translateY(110%);
-  opacity: 0;
-}
-
-/* ==================== STATUS & PROGRESS ==================== */
-.status {
-  padding: 8px 16px;
-  background: linear-gradient(135deg, rgba(255,237,0,0.15), rgba(255,237,0,0.08));
-  border: 3px solid var(--accent);
-  color: var(--accent);
-  font-family: 'Bebas Neue';
-  font-weight: 900;
-  text-transform: uppercase;
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.3),
-    0 0 15px rgba(255,237,0,0.3);
-  text-shadow: 0 0 8px rgba(255,237,0,0.5);
-  font-size: 16px;
-}
-
-.progress-bar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: rgba(0,0,0,0.5);
-  z-index: 50;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  transition: width 0.28s ease-out;
-  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-  box-shadow: 
-    0 0 10px rgba(0,217,255,0.8),
-    0 0 20px rgba(255,0,234,0.5);
-  position: relative;
-}
-
-.progress-fill::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 8px;
-  height: 100%;
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
-}
-
-/* ==================== RESPONSIVE ==================== */
-/* Respect user's motion preferences */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  body::after {
-    animation: none;
-  }
-  
-  .logo {
-    animation: none;
-  }
-  
-  .title h1 {
-    animation: none;
-  }
-}
-
-/* Better keyboard focus indicators */
-button:focus-visible,
-select:focus-visible,
-a:focus-visible,
-.viewport:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* Skip to content link for accessibility */
-.skip-to-content {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--accent);
-  color: var(--bg-dark);
-  padding: 8px 16px;
-  text-decoration: none;
-  font-weight: bold;
-  z-index: 1000;
-  border-radius: 0 0 4px 0;
-}
-
-.skip-to-content:focus {
-  top: 0;
-}
-
-/* Keyboard shortcuts help overlay */
-.shortcuts-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 10, 18, 0.97);
-  backdrop-filter: blur(10px);
-  z-index: 300;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.shortcuts-overlay.active {
-  display: flex;
-}
-
-.shortcuts-panel {
-  background: linear-gradient(180deg, rgba(26,26,46,0.98), rgba(10,10,18,0.98));
-  border: 4px solid var(--primary);
-  padding: 32px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 
-    0 0 40px rgba(0,217,255,0.5),
-    inset 0 4px 0 rgba(0,217,255,0.1),
-    0 12px 0 rgba(0,0,0,0.5);
-  position: relative;
-}
-
-.shortcuts-panel::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
-  z-index: 1;
-}
-
-.shortcuts-panel h2 {
-  margin: 0 0 24px 0;
-  font-size: 36px;
-  color: var(--primary);
-  font-family: 'Bebas Neue';
-  letter-spacing: 3px;
-  text-shadow: 
-    3px 3px 0 rgba(0,0,0,0.5),
-    0 0 20px rgba(0,217,255,0.5);
-  text-transform: uppercase;
-}
-
-.shortcuts-grid {
-  display: grid;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.shortcut-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px;
-  background: linear-gradient(135deg, rgba(0,217,255,0.1), rgba(255,0,234,0.08));
-  border: 3px solid rgba(0,217,255,0.3);
-  box-shadow: 0 4px 0 rgba(0,0,0,0.3);
-}
-
-.shortcut-key {
-  background: linear-gradient(135deg, var(--bg-dark), var(--bg-panel));
-  border: 3px solid var(--accent);
-  padding: 6px 14px;
-  font-family: 'Bebas Neue';
-  color: var(--accent);
-  font-size: 18px;
-  min-width: 90px;
-  text-align: center;
-  box-shadow: 
-    0 3px 0 rgba(0,0,0,0.4),
-    0 0 10px rgba(255,237,0,0.3);
-  font-weight: 900;
-}
-
-.shortcut-desc {
-  flex: 1;
-  margin-left: 16px;
-  color: var(--text);
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.shortcuts-close {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: var(--bg-dark);
-  border: 3px solid var(--accent);
-  font-family: 'Bebas Neue';
-  font-size: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.4),
-    0 0 20px rgba(0,217,255,0.5);
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.shortcuts-close:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 6px 0 rgba(0,0,0,0.4),
-    0 0 30px rgba(0,217,255,0.8);
-}
-
-.shortcuts-close:active {
-  transform: translateY(0);
-  box-shadow: 
-    0 2px 0 rgba(0,0,0,0.4),
-    0 0 20px rgba(0,217,255,0.5);
-}
-
-/* End of chapter overlay */
-.chapter-end-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(10,10,18,0.98), rgba(26,26,46,0.98));
-  backdrop-filter: blur(8px);
-  z-index: 35;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  animation: fadeIn 300ms ease-in;
-}
-
-.chapter-end-overlay.active {
-  display: flex;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.chapter-end-content {
-  text-align: center;
-  max-width: 500px;
-  padding: 32px;
-  background: linear-gradient(180deg, rgba(26,26,46,0.9), rgba(10,10,18,0.9));
-  border: 4px solid var(--accent);
-  box-shadow: 
-    0 0 40px rgba(255,237,0,0.5),
-    inset 0 4px 0 rgba(255,237,0,0.1),
-    0 12px 0 rgba(0,0,0,0.5);
-  position: relative;
-}
-
-.chapter-end-content::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
-  z-index: 1;
-}
-
-.chapter-end-content h2 {
-  font-family: 'Bebas Neue';
-  font-size: 52px;
-  color: var(--accent);
-  margin: 0 0 16px 0;
-  letter-spacing: 4px;
-  text-shadow: 
-    4px 4px 0 rgba(0,0,0,0.5),
-    0 0 30px rgba(255,237,0,0.8);
-  text-transform: uppercase;
-  animation: pixelBounce 2s ease-in-out infinite;
-}
-
-.chapter-end-content p {
-  font-size: 18px;
-  color: var(--text);
-  margin: 0 0 32px 0;
-  line-height: 1.6;
-  font-weight: 600;
-}
-
-.chapter-end-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.chapter-end-btn {
-  padding: 14px 24px;
-  border: 3px solid var(--primary);
-  background: linear-gradient(135deg, rgba(0,217,255,0.12), rgba(255,0,234,0.08));
-  color: var(--text);
-  font-family: 'Bebas Neue';
-  font-size: 18px;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-decoration: none;
-  display: inline-block;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.4);
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.chapter-end-btn:hover {
-  background: linear-gradient(135deg, rgba(0,217,255,0.2), rgba(255,0,234,0.15));
-  transform: translateY(-2px);
-  box-shadow: 
-    0 6px 0 rgba(0,0,0,0.4),
-    0 0 20px rgba(0,217,255,0.5);
-}
-
-.chapter-end-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 0 rgba(0,0,0,0.4);
-}
-
-.chapter-end-btn.primary {
-  background: linear-gradient(135deg, var(--accent), var(--primary));
-  color: var(--bg-dark);
-  border: 3px solid var(--accent);
-  box-shadow: 
-    0 4px 0 rgba(0,0,0,0.5),
-    0 0 25px rgba(255,237,0,0.6);
-}
-
-/* Aspect ratio ~7:5 (1.4) or narrower - move panels below viewport */
-@media (max-aspect-ratio: 7/5) {
-  html, body {
-    height: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  main {
-    height: auto;
-    overflow: visible;
-  }
-
-  .viewerWrap {
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 12px;
-    gap: 12px;
-  }
-  
-  /* Wrapper contains viewport + controls, ordered as a unit in mobile layout */
-  .viewer-content-wrapper {
-    order: 1;
-    width: 100%;
-    flex: 0 0 100%;
-  }
-
-  /* Viewport and controls use natural document flow within wrapper */
-  .viewport {
-    width: 100%;
-    height: auto;
-    aspect-ratio: auto;
-    min-height: 50vh;
-  }
-
-  .controls {
-    margin: 12px 0 12px 0;
-    padding: 12px 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    max-width: 100%;
-    border-width: 3px;
-  }
-  
-  .controls .left,
-  .controls .right {
-    gap: 6px;
-  }
-
-  .side-panel {
-    width: calc(50% - 6px) !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    min-height: auto;
-    flex: 0 0 calc(50% - 6px) !important;
-  }
-
-  .side-panel.left {
-    order: 2;
-    height: auto;
-    min-height: 580px;
-    align-self: stretch;
-  }
-
-  .side-panel.left .left-panel-content {
-    padding: 12px;
-    gap: 8px;
-  }
-
-  .side-panel.left .left-panel-text-top {
-    font-size: 18px;
-  }
-
-  .side-panel.left .left-panel-text-bottom {
-    font-size: 11px;
-  }
-  
-  .email-signup-section {
-    gap: 8px;
-    margin-top: 4px;
-  }
-  
-  .email-signup-label {
-    font-size: 14px;
-  }
-  
-  .email-input {
-    max-width: 100%;
-    font-size: 13px;
-    padding: 8px 10px;
-  }
-  
-  .email-submit-btn {
-    font-size: 16px;
-    padding: 8px 24px;
-  }
-  
-  .email-signup-cta {
-    font-size: 13px;
-  }
-  
-  .side-panel.right {
-    order: 3;
-    flex-direction: column;
-    padding: 12px;
-    height: auto;
-    min-height: 320px;
-    align-self: stretch;
-  }
-  
-  .side-panel.right .preview {
-    width: 100%;
-    max-height: none;
-    height: 140px;
-    margin-bottom: 12px;
-  }
-  
-  .panel-buttons {
-    flex-direction: column;
-    padding: 0;
-    gap: 8px;
-  }
-  
-  .panel-btn {
-    flex: 1 1 auto;
-    width: 100%;
-  }
-  
-  .edgeZone {
-    width: 18%;
-  }
-}
-
-/* Very narrow/portrait - single column layout */
-@media (max-aspect-ratio: 5/7) {
-  .viewport {
-    min-height: 40vh;
-  }
-
-  .side-panel.left {
-    height: 180px;
-  }
-
-  .side-panel.left .left-panel-content {
-    padding: 8px;
-    gap: 6px;
-  }
-
-  .side-panel.left .left-panel-text-top {
-    font-size: 16px;
-  }
-
-  .side-panel.left .left-panel-text-bottom {
-    font-size: 10px;
-  }
-
-  .email-signup-section {
-    gap: 6px;
-  }
-  
-  .email-signup-label {
-    font-size: 12px;
-  }
-  
-  .email-input {
-    font-size: 12px;
-    padding: 7px 8px;
-  }
-  
-  .email-submit-btn {
-    font-size: 14px;
-    padding: 7px 20px;
-  }
-  
-  .email-signup-cta {
-    font-size: 12px;
-  }
-
-  .side-panel.right {
-    flex-direction: column;
-  }
-
-  .side-panel.right .preview {
-    width: 100%;
-    height: 160px;
-  }
-
-  .panel-buttons {
-    flex-direction: column;
-  }
-  
-  .panel-btn {
-    flex: 1 1 auto;
-  }
-
-  .controls {
-    padding: 8px 4px;
-    gap: 4px;
-  }
-
-  .controls .left,
-  .controls .right {
-    gap: 3px;
-  }
-
-  .btn {
-    height: 40px;
-    min-width: 40px;
-    padding: 0 8px;
-    font-size: 12px;
-  }
-  
-  .btn.primary {
-    padding: 0 10px;
-  }
-
-  .status {
-    font-size: 11px;
-    padding: 6px 6px;
-  }
-}
-
-/* Smaller side panels on medium screens */
-@media (max-width: 1400px) {
-  .side-panel {
-    width: 18vw;
-    min-width: 220px;
-  }
-}
-</style>
+  <style>
+    /* ==================== CSS VARIABLES ==================== */
+    :root {
+      --primary: #00d9ff;
+      --secondary: #ff00ea;
+      --accent: #ffed00;
+      --bg-dark: #0a0a12;
+      --bg-panel: #1a1a2e;
+      --text: #ffffff;
+      --danger: #ff3838;
+    }
+
+    /* ==================== RESET ==================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ==================== ANIMATIONS ==================== */
+    @keyframes glitchText {
+
+      0%,
+      100% {
+        text-shadow: 2px 2px 0 var(--primary), -2px -2px 0 var(--secondary);
+      }
+
+      25% {
+        text-shadow: -2px 2px 0 var(--secondary), 2px -2px 0 var(--primary);
+      }
+
+      50% {
+        text-shadow: 2px -2px 0 var(--primary), -2px 2px 0 var(--secondary);
+      }
+
+      75% {
+        text-shadow: -2px -2px 0 var(--secondary), 2px 2px 0 var(--primary);
+      }
+    }
+
+    @keyframes scanline {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    @keyframes neonPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+      }
+
+      50% {
+        box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      }
+    }
+
+    @keyframes pixelShift {
+
+      0%,
+      100% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(2px, 0);
+      }
+
+      50% {
+        transform: translate(0, 2px);
+      }
+
+      75% {
+        transform: translate(-2px, 0);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ==================== BASE LAYOUT ==================== */
+    html,
+    body {
+      height: 100%;
+      font-family: 'Righteous', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 72px);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg,
+          transparent 0px,
+          transparent 2px,
+          rgba(0, 217, 255, 0.02) 2px,
+          rgba(0, 217, 255, 0.02) 4px),
+        radial-gradient(circle at 20% 80%, rgba(255, 237, 0, 0.05), transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 234, 0.05), transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.05) 50%);
+      background-size: 100% 3px;
+      pointer-events: none;
+      z-index: 1;
+      animation: scanline 6s linear infinite;
+      opacity: 0.4;
+    }
+
+    /* ==================== HEADER ==================== */
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, rgba(10, 10, 18, 0.95), rgba(26, 26, 46, 0.95));
+      border-bottom: 3px solid var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-panel), var(--bg-dark));
+      border: 3px solid var(--accent);
+      color: var(--primary);
+      font-family: 'Bebas Neue';
+      font-weight: 900;
+      font-size: 28px;
+      box-shadow: 0 0 10px rgba(0, 217, 255, 0.12);
+      transition: transform 0.25s;
+      animation: neonPulse 6s ease-in-out infinite;
+    }
+
+    .logo:hover {
+      transform: scale(1.06);
+      animation: glitchText 8s infinite;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.35));
+      animation: pixelShift 12s linear infinite, glitchText 8s ease-in-out infinite;
+    }
+
+    .title .subtitle {
+      margin: 0;
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      opacity: 1;
+    }
+
+    /* ==================== CHAPTER SELECT ==================== */
+    select#chapter {
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(255, 0, 234, 0.15));
+      color: var(--text);
+      border: 3px solid var(--accent);
+      padding: 10px 16px;
+      min-width: 180px;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      font-family: 'Bebas Neue', sans-serif;
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 237, 0, 0.3);
+      position: relative;
+    }
+
+    select#chapter:hover {
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.25), rgba(255, 0, 234, 0.25));
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.3),
+        0 0 25px rgba(255, 237, 0, 0.6);
+      transform: translateY(-2px);
+    }
+
+    select#chapter:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 237, 0, 0.3);
+    }
+
+    select#chapter option {
+      background: var(--bg-panel);
+      color: var(--text);
+      padding: 8px;
+    }
+
+    /* ==================== VIEWER LAYOUT ==================== */
+    .viewerWrap {
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      max-width: 2000px;
+      margin: 0 auto;
+      padding: 16px 12px 0 12px;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+
+    .viewer-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* ==================== SIDE PANELS ==================== */
+    .side-panel {
+      flex: 0 0 auto;
+      width: 20vw;
+      min-width: 250px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, rgba(26, 26, 46, 0.95), rgba(10, 10, 18, 0.95));
+      border: 4px solid var(--primary);
+      box-shadow:
+        0 0 20px rgba(0, 217, 255, 0.4),
+        inset 0 4px 0 rgba(0, 217, 255, 0.1),
+        0 8px 0 rgba(0, 0, 0, 0.3);
+      color: var(--text);
+      overflow: hidden;
+      z-index: 10;
+      position: relative;
+    }
+
+    .side-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+      z-index: 1;
+    }
+
+    .side-panel.left,
+    .side-panel.right {
+      height: 100%;
+    }
+
+    .side-panel.left .left-panel-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 20px;
+      gap: 16px;
+    }
+
+    .side-panel.left .left-panel-text-top,
+    .side-panel.left .left-panel-text-bottom {
+      font-family: 'Bebas Neue', sans-serif;
+      text-align: center;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      line-height: 1.3;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .side-panel.left .left-panel-text-top {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--accent);
+      text-shadow:
+        2px 2px 0 rgba(0, 0, 0, 0.5),
+        0 0 15px rgba(255, 237, 0, 0.6);
+    }
+
+    .side-panel.left .left-panel-text-bottom {
+      font-size: 16px;
+      font-weight: 500;
+      max-width: 100%;
+      word-wrap: break-word;
+    }
+
+    .side-panel.left .preview {
+      /*flex: 1 1 auto;*/
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      min-height: 0;
+    }
+
+    .side-panel.left .preview .panel-preview-img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      border: 3px solid rgba(0, 217, 255, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .side-panel.left .preview .panel-preview-img:hover {
+      transform: scale(1.05);
+      border-color: var(--accent);
+    }
+
+    /* ==================== EMAIL SIGNUP SECTION ==================== */
+    .email-signup-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .email-signup-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .email-signup-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .email-input {
+      width: 100%;
+      max-width: 280px;
+      padding: 10px 12px;
+      background: rgba(26, 26, 46, 0.8);
+      border: 3px solid var(--primary);
+      color: var(--text);
+      font-family: 'Righteous', sans-serif;
+      font-size: 14px;
+      text-align: center;
+      transition: all 0.2s;
+      box-shadow:
+        0 0 10px rgba(0, 217, 255, 0.3),
+        inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    .email-input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 13px;
+    }
+
+    .email-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow:
+        0 0 20px rgba(255, 237, 0, 0.5),
+        inset 0 2px 4px rgba(0, 0, 0, 0.4);
+      background: rgba(26, 26, 46, 0.95);
+    }
+
+    .email-submit-btn {
+      padding: 10px 32px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      border: 3px solid var(--accent);
+      color: var(--bg-dark);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(255, 237, 0, 0.4);
+      position: relative;
+    }
+
+    .email-submit-btn:hover {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 0 rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 237, 0, 0.7);
+    }
+
+    .email-submit-btn:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.5),
+        0 0 15px rgba(255, 237, 0, 0.4);
+    }
+
+    .email-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .email-signup-cta {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-align: center;
+      text-shadow:
+        2px 2px 0 rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(255, 237, 0, 0.4);
+    }
+
+    .email-form-message {
+      font-family: 'Righteous', sans-serif;
+      font-size: 14px;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin-top: 8px;
+      max-width: 280px;
+    }
+
+    .email-form-message.success {
+      background: rgba(0, 217, 255, 0.2);
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .email-form-message.error {
+      background: rgba(255, 56, 56, 0.2);
+      border: 2px solid var(--danger);
+      color: var(--danger);
+    }
+
+    .side-panel.right {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .side-panel.right .preview {
+      flex: 0 0 auto;
+      width: 100%;
+      max-height: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .side-panel.right .preview .panel-preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      border: 3px solid rgba(0, 217, 255, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .side-panel.right .preview .panel-preview-img:hover {
+      transform: scale(1.05);
+      border-color: var(--accent);
+    }
+
+    .panel-buttons {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+      padding: 8px 0;
+      min-height: 0;
+    }
+
+    .panel-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.12), rgba(255, 0, 234, 0.08));
+      border: 3px solid var(--primary);
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.3),
+        0 0 10px rgba(0, 217, 255, 0.2);
+    }
+
+    .panel-btn::before {
+      content: "▶";
+      position: absolute;
+      left: -10px;
+      color: var(--accent);
+      opacity: 0;
+      transition: all 0.2s;
+      font-size: 20px;
+      text-shadow: 0 0 10px var(--accent);
+    }
+
+    .panel-btn:hover {
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 0, 234, 0.15));
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 217, 255, 0.5);
+      transform: translateX(8px);
+      border-color: var(--accent);
+    }
+
+    .panel-btn:hover::before {
+      opacity: 1;
+      left: -15px;
+      animation: pixelBounce 0.6s ease-in-out infinite;
+    }
+
+    .panel-btn:active {
+      transform: translateX(8px) translateY(2px);
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.4),
+        0 0 15px rgba(0, 217, 255, 0.4);
+    }
+
+    .panel-btn-icon {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: 3px solid var(--accent);
+      font-size: 28px;
+      color: var(--bg-dark);
+      font-weight: bold;
+      box-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .panel-btn-icon::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2));
+    }
+
+    .panel-btn-text {
+      flex: 1;
+      font-family: 'Bebas Neue';
+      font-size: 20px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      font-weight: 900;
+    }
+
+    /* ==================== VIEWPORT ==================== */
+    .viewport {
+      flex: 1 1 auto;
+      min-height: 0;
+      min-width: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: linear-gradient(180deg, rgba(26, 26, 46, 0.8), rgba(10, 10, 18, 0.9));
+      border: 4px solid var(--primary);
+      box-shadow:
+        0 0 30px rgba(0, 217, 255, 0.3),
+        inset 0 4px 0 rgba(0, 217, 255, 0.1),
+        0 8px 0 rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      touch-action: none;
+      z-index: 5;
+      max-height: 100%;
+      position: relative;
+    }
+
+    .viewport::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+      z-index: 10;
+    }
+
+    body.fullscreen-active .viewport {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      clip-path: none !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      background: #000;
+      z-index: 200;
+    }
+
+    body.fullscreen-active .side-panel {
+      display: none !important;
+    }
+
+    body.fullscreen-active main {
+      height: 100vh;
+    }
+
+    /* ==================== STAGE & PAGES ==================== */
+    .stageWrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      will-change: transform;
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stage {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      transform-origin: 50% 50%;
+      will-change: transform;
+      cursor: grab;
+      touch-action: none;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid rgba(0, 217, 255, 0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .page img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: calc(100vh - 150px);
+      object-fit: contain;
+      -webkit-user-drag: none;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .spinner {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border: 4px solid transparent;
+      border-top: 4px solid var(--primary);
+      border-right: 4px solid var(--secondary);
+      border-bottom: 4px solid var(--accent);
+      animation: spin 0.8s linear infinite;
+      box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+    }
+
+    /* ==================== PAGE TRANSITIONS ==================== */
+    .flashOverlay {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      transition: opacity 140ms linear;
+      z-index: 25;
+    }
+
+    .slide-out-left {
+      transition: transform 160ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      transform: translateX(-18px);
+    }
+
+    .slide-out-right {
+      transition: transform 160ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      transform: translateX(18px);
+    }
+
+    .slide-in-left {
+      transition: transform 200ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      transform: translateX(0);
+    }
+
+    .slide-in-right {
+      transition: transform 200ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      transform: translateX(0);
+    }
+
+    /* ==================== EDGE ZONES ==================== */
+    .edgeZone {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 12%;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 120ms;
+    }
+
+    .edgeZone.active {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .edgeZone.left {
+      left: 0;
+    }
+
+    .edgeZone.right {
+      right: 0;
+    }
+
+    .edgeArrow {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: 4px solid var(--accent);
+      color: var(--bg-dark);
+      cursor: pointer;
+      user-select: none;
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 217, 255, 0.6);
+      transition: all 0.15s;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .edgeArrow:hover {
+      transform: scale(1.1);
+      box-shadow:
+        0 6px 0 rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(0, 217, 255, 0.9);
+      animation: pixelBounce 0.6s ease-in-out infinite;
+    }
+
+    .edgeArrow:active {
+      transform: scale(1.05) translateY(2px);
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 217, 255, 0.6);
+    }
+
+    /* ==================== CONTROLS ==================== */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      margin: 12px auto 16px auto;
+      max-width: 2000px;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(26, 26, 46, 0.98), rgba(10, 10, 18, 0.98));
+      border: 4px solid var(--primary);
+      box-shadow:
+        0 0 25px rgba(0, 217, 255, 0.3),
+        inset 0 4px 0 rgba(0, 217, 255, 0.1),
+        0 8px 0 rgba(0, 0, 0, 0.3);
+      z-index: 70;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .controls::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+    }
+
+    .controls .left,
+    .controls .right {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn {
+      height: 48px;
+      min-width: 48px;
+      padding: 0 16px;
+      border: 3px solid var(--primary);
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.12), rgba(255, 0, 234, 0.08));
+      color: var(--text);
+      cursor: pointer;
+      font-family: 'Bebas Neue';
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 16px;
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.3),
+        0 0 10px rgba(0, 217, 255, 0.2);
+      transition: all 0.15s;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 0, 234, 0.15));
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 217, 255, 0.5);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.4),
+        0 0 15px rgba(0, 217, 255, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn.primary {
+      font-size: 18px;
+      line-height: 1;
+      padding: 8px 20px;
+      border: 3px solid var(--accent);
+      color: var(--bg-dark);
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 237, 0, 0.6),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+      font-weight: 900;
+    }
+
+    .btn.primary::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2));
+      pointer-events: none;
+    }
+
+    .btn.primary:hover {
+      animation: arcadePulse 1s ease-in-out infinite;
+    }
+
+    body.fullscreen-active header.topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 210;
+      transition: transform 0.28s ease, opacity 0.28s ease;
+      will-change: transform, opacity;
+      background: linear-gradient(135deg, rgba(10, 10, 18, 0.9), rgba(26, 26, 46, 0.9));
+    }
+
+    body.fullscreen-active .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 210;
+      transition: transform 0.28s ease, opacity 0.28s ease;
+      will-change: transform, opacity;
+      margin: 0;
+    }
+
+    body.fullscreen-active header.topbar.hidden {
+      transform: translateY(-110%);
+      opacity: 0;
+    }
+
+    body.fullscreen-active .controls.hidden {
+      transform: translateX(-50%) translateY(110%);
+      opacity: 0;
+    }
+
+    /* ==================== STATUS & PROGRESS ==================== */
+    .status {
+      padding: 8px 16px;
+      background: linear-gradient(135deg, rgba(255, 237, 0, 0.15), rgba(255, 237, 0, 0.08));
+      border: 3px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Bebas Neue';
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 237, 0, 0.3);
+      text-shadow: 0 0 8px rgba(255, 237, 0, 0.5);
+      font-size: 16px;
+    }
+
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 50;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      transition: width 0.28s ease-out;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+      box-shadow:
+        0 0 10px rgba(0, 217, 255, 0.8),
+        0 0 20px rgba(255, 0, 234, 0.5);
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 8px;
+      height: 100%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* ==================== RESPONSIVE ==================== */
+    /* Respect user's motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      body::after {
+        animation: none;
+      }
+
+      .logo {
+        animation: none;
+      }
+
+      .title h1 {
+        animation: none;
+      }
+    }
+
+    /* Better keyboard focus indicators */
+    button:focus-visible,
+    select:focus-visible,
+    a:focus-visible,
+    .viewport:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Skip to content link for accessibility */
+    .skip-to-content {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: var(--bg-dark);
+      padding: 8px 16px;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 1000;
+      border-radius: 0 0 4px 0;
+    }
+
+    .skip-to-content:focus {
+      top: 0;
+    }
+
+    /* Keyboard shortcuts help overlay */
+    .shortcuts-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 18, 0.97);
+      backdrop-filter: blur(10px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .shortcuts-overlay.active {
+      display: flex;
+    }
+
+    .shortcuts-panel {
+      background: linear-gradient(180deg, rgba(26, 26, 46, 0.98), rgba(10, 10, 18, 0.98));
+      border: 4px solid var(--primary);
+      padding: 32px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow:
+        0 0 40px rgba(0, 217, 255, 0.5),
+        inset 0 4px 0 rgba(0, 217, 255, 0.1),
+        0 12px 0 rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .shortcuts-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+      z-index: 1;
+    }
+
+    .shortcuts-panel h2 {
+      margin: 0 0 24px 0;
+      font-size: 36px;
+      color: var(--primary);
+      font-family: 'Bebas Neue';
+      letter-spacing: 3px;
+      text-shadow:
+        3px 3px 0 rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 217, 255, 0.5);
+      text-transform: uppercase;
+    }
+
+    .shortcuts-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .shortcut-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px;
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(255, 0, 234, 0.08));
+      border: 3px solid rgba(0, 217, 255, 0.3);
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .shortcut-key {
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-panel));
+      border: 3px solid var(--accent);
+      padding: 6px 14px;
+      font-family: 'Bebas Neue';
+      color: var(--accent);
+      font-size: 18px;
+      min-width: 90px;
+      text-align: center;
+      box-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.4),
+        0 0 10px rgba(255, 237, 0, 0.3);
+      font-weight: 900;
+    }
+
+    .shortcut-desc {
+      flex: 1;
+      margin-left: 16px;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .shortcuts-close {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--bg-dark);
+      border: 3px solid var(--accent);
+      font-family: 'Bebas Neue';
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 217, 255, 0.5);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .shortcuts-close:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 0 rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(0, 217, 255, 0.8);
+    }
+
+    .shortcuts-close:active {
+      transform: translateY(0);
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 217, 255, 0.5);
+    }
+
+    /* End of chapter overlay */
+    .chapter-end-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 10, 18, 0.98), rgba(26, 26, 46, 0.98));
+      backdrop-filter: blur(8px);
+      z-index: 35;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 300ms ease-in;
+    }
+
+    .chapter-end-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .chapter-end-content {
+      text-align: center;
+      max-width: 500px;
+      padding: 32px;
+      background: linear-gradient(180deg, rgba(26, 26, 46, 0.9), rgba(10, 10, 18, 0.9));
+      border: 4px solid var(--accent);
+      box-shadow:
+        0 0 40px rgba(255, 237, 0, 0.5),
+        inset 0 4px 0 rgba(255, 237, 0, 0.1),
+        0 12px 0 rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .chapter-end-content::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+      z-index: 1;
+    }
+
+    .chapter-end-content h2 {
+      font-family: 'Bebas Neue';
+      font-size: 52px;
+      color: var(--accent);
+      margin: 0 0 16px 0;
+      letter-spacing: 4px;
+      text-shadow:
+        4px 4px 0 rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(255, 237, 0, 0.8);
+      text-transform: uppercase;
+      animation: pixelBounce 2s ease-in-out infinite;
+    }
+
+    .chapter-end-content p {
+      font-size: 18px;
+      color: var(--text);
+      margin: 0 0 32px 0;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .chapter-end-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .chapter-end-btn {
+      padding: 14px 24px;
+      border: 3px solid var(--primary);
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.12), rgba(255, 0, 234, 0.08));
+      color: var(--text);
+      font-family: 'Bebas Neue';
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .chapter-end-btn:hover {
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 0, 234, 0.15));
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 0 rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 217, 255, 0.5);
+    }
+
+    .chapter-end-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .chapter-end-btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: var(--bg-dark);
+      border: 3px solid var(--accent);
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.5),
+        0 0 25px rgba(255, 237, 0, 0.6);
+    }
+
+    /* Aspect ratio ~7:5 (1.4) or narrower - move panels below viewport */
+    @media (max-aspect-ratio: 7/5) {
+
+      html,
+      body {
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      main {
+        height: auto;
+        overflow: visible;
+      }
+
+      .viewerWrap {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 12px;
+        gap: 12px;
+      }
+
+      /* Wrapper contains viewport + controls, ordered as a unit in mobile layout */
+      .viewer-content-wrapper {
+        order: 1;
+        width: 100%;
+        flex: 0 0 100%;
+      }
+
+      /* Viewport and controls use natural document flow within wrapper */
+      .viewport {
+        width: 100%;
+        height: auto;
+        aspect-ratio: auto;
+        min-height: 50vh;
+      }
+
+      .controls {
+        margin: 12px 0 12px 0;
+        padding: 12px 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        max-width: 100%;
+        border-width: 3px;
+      }
+
+      .controls .left,
+      .controls .right {
+        gap: 6px;
+      }
+
+      .side-panel {
+        width: calc(50% - 6px) !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        min-height: auto;
+        flex: 0 0 calc(50% - 6px) !important;
+      }
+
+      .side-panel.left {
+        order: 2;
+        height: auto;
+        min-height: 580px;
+        align-self: stretch;
+      }
+
+      .side-panel.left .left-panel-content {
+        padding: 12px;
+        gap: 8px;
+      }
+
+      .side-panel.left .left-panel-text-top {
+        font-size: 18px;
+      }
+
+      .side-panel.left .left-panel-text-bottom {
+        font-size: 11px;
+      }
+
+      .email-signup-section {
+        gap: 8px;
+        margin-top: 4px;
+      }
+
+      .email-signup-label {
+        font-size: 14px;
+      }
+
+      .email-input {
+        max-width: 100%;
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+
+      .email-submit-btn {
+        font-size: 16px;
+        padding: 8px 24px;
+      }
+
+      .email-signup-cta {
+        font-size: 13px;
+      }
+
+      .side-panel.right {
+        order: 3;
+        flex-direction: column;
+        padding: 12px;
+        height: auto;
+        min-height: 320px;
+        align-self: stretch;
+      }
+
+      .side-panel.right .preview {
+        width: 100%;
+        max-height: none;
+        height: 140px;
+        margin-bottom: 12px;
+      }
+
+      .panel-buttons {
+        flex-direction: column;
+        padding: 0;
+        gap: 8px;
+      }
+
+      .panel-btn {
+        flex: 1 1 auto;
+        width: 100%;
+      }
+
+      .edgeZone {
+        width: 18%;
+      }
+    }
+
+    /* Very narrow/portrait - single column layout */
+    @media (max-aspect-ratio: 5/7) {
+      .viewport {
+        min-height: 40vh;
+      }
+
+      .side-panel.left {
+        height: 180px;
+      }
+
+      .side-panel.left .left-panel-content {
+        padding: 8px;
+        gap: 6px;
+      }
+
+      .side-panel.left .left-panel-text-top {
+        font-size: 16px;
+      }
+
+      .side-panel.left .left-panel-text-bottom {
+        font-size: 10px;
+      }
+
+      .email-signup-section {
+        gap: 6px;
+      }
+
+      .email-signup-label {
+        font-size: 12px;
+      }
+
+      .email-input {
+        font-size: 12px;
+        padding: 7px 8px;
+      }
+
+      .email-submit-btn {
+        font-size: 14px;
+        padding: 7px 20px;
+      }
+
+      .email-signup-cta {
+        font-size: 12px;
+      }
+
+      .side-panel.right {
+        flex-direction: column;
+      }
+
+      .side-panel.right .preview {
+        width: 100%;
+        height: 160px;
+      }
+
+      .panel-buttons {
+        flex-direction: column;
+      }
+
+      .panel-btn {
+        flex: 1 1 auto;
+      }
+
+      .controls {
+        padding: 8px 4px;
+        gap: 4px;
+      }
+
+      .controls .left,
+      .controls .right {
+        gap: 3px;
+      }
+
+      .btn {
+        height: 40px;
+        min-width: 40px;
+        padding: 0 8px;
+        font-size: 12px;
+      }
+
+      .btn.primary {
+        padding: 0 10px;
+      }
+
+      .status {
+        font-size: 11px;
+        padding: 6px 6px;
+      }
+    }
+
+    /* Smaller side panels on medium screens */
+    @media (max-width: 1400px) {
+      .side-panel {
+        width: 18vw;
+        min-width: 220px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- Skip to content link for accessibility -->
-<a href="#viewport" class="skip-to-content">Skip to comic</a>
+  <!-- Skip to content link for accessibility -->
+  <a href="#viewport" class="skip-to-content">Skip to comic</a>
 
-<!-- ==================== HEADER ==================== -->
-<header class="topbar" id="topbar">
-  <div class="brand">
-    <div class="logo">BWC</div>
-    <div class="title">
-      <h1>BATTLE BROS</h1>
-      <p class="subtitle" id="subtitle" aria-live="polite">/// GUESS WHO'S BACK IN TOWN? ///</p>
+  <!-- ==================== HEADER ==================== -->
+  <header class="topbar" id="topbar">
+    <div class="brand">
+      <div class="logo">BWC</div>
+      <div class="title">
+        <h1>BATTLE BROS</h1>
+        <p class="subtitle" id="subtitle" aria-live="polite">/// GUESS WHO'S BACK IN TOWN? ///</p>
+      </div>
     </div>
-  </div>
-  <select id="chapter" aria-label="Select chapter"></select>
-</header>
+    <select id="chapter" aria-label="Select chapter"></select>
+  </header>
 
-<!-- ==================== MAIN VIEWER ==================== -->
-<main>
-  <div class="viewerWrap">
+  <!-- ==================== MAIN VIEWER ==================== -->
+  <main>
+    <div class="viewerWrap">
 
-    <!-- Left Preview Panel -->
-    <aside class="side-panel left" id="leftPanel">
-      <div class="left-panel-content">
-        <div class="left-panel-text-top">TO GO EVEN FURTHER BEYOND</div>
-        <div class="preview" id="leftPreview" aria-hidden="false">
+      <!-- Left Preview Panel -->
+      <aside class="side-panel left" id="leftPanel">
+        <div class="left-panel-content">
+          <div class="left-panel-text-top">TO GO EVEN FURTHER BEYOND</div>
+          <div class="preview" id="leftPreview" aria-hidden="false">
+            <picture>
+              <img class="panel-preview-img" src="bookturn.gif" alt="Battle Bros Volume 1 - Get the physical comic!"
+                id="bookTurnPromo">
+            </picture>
+          </div>
+          <div class="left-panel-text-bottom">WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics
+            store!</div>
+
+          <!-- Email Signup Form -->
+          <div class="email-signup-section">
+            <div class="email-signup-label">GET LOVE LETTERS FROM ME:</div>
+            <form id="emailSignupForm" action="https://formspree.io/f/xjkjkvla" method="POST" class="email-signup-form">
+              <input type="email" name="email" id="emailInput" placeholder="your.email@example.com" required
+                class="email-input" aria-label="Email address">
+              <button type="submit" class="email-submit-btn">SUBMIT</button>
+            </form>
+            <div class="email-signup-cta">JOIN THE EMAIL LIST!</div>
+            <div id="emailFormMessage" class="email-form-message" style="display: none;"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Viewport and Controls Wrapper -->
+      <div class="viewer-content-wrapper" id="mainContent">
+
+        <!-- Main Viewport -->
+        <section class="viewport" id="viewport" tabindex="0" aria-label="Comic viewport">
+          <div class="stageWrap" id="stageWrap">
+            <div class="stage" id="stage">
+
+              <!-- Left Page -->
+              <div class="page" id="leftPage" role="img" aria-hidden="false">
+                <div class="spinner" id="leftSpinner" style="display:none;"></div>
+                <img id="leftImg" src="" alt="" draggable="false" loading="lazy">
+              </div>
+
+              <!-- Right Page (two-page mode) -->
+              <div class="page" id="rightPage" aria-hidden="true" style="display:none;">
+                <div class="spinner" id="rightSpinner" style="display:none;"></div>
+                <img id="rightImg" src="" alt="" draggable="false" loading="lazy">
+              </div>
+            </div>
+
+            <div class="flashOverlay" id="flashOverlay" aria-hidden="true"></div>
+          </div>
+
+          <!-- Edge Navigation Zones -->
+          <div class="edgeZone left" id="edgeLeft" aria-hidden="true">
+            <div class="edgeArrow" id="edgeLeftBtn" title="Previous page" role="button" aria-label="Previous page">
+              <svg viewBox="0 0 24 24" width="22" height="22">
+                <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+              </svg>
+            </div>
+          </div>
+          <div class="edgeZone right" id="edgeRight" aria-hidden="true">
+            <div class="edgeArrow" id="edgeRightBtn" title="Next page" role="button" aria-label="Next page">
+              <svg viewBox="0 0 24 24" width="22" height="22">
+                <path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </section>
+
+        <!-- ==================== CONTROLS ==================== -->
+        <div class="controls" id="controls" role="toolbar" aria-label="Reader controls">
+          <div class="left">
+            <button class="btn" id="prevBtn" type="button" aria-label="Previous page">◀ BACK</button>
+            <button class="btn" id="nextBtn" type="button" aria-label="Next page">NEXT ▶</button>
+            <span class="status" id="pageIndicator" aria-live="polite">PAGE 0 / 0</span>
+          </div>
+          <div class="right">
+            <button class="btn" id="helpBtn" type="button" aria-label="Show keyboard shortcuts"
+              title="Keyboard shortcuts (?)">?</button>
+            <button class="btn" id="zoomOut" type="button" aria-label="Zoom out">−</button>
+            <button class="btn primary" id="fitBtn" type="button" aria-label="Fit">⚡ FIT</button>
+            <button class="btn" id="zoomIn" type="button" aria-label="Zoom in">+</button>
+            <button class="btn" id="fullscreenBtn" type="button" aria-label="Toggle fullscreen">⛶</button>
+          </div>
+        </div>
+
+      </div><!-- End viewer-content-wrapper -->
+
+      <!-- Right Preview Panel -->
+      <aside class="side-panel right" id="rightPanel">
+        <div class="preview" id="rightPreview" aria-hidden="false">
           <picture>
-            <img class="panel-preview-img" src="bookturn.gif" alt="Battle Bros Volume 1 - Get the physical comic!" id="bookTurnPromo">
+            <source srcset="banner3.png" type="image/webp">
+            <img class="panel-preview-img" src="banner3.png" alt="Right illustration preview">
           </picture>
         </div>
-        <div class="left-panel-text-bottom">WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!</div>
-        
-        <!-- Email Signup Form -->
-        <div class="email-signup-section">
-          <div class="email-signup-label">GET LOVE LETTERS FROM ME:</div>
-          <form id="emailSignupForm" action="https://formspree.io/f/xjkjkvla" method="POST" class="email-signup-form">
-            <input type="email" name="email" id="emailInput" placeholder="your.email@example.com" required class="email-input" aria-label="Email address">
-            <button type="submit" class="email-submit-btn">SUBMIT</button>
-          </form>
-          <div class="email-signup-cta">JOIN THE EMAIL LIST!</div>
-          <div id="emailFormMessage" class="email-form-message" style="display: none;"></div>
+        <div class="panel-buttons">
+          <a href="https://bsky.app/profile/bwondercomics.com" target="_blank" rel="noopener noreferrer"
+            class="panel-btn" id="customBtn1">
+            <div class="panel-btn-icon">🦋</div>
+            <div class="panel-btn-text">Bluesky</div>
+          </a>
+          <a href="https://patreon.com/doylemelville2" target="_blank" rel="noopener noreferrer" class="panel-btn"
+            id="customBtn2">
+            <div class="panel-btn-icon">💎</div>
+            <div class="panel-btn-text">Patreon</div>
+          </a>
+          <a href="https://doyle-melvilleii.artstation.com" target="_blank" rel="noopener noreferrer" class="panel-btn"
+            id="customBtn3">
+            <div class="panel-btn-icon">🎨</div>
+            <div class="panel-btn-text">ArtStation</div>
+          </a>
+          <a href="https://bwondercomics.bigcartel.com/product/battle-bros-volume-1" target="_blank"
+            rel="noopener noreferrer" class="panel-btn" id="customBtn4">
+            <div class="panel-btn-icon">📖</div>
+            <div class="panel-btn-text">Buy Print</div>
+          </a>
         </div>
-      </div>
-    </aside>
+      </aside>
 
-    <!-- Viewport and Controls Wrapper -->
-    <div class="viewer-content-wrapper">
-
-    <!-- Main Viewport -->
-    <section class="viewport" id="viewport" tabindex="0" aria-label="Comic viewport">
-      <div class="stageWrap" id="stageWrap">
-        <div class="stage" id="stage">
-          
-          <!-- Left Page -->
-          <div class="page" id="leftPage" role="img" aria-hidden="false">
-            <div class="spinner" id="leftSpinner" style="display:none;"></div>
-            <img id="leftImg" src="" alt="" draggable="false" loading="lazy">
-          </div>
-
-          <!-- Right Page (two-page mode) -->
-          <div class="page" id="rightPage" aria-hidden="true" style="display:none;">
-            <div class="spinner" id="rightSpinner" style="display:none;"></div>
-            <img id="rightImg" src="" alt="" draggable="false" loading="lazy">
-          </div>
-        </div>
-
-        <div class="flashOverlay" id="flashOverlay" aria-hidden="true"></div>
-      </div>
-
-      <!-- Edge Navigation Zones -->
-      <div class="edgeZone left" id="edgeLeft" aria-hidden="true">
-        <div class="edgeArrow" id="edgeLeftBtn" title="Previous page" role="button" aria-label="Previous page">
-          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-        </div>
-      </div>
-      <div class="edgeZone right" id="edgeRight" aria-hidden="true">
-        <div class="edgeArrow" id="edgeRightBtn" title="Next page" role="button" aria-label="Next page">
-          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-        </div>
-      </div>
-
-      <!-- Progress Bar -->
-      <div class="progress-bar" aria-hidden="true">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </section>
-
-    <!-- ==================== CONTROLS ==================== -->
-    <div class="controls" id="controls" role="toolbar" aria-label="Reader controls">
-      <div class="left">
-        <button class="btn" id="prevBtn" type="button" aria-label="Previous page">◀ BACK</button>
-        <button class="btn" id="nextBtn" type="button" aria-label="Next page">NEXT ▶</button>
-        <span class="status" id="pageIndicator" aria-live="polite">PAGE 0 / 0</span>
-      </div>
-      <div class="right">
-        <button class="btn" id="helpBtn" type="button" aria-label="Show keyboard shortcuts" title="Keyboard shortcuts (?)">?</button>
-        <button class="btn" id="zoomOut" type="button" aria-label="Zoom out">−</button>
-        <button class="btn primary" id="fitBtn" type="button" aria-label="Fit">⚡ FIT</button>
-        <button class="btn" id="zoomIn" type="button" aria-label="Zoom in">+</button>
-        <button class="btn" id="fullscreenBtn" type="button" aria-label="Toggle fullscreen">⛶</button>
-      </div>
     </div>
+  </main>
 
-    </div><!-- End viewer-content-wrapper -->
-
-    <!-- Right Preview Panel -->
-    <aside class="side-panel right" id="rightPanel">
-      <div class="preview" id="rightPreview" aria-hidden="false">
-        <picture>
-          <source srcset="banner3.png" type="image/webp">
-          <img class="panel-preview-img" src="banner3.png" alt="Right illustration preview">
-        </picture>
+  <!-- Keyboard Shortcuts Overlay -->
+  <div class="shortcuts-overlay" id="shortcutsOverlay">
+    <div class="shortcuts-panel">
+      <h2>⌨️ Keyboard Shortcuts</h2>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item">
+          <span class="shortcut-key">← →</span>
+          <span class="shortcut-desc">Navigate between pages</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key">+ / =</span>
+          <span class="shortcut-desc">Zoom in</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key">−</span>
+          <span class="shortcut-desc">Zoom out</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key">0</span>
+          <span class="shortcut-desc">Reset zoom to default</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key">F</span>
+          <span class="shortcut-desc">Toggle fullscreen mode</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key">?</span>
+          <span class="shortcut-desc">Show/hide this help</span>
+        </div>
+        <div class="shortcut-item">
+          <span class="shortcut-key">ESC</span>
+          <span class="shortcut-desc">Close overlays or exit fullscreen</span>
+        </div>
       </div>
-      <div class="panel-buttons">
-        <a href="https://bsky.app/profile/bwondercomics.com" target="_blank" rel="noopener noreferrer" class="panel-btn" id="customBtn1">
-          <div class="panel-btn-icon">🦋</div>
-          <div class="panel-btn-text">Bluesky</div>
-        </a>
-        <a href="https://patreon.com/doylemelville2" target="_blank" rel="noopener noreferrer" class="panel-btn" id="customBtn2">
-          <div class="panel-btn-icon">💎</div>
-          <div class="panel-btn-text">Patreon</div>
-        </a>
-        <a href="https://doyle-melvilleii.artstation.com" target="_blank" rel="noopener noreferrer" class="panel-btn" id="customBtn3">
-          <div class="panel-btn-icon">🎨</div>
-          <div class="panel-btn-text">ArtStation</div>
-        </a>
-        <a href="https://bwondercomics.bigcartel.com/product/battle-bros-volume-1" target="_blank" rel="noopener noreferrer" class="panel-btn" id="customBtn4">
-          <div class="panel-btn-icon">📖</div>
-          <div class="panel-btn-text">Buy Print</div>
-        </a>
-      </div>
-    </aside>
-
-  </div>
-</main>
-
-<!-- Keyboard Shortcuts Overlay -->
-<div class="shortcuts-overlay" id="shortcutsOverlay">
-  <div class="shortcuts-panel">
-    <h2>⌨️ Keyboard Shortcuts</h2>
-    <div class="shortcuts-grid">
-      <div class="shortcut-item">
-        <span class="shortcut-key">← →</span>
-        <span class="shortcut-desc">Navigate between pages</span>
-      </div>
-      <div class="shortcut-item">
-        <span class="shortcut-key">+ / =</span>
-        <span class="shortcut-desc">Zoom in</span>
-      </div>
-      <div class="shortcut-item">
-        <span class="shortcut-key">−</span>
-        <span class="shortcut-desc">Zoom out</span>
-      </div>
-      <div class="shortcut-item">
-        <span class="shortcut-key">0</span>
-        <span class="shortcut-desc">Reset zoom to default</span>
-      </div>
-      <div class="shortcut-item">
-        <span class="shortcut-key">F</span>
-        <span class="shortcut-desc">Toggle fullscreen mode</span>
-      </div>
-      <div class="shortcut-item">
-        <span class="shortcut-key">?</span>
-        <span class="shortcut-desc">Show/hide this help</span>
-      </div>
-      <div class="shortcut-item">
-        <span class="shortcut-key">ESC</span>
-        <span class="shortcut-desc">Close overlays or exit fullscreen</span>
-      </div>
-    </div>
-    <button class="shortcuts-close" id="shortcutsClose">Close</button>
-  </div>
-</div>
-
-<!-- End of Chapter Overlay -->
-<div class="chapter-end-overlay" id="chapterEndOverlay">
-  <div class="chapter-end-content">
-    <h2>✨ CHAPTER COMPLETE ✨</h2>
-    <p>You've reached the end of this chapter! Ready for more Battle Bros action?</p>
-    <div class="chapter-end-buttons">
-      <button class="chapter-end-btn primary" id="nextChapterBtn">Next Chapter</button>
-      <button class="chapter-end-btn" id="restartChapterBtn">Restart Chapter</button>
-      <button class="chapter-end-btn" id="closeEndOverlay">Keep Reading</button>
+      <button class="shortcuts-close" id="shortcutsClose">Close</button>
     </div>
   </div>
-</div>
 
-<script>
-(function() {
-  'use strict';
+  <!-- End of Chapter Overlay -->
+  <div class="chapter-end-overlay" id="chapterEndOverlay">
+    <div class="chapter-end-content">
+      <h2>✨ CHAPTER COMPLETE ✨</h2>
+      <p>You've reached the end of this chapter! Ready for more Battle Bros action?</p>
+      <div class="chapter-end-buttons">
+        <button class="chapter-end-btn primary" id="nextChapterBtn">Next Chapter</button>
+        <button class="chapter-end-btn" id="restartChapterBtn">Restart Chapter</button>
+        <button class="chapter-end-btn" id="closeEndOverlay">Keep Reading</button>
+      </div>
+    </div>
+  </div>
 
-  // ==================== CONFIGURATION ====================
-  const CONFIG = {
-    STORAGE_KEY: 'battleBros_progress',
-    IMAGE_CACHE_SIZE: 60,
-    PRELOAD_AHEAD: 8,
-    TWO_PAGE_BREAKPOINT: 900,
-    ZOOM_STEP: 1.2,
-    ZOOM_MIN: 0.05,
-    ZOOM_MAX: 20,
-    ANIMATION_DURATION: 200,
-    CONTROLS_HIDE_DELAY: 800,
-    EDGE_ZONE_THRESHOLD: 0.12,
-    SWIPE_THRESHOLD: 50,
-    SWIPE_TIMEOUT: 500
-  };
+  <script>
+    (function () {
+      'use strict';
 
-  // ==================== QUOTES ==================== DO NOT CHANGE OR REMOVE THESE
-  const QUOTES = [
-    "/// GUESS WHO'S BACK IN TOWN? (IT'S THE BROS) ///",
-    "/// LIKE A BATTLE ROYAL BUT MORE FUN ///",
-    "/// DRAGON BALL Z ABRIDGED IS COOL ///",
-    "/// SINGLE SMACK GUY ///",
-    "/// MAOI SAMI POW! ///",
-    "/// NOW WITH 20% ///",
-    "/// LITTLE BIDEN ///",
-    "/// THAT MEANS NOTHING TO ME ///",
-    "/// BATTLE BROS ///",
-    "/// DIGIMON THE MOVIE 2000 ///",
-    "/// CHINESE CHICKEN ///",
-    "/// 9001 ///",
-    "/// LOVE THE FIT BUTTON ///",
-    "/// YO SAMURAI ///",
-    "/// PENISDOTCLOWNFART ///",
-    "/// BE LIKE WATER ///",
-    "/// PNEUMATICS RULE ///",
-    "/// SONICS FRICKS ///",
-    "/// I LOVE YOU ///",
-    "/// BOUNCE ON A BROTHA ///",
-    "/// EPIC BATTLES AWAIT ///",
-    "/// kill your family ///"
-  ];
-
-  // ==================== CHAPTER DATA ====================
-  // Chapter data is loaded dynamically from admin/data.json
-  let chapters = {};
-
-  // ==================== APPLICATION STATE ====================
-  const state = {
-    currentChapter: '',
-    pages: [],
-    pageIndex: 0,
-    scale: 1,
-    pan: { x: 0, y: 0 },
-    pointers: new Map(),
-    isDragging: false,
-    dragStart: null,
-    panStart: null,
-    touchStart: null,
-    pinchDistance: null,
-    pinchCenter: null,
-    pinchScale: 1,
-    imageCache: new Map(),
-    lastTap: 0,
-    isTransitioning: false,
-    rafId: null,
-    prevTransformOrigin: null
-  };
-
-  // ==================== DOM ELEMENTS ====================
-  const el = {};
-
-  function initElements() {
-    el.chapter = document.getElementById('chapter');
-    el.stageWrap = document.getElementById('stageWrap');
-    el.stage = document.getElementById('stage');
-    el.viewport = document.getElementById('viewport');
-    el.topbar = document.getElementById('topbar');
-    el.controls = document.getElementById('controls');
-    el.leftPage = document.getElementById('leftPage');
-    el.rightPage = document.getElementById('rightPage');
-    el.leftImg = document.getElementById('leftImg');
-    el.rightImg = document.getElementById('rightImg');
-    el.leftSpinner = document.getElementById('leftSpinner');
-    el.rightSpinner = document.getElementById('rightSpinner');
-    el.indicator = document.getElementById('pageIndicator');
-    el.progressFill = document.getElementById('progressFill');
-    el.prevBtn = document.getElementById('prevBtn');
-    el.nextBtn = document.getElementById('nextBtn');
-    el.zoomIn = document.getElementById('zoomIn');
-    el.zoomOut = document.getElementById('zoomOut');
-    el.fitBtn = document.getElementById('fitBtn');
-    el.fullscreenBtn = document.getElementById('fullscreenBtn');
-    el.flash = document.getElementById('flashOverlay');
-    el.edgeLeft = document.getElementById('edgeLeft');
-    el.edgeRight = document.getElementById('edgeRight');
-    el.edgeLeftBtn = document.getElementById('edgeLeftBtn');
-    el.edgeRightBtn = document.getElementById('edgeRightBtn');
-    el.subtitle = document.getElementById('subtitle');
-  }
-
-  // ==================== IMAGE LOADING ====================
-  
-  function preloadImage(url) {
-    if (!url) return Promise.reject('no-url');
-    if (state.imageCache.has(url)) return state.imageCache.get(url);
-    
-    const promise = new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = () => reject(new Error('Image load failed: ' + url));
-      img.src = url;
-    });
-    
-    state.imageCache.set(url, promise);
-    
-    if (state.imageCache.size > CONFIG.IMAGE_CACHE_SIZE) {
-      const firstKey = state.imageCache.keys().next().value;
-      state.imageCache.delete(firstKey);
-    }
-    
-    return promise;
-  }
-
-  function loadImage(imgEl, spinnerEl, url) {
-    if (!imgEl) return;
-    
-    if (!url) {
-      imgEl.removeAttribute('src');
-      imgEl.alt = '';
-      if (spinnerEl) spinnerEl.style.display = 'none';
-      return;
-    }
-    
-    if (spinnerEl) spinnerEl.style.display = '';
-    
-    const hideSpinner = () => {
-      if (spinnerEl) spinnerEl.style.display = 'none';
-      imgEl.removeEventListener('load', hideSpinner);
-      imgEl.removeEventListener('error', hideSpinner);
-    };
-    
-    imgEl.addEventListener('load', hideSpinner);
-    imgEl.addEventListener('error', hideSpinner);
-    
-    const pageNum = state.pages.indexOf(url) + 1;
-    imgEl.alt = `${state.currentChapter} – page ${pageNum}`;
-    
-    imgEl.src = url;
-    
-    preloadImage(url).catch(() => {});
-  }
-
-  function preloadUpcoming() {
-    const startIdx = state.pageIndex + 2;
-    const endIdx = Math.min(state.pages.length, startIdx + CONFIG.PRELOAD_AHEAD);
-    
-    for (let i = startIdx; i < endIdx; i++) {
-      preloadImage(state.pages[i]).catch(() => {});
-    }
-  }
-
-  // ==================== PROGRESS PERSISTENCE ====================
-  
-  function saveProgress() {
-    try {
-      const data = {
-        chapter: state.currentChapter,
-        page: state.pageIndex,
-        timestamp: Date.now()
+      // ==================== CONFIGURATION ====================
+      const CONFIG = {
+        STORAGE_KEY: 'battleBros_progress',
+        IMAGE_CACHE_SIZE: 60,
+        PRELOAD_AHEAD: 8,
+        TWO_PAGE_BREAKPOINT: 900,
+        ZOOM_STEP: 1.2,
+        ZOOM_MIN: 0.05,
+        ZOOM_MAX: 20,
+        ANIMATION_DURATION: 200,
+        CONTROLS_HIDE_DELAY: 800,
+        EDGE_ZONE_THRESHOLD: 0.12,
+        SWIPE_THRESHOLD: 50,
+        SWIPE_TIMEOUT: 500
       };
-      localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(data));
-    } catch (e) {
-      console.warn('Failed to save progress:', e);
-    }
-  }
 
-  function loadProgress() {
-    try {
-      const json = localStorage.getItem(CONFIG.STORAGE_KEY);
-      return json ? JSON.parse(json) : null;
-    } catch (e) {
-      return null;
-    }
-  }
+      // ==================== QUOTES ==================== DO NOT CHANGE OR REMOVE THESE
+      const QUOTES = [
+        "/// GUESS WHO'S BACK IN TOWN? (IT'S THE BROS) ///",
+        "/// LIKE A BATTLE ROYAL BUT MORE FUN ///",
+        "/// DRAGON BALL Z ABRIDGED IS COOL ///",
+        "/// SINGLE SMACK GUY ///",
+        "/// MAOI SAMI POW! ///",
+        "/// NOW WITH 20% ///",
+        "/// LITTLE BIDEN ///",
+        "/// THAT MEANS NOTHING TO ME ///",
+        "/// BATTLE BROS ///",
+        "/// DIGIMON THE MOVIE 2000 ///",
+        "/// CHINESE CHICKEN ///",
+        "/// 9001 ///",
+        "/// LOVE THE FIT BUTTON ///",
+        "/// YO SAMURAI ///",
+        "/// PENISDOTCLOWNFART ///",
+        "/// BE LIKE WATER ///",
+        "/// PNEUMATICS RULE ///",
+        "/// SONICS FRICKS ///",
+        "/// I LOVE YOU ///",
+        "/// BOUNCE ON A BROTHA ///",
+        "/// EPIC BATTLES AWAIT ///",
+        "/// kill your family ///"
+      ];
 
-  // ==================== LAYOUT HELPERS ====================
-  
-  function isTwoPageMode() {
-    // Calculate aspect ratio (width / height)
-    const aspectRatio = window.innerWidth / window.innerHeight;
-    // At ~5:7 ratio (0.714) or below, always use single-page mode (portrait)
-    // Above that ratio, use two-page mode if width is sufficient
-    const hasMinWidth = window.innerWidth >= CONFIG.TWO_PAGE_BREAKPOINT;
-    const isWideEnough = aspectRatio > 0.714; // More than 5:7 ratio
-    return hasMinWidth && isWideEnough;
-  }
+      // ==================== CHAPTER DATA ====================
+      // Chapter data is loaded dynamically from admin/data.json
+      let chapters = {};
 
-  function canShowTwoPages() {
-    return isTwoPageMode() && state.pageIndex + 1 < state.pages.length;
-  }
+      // ==================== APPLICATION STATE ====================
+      const state = {
+        currentChapter: '',
+        pages: [],
+        pageIndex: 0,
+        scale: 1,
+        pan: { x: 0, y: 0 },
+        pointers: new Map(),
+        isDragging: false,
+        dragStart: null,
+        panStart: null,
+        touchStart: null,
+        pinchDistance: null,
+        pinchCenter: null,
+        pinchScale: 1,
+        imageCache: new Map(),
+        lastTap: 0,
+        isTransitioning: false,
+        rafId: null,
+        prevTransformOrigin: null
+      };
 
-  // ==================== RENDERING ====================
-  
-  function render() {
-    state.isTransitioning = true;
-    if (el.stage) el.stage.classList.add('transitioning');
-    setTimeout(() => {
-      if (el.stage) el.stage.classList.remove('transitioning');
-      state.isTransitioning = false;
-    }, CONFIG.ANIMATION_DURATION);
+      // ==================== DOM ELEMENTS ====================
+      const el = {};
 
-    const twoPageMode = canShowTwoPages();
-    const leftUrl = state.pages[state.pageIndex] || '';
-    const rightUrl = state.pages[state.pageIndex + 1] || '';
-
-    if (!twoPageMode) {
-      if (el.rightPage) el.rightPage.style.display = 'none';
-      loadImage(el.leftImg, el.leftSpinner, leftUrl);
-    } else {
-      if (el.rightPage) el.rightPage.style.display = '';
-      loadImage(el.leftImg, el.leftSpinner, leftUrl);
-      loadImage(el.rightImg, el.rightSpinner, rightUrl);
-    }
-
-    updateUI();
-    preloadUpcoming();
-  }
-
-  function updateUI() {
-    const total = state.pages.length || 1;
-    const current = state.pageIndex + 1;
-    const twoPageMode = canShowTwoPages();
-
-    if (el.indicator) {
-      el.indicator.textContent = twoPageMode
-        ? `PAGE ${current}-${Math.min(current + 1, total)} / ${total}`
-        : `PAGE ${current} / ${total}`;
-    }
-
-    if (el.progressFill) {
-      const displayed = Math.min(total, state.pageIndex + (twoPageMode ? 2 : 1));
-      el.progressFill.style.width = ((displayed / total) * 100) + '%';
-    }
-
-    if (el.prevBtn) {
-      el.prevBtn.disabled = state.pageIndex === 0;
-    }
-    
-    if (el.nextBtn) {
-      const isAtEnd = state.pageIndex >= total - 1;
-      const rightIsLast = twoPageMode && state.pageIndex + 1 === total - 1;
-      el.nextBtn.disabled = isAtEnd || rightIsLast;
-    }
-  }
-
-  // ==================== PAGE NAVIGATION ====================
-  
-  function animatePageChange(direction, onMid) {
-    if (state.isTransitioning) return;
-    if (!el.stageWrap) {
-      if (typeof onMid === 'function') onMid();
-      return;
-    }
-
-    state.isTransitioning = true;
-
-    el.stageWrap.classList.remove('slide-in-left', 'slide-in-right', 'slide-out-left', 'slide-out-right');
-    void el.stageWrap.offsetWidth;
-
-    const slideOut = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
-    el.stageWrap.classList.add(slideOut);
-
-    if (el.flash) {
-      setTimeout(() => {
-        el.flash.style.opacity = '1';
-      }, 80);
-    }
-
-    setTimeout(() => {
-      if (typeof onMid === 'function') onMid();
-
-      if (el.flash) {
-        el.flash.style.transition = 'opacity 160ms linear';
-        el.flash.style.opacity = '0';
+      function initElements() {
+        el.chapter = document.getElementById('chapter');
+        el.stageWrap = document.getElementById('stageWrap');
+        el.stage = document.getElementById('stage');
+        el.viewport = document.getElementById('viewport');
+        el.topbar = document.getElementById('topbar');
+        el.controls = document.getElementById('controls');
+        el.leftPage = document.getElementById('leftPage');
+        el.rightPage = document.getElementById('rightPage');
+        el.leftImg = document.getElementById('leftImg');
+        el.rightImg = document.getElementById('rightImg');
+        el.leftSpinner = document.getElementById('leftSpinner');
+        el.rightSpinner = document.getElementById('rightSpinner');
+        el.indicator = document.getElementById('pageIndicator');
+        el.progressFill = document.getElementById('progressFill');
+        el.prevBtn = document.getElementById('prevBtn');
+        el.nextBtn = document.getElementById('nextBtn');
+        el.zoomIn = document.getElementById('zoomIn');
+        el.zoomOut = document.getElementById('zoomOut');
+        el.fitBtn = document.getElementById('fitBtn');
+        el.fullscreenBtn = document.getElementById('fullscreenBtn');
+        el.flash = document.getElementById('flashOverlay');
+        el.edgeLeft = document.getElementById('edgeLeft');
+        el.edgeRight = document.getElementById('edgeRight');
+        el.edgeLeftBtn = document.getElementById('edgeLeftBtn');
+        el.edgeRightBtn = document.getElementById('edgeRightBtn');
+        el.subtitle = document.getElementById('subtitle');
       }
 
-      el.stageWrap.classList.remove('slide-out-left', 'slide-out-right');
-      
-      if (direction === 'next') {
-        el.stageWrap.style.transform = 'translateX(18px)';
-        requestAnimationFrame(() => {
-          el.stageWrap.classList.add('slide-in-left');
-          el.stageWrap.style.transform = 'translateX(0)';
+      // ==================== IMAGE LOADING ====================
+
+      function preloadImage(url) {
+        if (!url) return Promise.reject('no-url');
+        if (state.imageCache.has(url)) return state.imageCache.get(url);
+
+        const promise = new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error('Image load failed: ' + url));
+          img.src = url;
         });
-      } else {
-        el.stageWrap.style.transform = 'translateX(-18px)';
-        requestAnimationFrame(() => {
-          el.stageWrap.classList.add('slide-in-right');
-          el.stageWrap.style.transform = 'translateX(0)';
-        });
+
+        state.imageCache.set(url, promise);
+
+        if (state.imageCache.size > CONFIG.IMAGE_CACHE_SIZE) {
+          const firstKey = state.imageCache.keys().next().value;
+          state.imageCache.delete(firstKey);
+        }
+
+        return promise;
       }
 
-      setTimeout(() => {
-        el.stageWrap.classList.remove('slide-in-left', 'slide-in-right');
-        el.stageWrap.style.transform = '';
-        state.isTransitioning = false;
-      }, 220);
-    }, CONFIG.ANIMATION_DURATION);
-  }
+      function loadImage(imgEl, spinnerEl, url) {
+        if (!imgEl) return;
 
-  function prevPage() {
-    if (state.isTransitioning) return;
+        if (!url) {
+          imgEl.removeAttribute('src');
+          imgEl.alt = '';
+          if (spinnerEl) spinnerEl.style.display = 'none';
+          return;
+        }
 
-    const step = isTwoPageMode() ? 2 : 1;
-    const newIndex = Math.max(0, state.pageIndex - step);
-    
-    if (newIndex === state.pageIndex) return;
+        if (spinnerEl) spinnerEl.style.display = '';
 
-    animatePageChange('prev', () => {
-      state.pageIndex = newIndex;
-      render();
-      saveProgress();
-    });
-  }
-
-  function nextPage() {
-    if (state.isTransitioning) return;
-
-    const twoPageMode = isTwoPageMode();
-    const total = state.pages.length;
-
-    const rightIsLast = twoPageMode && state.pageIndex + 1 === total - 1;
-    const isAtEnd = state.pageIndex >= total - 1;
-    
-    if (rightIsLast || isAtEnd) {
-      // Show end of chapter overlay
-      showEndOfChapter();
-      return;
-    }
-
-    let newIndex;
-    if (twoPageMode) {
-      newIndex = state.pageIndex + 2 >= total 
-        ? total - 1 
-        : state.pageIndex + 2;
-    } else {
-      newIndex = Math.min(total - 1, state.pageIndex + 1);
-    }
-
-    animatePageChange('next', () => {
-      state.pageIndex = newIndex;
-      render();
-      saveProgress();
-    });
-  }
-
-  // ==================== ZOOM & PAN ====================
-  
-  function applyTransform() {
-    if (state.rafId) cancelAnimationFrame(state.rafId);
-    
-    state.rafId = requestAnimationFrame(() => {
-      if (el.stage) {
-        el.stage.style.transform = `translate(${state.pan.x}px, ${state.pan.y}px) scale(${state.scale})`;
-      }
-      state.rafId = null;
-    });
-  }
-
-  function zoomIn() {
-    state.scale = Math.min(CONFIG.ZOOM_MAX, state.scale * CONFIG.ZOOM_STEP);
-    applyTransform();
-  }
-
-  function zoomOut() {
-    state.scale = Math.max(CONFIG.ZOOM_MIN, state.scale / CONFIG.ZOOM_STEP);
-    applyTransform();
-  }
-
-  function resetView() {
-    state.scale = 1;
-    state.pan = { x: 0, y: 0 };
-    applyTransform();
-  }
-
-  function fitToScreen() {
-    if (document.fullscreenElement) {
-      fitHeightFullscreen();
-    } else {
-      resetView();
-    }
-  }
-
-  function fitHeightFullscreen() {
-    const img = el.leftImg;
-    const stage = el.stage;
-    if (!img || !img.complete || !img.naturalHeight || !stage) {
-      state.scale = 1;
-      state.pan = { x: 0, y: 0 };
-      applyTransform();
-      return;
-    }
-
-    if (el.stage) {
-      if (state.prevTransformOrigin === null) {
-        state.prevTransformOrigin = window.getComputedStyle(el.stage).transformOrigin || '50% 50%';
-      }
-      el.stage.style.transformOrigin = 'center center';
-    }
-
-    const vpWidth = el.viewport.clientWidth;
-    const vpHeight = el.viewport.clientHeight;
-    
-    // Temporarily reset scale to 1 to get true dimensions
-    // Apply transform SYNCHRONOUSLY, not via RAF
-    state.scale = 1;
-    state.pan = { x: 0, y: 0 };
-    
-    // Cancel any pending RAF and apply transform immediately
-    if (state.rafId) {
-      cancelAnimationFrame(state.rafId);
-      state.rafId = null;
-    }
-    stage.style.transform = `translate(${state.pan.x}px, ${state.pan.y}px) scale(${state.scale})`;
-    
-    // Force a reflow to get accurate measurements
-    void stage.offsetHeight;
-    
-    // Get the actual rendered size of the stage at scale 1
-    const stageBounds = stage.getBoundingClientRect();
-    const stageWidth = stageBounds.width;
-    const stageHeight = stageBounds.height;
-    
-    // Calculate scale to fit the ENTIRE stage to viewport
-    const scaleToFitWidth = vpWidth / stageWidth;
-    const scaleToFitHeight = vpHeight / stageHeight;
-    
-    // Use the smaller scale to ensure everything fits
-    let targetScale = Math.min(scaleToFitWidth, scaleToFitHeight);
-    targetScale = Math.max(CONFIG.ZOOM_MIN, Math.min(CONFIG.ZOOM_MAX, targetScale));
-    
-    state.scale = targetScale;
-    state.pan = { x: 0, y: 0 };
-    applyTransform();
-  }
-
-  // ==================== POINTER INTERACTIONS ====================
-  
-  function getDistance(a, b) {
-    const dx = a.x - b.x;
-    const dy = a.y - b.y;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
-
-  function onPointerDown(e) {
-    try {
-      e.target.setPointerCapture(e.pointerId);
-    } catch (err) {}
-
-    state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    const pointerCount = state.pointers.size;
-
-    if (pointerCount === 1) {
-      state.touchStart = {
-        x: e.clientX,
-        y: e.clientY,
-        time: Date.now()
-      };
-      state.dragStart = { x: e.clientX, y: e.clientY };
-      state.panStart = { ...state.pan };
-      state.isDragging = state.scale > 1.01;
-    } else if (pointerCount === 2) {
-      const points = Array.from(state.pointers.values());
-      state.pinchDistance = getDistance(points[0], points[1]);
-      state.pinchScale = state.scale;
-      state.pinchCenter = {
-        x: (points[0].x + points[1].x) / 2,
-        y: (points[0].y + points[1].y) / 2
-      };
-      state.panStart = { ...state.pan };
-      state.isDragging = false;
-    }
-
-    if (document.fullscreenElement) {
-      const nearEdge = e.clientY < 150 || e.clientY > window.innerHeight - 200;
-      if (nearEdge) showControlsBar();
-    }
-  }
-
-  function onPointerMove(e) {
-    if (!state.pointers.has(e.pointerId)) return;
-
-    state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    updateEdgeZones(e.clientX, e.clientY);
-
-    const pointerCount = state.pointers.size;
-
-    if (pointerCount === 1) {
-      if (state.isDragging) {
-        const point = Array.from(state.pointers.values())[0];
-        state.pan.x = state.panStart.x + (point.x - state.dragStart.x);
-        state.pan.y = state.panStart.y + (point.y - state.dragStart.y);
-        applyTransform();
-      }
-    } else if (pointerCount >= 2) {
-      const points = Array.from(state.pointers.values());
-      const newDist = getDistance(points[0], points[1]);
-      
-      if (state.pinchDistance && state.pinchScale != null) {
-        const scale = state.pinchScale * (newDist / state.pinchDistance);
-        const newScale = Math.max(CONFIG.ZOOM_MIN, Math.min(CONFIG.ZOOM_MAX, scale));
-        
-        const newCenter = {
-          x: (points[0].x + points[1].x) / 2,
-          y: (points[0].y + points[1].y) / 2
+        const hideSpinner = () => {
+          if (spinnerEl) spinnerEl.style.display = 'none';
+          imgEl.removeEventListener('load', hideSpinner);
+          imgEl.removeEventListener('error', hideSpinner);
         };
 
-        state.scale = newScale;
-        state.pan.x = state.panStart.x + (newCenter.x - state.pinchCenter.x);
-        state.pan.y = state.panStart.y + (newCenter.y - state.pinchCenter.y);
+        imgEl.addEventListener('load', hideSpinner);
+        imgEl.addEventListener('error', hideSpinner);
+
+        const pageNum = state.pages.indexOf(url) + 1;
+        imgEl.alt = `${state.currentChapter} – page ${pageNum}`;
+
+        imgEl.src = url;
+
+        preloadImage(url).catch(() => { });
+      }
+
+      function preloadUpcoming() {
+        const startIdx = state.pageIndex + 2;
+        const endIdx = Math.min(state.pages.length, startIdx + CONFIG.PRELOAD_AHEAD);
+
+        for (let i = startIdx; i < endIdx; i++) {
+          preloadImage(state.pages[i]).catch(() => { });
+        }
+      }
+
+      // ==================== PROGRESS PERSISTENCE ====================
+
+      function saveProgress() {
+        try {
+          const data = {
+            chapter: state.currentChapter,
+            page: state.pageIndex,
+            timestamp: Date.now()
+          };
+          localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(data));
+        } catch (e) {
+          console.warn('Failed to save progress:', e);
+        }
+      }
+
+      function loadProgress() {
+        try {
+          const json = localStorage.getItem(CONFIG.STORAGE_KEY);
+          return json ? JSON.parse(json) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      // ==================== LAYOUT HELPERS ====================
+
+      function isTwoPageMode() {
+        // Calculate aspect ratio (width / height)
+        const aspectRatio = window.innerWidth / window.innerHeight;
+        // At ~5:7 ratio (0.714) or below, always use single-page mode (portrait)
+        // Above that ratio, use two-page mode if width is sufficient
+        const hasMinWidth = window.innerWidth >= CONFIG.TWO_PAGE_BREAKPOINT;
+        const isWideEnough = aspectRatio > 0.714; // More than 5:7 ratio
+        return hasMinWidth && isWideEnough;
+      }
+
+      function canShowTwoPages() {
+        return isTwoPageMode() && state.pageIndex + 1 < state.pages.length;
+      }
+
+      // ==================== RENDERING ====================
+
+      function render() {
+        state.isTransitioning = true;
+        if (el.stage) el.stage.classList.add('transitioning');
+        setTimeout(() => {
+          if (el.stage) el.stage.classList.remove('transitioning');
+          state.isTransitioning = false;
+        }, CONFIG.ANIMATION_DURATION);
+
+        const twoPageMode = canShowTwoPages();
+        const leftUrl = state.pages[state.pageIndex] || '';
+        const rightUrl = state.pages[state.pageIndex + 1] || '';
+
+        if (!twoPageMode) {
+          if (el.rightPage) el.rightPage.style.display = 'none';
+          loadImage(el.leftImg, el.leftSpinner, leftUrl);
+        } else {
+          if (el.rightPage) el.rightPage.style.display = '';
+          loadImage(el.leftImg, el.leftSpinner, leftUrl);
+          loadImage(el.rightImg, el.rightSpinner, rightUrl);
+        }
+
+        updateUI();
+        preloadUpcoming();
+      }
+
+      function updateUI() {
+        const total = state.pages.length || 1;
+        const current = state.pageIndex + 1;
+        const twoPageMode = canShowTwoPages();
+
+        if (el.indicator) {
+          el.indicator.textContent = twoPageMode
+            ? `PAGE ${current}-${Math.min(current + 1, total)} / ${total}`
+            : `PAGE ${current} / ${total}`;
+        }
+
+        if (el.progressFill) {
+          const displayed = Math.min(total, state.pageIndex + (twoPageMode ? 2 : 1));
+          el.progressFill.style.width = ((displayed / total) * 100) + '%';
+        }
+
+        if (el.prevBtn) {
+          el.prevBtn.disabled = state.pageIndex === 0;
+        }
+
+        if (el.nextBtn) {
+          const isAtEnd = state.pageIndex >= total - 1;
+          const rightIsLast = twoPageMode && state.pageIndex + 1 === total - 1;
+          el.nextBtn.disabled = isAtEnd || rightIsLast;
+        }
+      }
+
+      // ==================== PAGE NAVIGATION ====================
+
+      function animatePageChange(direction, onMid) {
+        if (state.isTransitioning) return;
+        if (!el.stageWrap) {
+          if (typeof onMid === 'function') onMid();
+          return;
+        }
+
+        state.isTransitioning = true;
+
+        el.stageWrap.classList.remove('slide-in-left', 'slide-in-right', 'slide-out-left', 'slide-out-right');
+        void el.stageWrap.offsetWidth;
+
+        const slideOut = direction === 'next' ? 'slide-out-left' : 'slide-out-right';
+        el.stageWrap.classList.add(slideOut);
+
+        if (el.flash) {
+          setTimeout(() => {
+            el.flash.style.opacity = '1';
+          }, 80);
+        }
+
+        setTimeout(() => {
+          if (typeof onMid === 'function') onMid();
+
+          if (el.flash) {
+            el.flash.style.transition = 'opacity 160ms linear';
+            el.flash.style.opacity = '0';
+          }
+
+          el.stageWrap.classList.remove('slide-out-left', 'slide-out-right');
+
+          if (direction === 'next') {
+            el.stageWrap.style.transform = 'translateX(18px)';
+            requestAnimationFrame(() => {
+              el.stageWrap.classList.add('slide-in-left');
+              el.stageWrap.style.transform = 'translateX(0)';
+            });
+          } else {
+            el.stageWrap.style.transform = 'translateX(-18px)';
+            requestAnimationFrame(() => {
+              el.stageWrap.classList.add('slide-in-right');
+              el.stageWrap.style.transform = 'translateX(0)';
+            });
+          }
+
+          setTimeout(() => {
+            el.stageWrap.classList.remove('slide-in-left', 'slide-in-right');
+            el.stageWrap.style.transform = '';
+            state.isTransitioning = false;
+          }, 220);
+        }, CONFIG.ANIMATION_DURATION);
+      }
+
+      function prevPage() {
+        if (state.isTransitioning) return;
+
+        const step = isTwoPageMode() ? 2 : 1;
+        const newIndex = Math.max(0, state.pageIndex - step);
+
+        if (newIndex === state.pageIndex) return;
+
+        animatePageChange('prev', () => {
+          state.pageIndex = newIndex;
+          render();
+          saveProgress();
+        });
+      }
+
+      function nextPage() {
+        if (state.isTransitioning) return;
+
+        const twoPageMode = isTwoPageMode();
+        const total = state.pages.length;
+
+        const rightIsLast = twoPageMode && state.pageIndex + 1 === total - 1;
+        const isAtEnd = state.pageIndex >= total - 1;
+
+        if (rightIsLast || isAtEnd) {
+          // Show end of chapter overlay
+          showEndOfChapter();
+          return;
+        }
+
+        let newIndex;
+        if (twoPageMode) {
+          newIndex = state.pageIndex + 2 >= total
+            ? total - 1
+            : state.pageIndex + 2;
+        } else {
+          newIndex = Math.min(total - 1, state.pageIndex + 1);
+        }
+
+        animatePageChange('next', () => {
+          state.pageIndex = newIndex;
+          render();
+          saveProgress();
+        });
+      }
+
+      // ==================== ZOOM & PAN ====================
+
+      function applyTransform() {
+        if (state.rafId) cancelAnimationFrame(state.rafId);
+
+        state.rafId = requestAnimationFrame(() => {
+          if (el.stage) {
+            el.stage.style.transform = `translate(${state.pan.x}px, ${state.pan.y}px) scale(${state.scale})`;
+          }
+          state.rafId = null;
+        });
+      }
+
+      function zoomIn() {
+        state.scale = Math.min(CONFIG.ZOOM_MAX, state.scale * CONFIG.ZOOM_STEP);
         applyTransform();
       }
-    }
-  }
 
-  function onPointerUp(e) {
-    try {
-      e.target.releasePointerCapture(e.pointerId);
-    } catch (err) {}
-
-    state.pointers.delete(e.pointerId);
-
-    if (state.pointers.size === 0) {
-      const wasPinching = state.pinchDistance !== null;
-
-      if (!wasPinching && state.touchStart) {
-        const dx = e.clientX - state.touchStart.x;
-        const dy = e.clientY - state.touchStart.y;
-        const dt = Date.now() - state.touchStart.time;
-
-        const isHorizontalSwipe = Math.abs(dx) > CONFIG.SWIPE_THRESHOLD;
-        const isDominantlyHorizontal = Math.abs(dx) > Math.abs(dy);
-        const isFastEnough = dt < CONFIG.SWIPE_TIMEOUT;
-        const isNotZoomed = state.scale <= 1.01;
-
-        if (isHorizontalSwipe && isDominantlyHorizontal && isFastEnough && isNotZoomed) {
-          dx > 0 ? prevPage() : nextPage();
-        }
+      function zoomOut() {
+        state.scale = Math.max(CONFIG.ZOOM_MIN, state.scale / CONFIG.ZOOM_STEP);
+        applyTransform();
       }
 
-      state.isDragging = false;
-      state.touchStart = null;
-      state.pinchDistance = null;
-      state.pinchCenter = null;
-      state.pinchScale = state.scale;
-    } else if (state.pointers.size === 1) {
-      const remaining = Array.from(state.pointers.values())[0];
-      state.dragStart = { x: remaining.x, y: remaining.y };
-      state.panStart = { ...state.pan };
-      state.isDragging = state.scale > 1.01;
-    }
-  }
-
-  function onWheel(e) {
-    if (e.ctrlKey) {
-      e.preventDefault();
-      const delta = e.deltaY > 0 ? -0.1 : 0.1;
-      state.scale = Math.max(CONFIG.ZOOM_MIN, Math.min(CONFIG.ZOOM_MAX, state.scale + delta));
-      applyTransform();
-    }
-  }
-
-  // ==================== EDGE ZONES ====================
-  
-  function updateEdgeZones(x, y) {
-    if (!el.viewport) return;
-
-    if (state.isDragging || state.pointers.size > 0) {
-      if (el.edgeLeft) el.edgeLeft.classList.remove('active');
-      if (el.edgeRight) el.edgeRight.classList.remove('active');
-      if (el.viewport) el.viewport.style.cursor = '';
-      return;
-    }
-
-    const rect = el.viewport.getBoundingClientRect();
-    const relX = x - rect.left;
-    const pct = relX / rect.width;
-
-    if (pct < CONFIG.EDGE_ZONE_THRESHOLD) {
-      if (el.edgeLeft) el.edgeLeft.classList.add('active');
-      if (el.edgeRight) el.edgeRight.classList.remove('active');
-      if (el.viewport) el.viewport.style.cursor = 'pointer';
-    } else if (pct > 1 - CONFIG.EDGE_ZONE_THRESHOLD) {
-      if (el.edgeRight) el.edgeRight.classList.add('active');
-      if (el.edgeLeft) el.edgeLeft.classList.remove('active');
-      if (el.viewport) el.viewport.style.cursor = 'pointer';
-    } else {
-      if (el.edgeLeft) el.edgeLeft.classList.remove('active');
-      if (el.edgeRight) el.edgeRight.classList.remove('active');
-      if (el.viewport) el.viewport.style.cursor = '';
-    }
-  }
-
-  // ==================== FULLSCREEN CONTROLS ====================
-  
-  let hideTimer = null;
-  let mouseOverControls = false;
-
-  function showControlsBar() {
-    if (el.topbar) el.topbar.classList.remove('hidden');
-    if (el.controls) el.controls.classList.remove('hidden');
-
-    if (hideTimer) {
-      clearTimeout(hideTimer);
-      hideTimer = null;
-    }
-
-    if (document.fullscreenElement && !mouseOverControls) {
-      hideTimer = setTimeout(() => {
-        if (!mouseOverControls) {
-          if (el.topbar) el.topbar.classList.add('hidden');
-          if (el.controls) el.controls.classList.add('hidden');
-        }
-      }, CONFIG.CONTROLS_HIDE_DELAY);
-    }
-  }
-
-  function onFullscreenChange() {
-    if (document.fullscreenElement) {
-      document.body.classList.add('fullscreen-active');
-      if (el.fullscreenBtn) el.fullscreenBtn.textContent = '✕';
-      showControlsBar();
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          try {
-            fitHeightFullscreen();
-          } catch (e) {
-            console.warn('Fit failed on fullscreen enter:', e);
-          }
-        });
-      });
-    } else {
-      document.body.classList.remove('fullscreen-active');
-      if (el.fullscreenBtn) el.fullscreenBtn.textContent = '⛶';
-      if (el.topbar) el.topbar.classList.remove('hidden');
-      if (el.controls) el.controls.classList.remove('hidden');
-
-      if (el.stage && state.prevTransformOrigin !== null) {
-        el.stage.style.transformOrigin = state.prevTransformOrigin;
-        state.prevTransformOrigin = null;
+      function resetView() {
+        state.scale = 1;
+        state.pan = { x: 0, y: 0 };
+        applyTransform();
       }
 
-      if (hideTimer) {
-        clearTimeout(hideTimer);
-        hideTimer = null;
-      }
-    }
-  }
-
-  function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    } else {
-      document.exitFullscreen();
-    }
-  }
-
-  // ==================== CHAPTER MANAGEMENT ====================
-  
-  function initChapterSelect() {
-    if (!el.chapter) return;
-
-    Object.keys(chapters).forEach(name => {
-      const option = document.createElement('option');
-      option.value = name;
-      option.textContent = name;
-      el.chapter.appendChild(option);
-    });
-  }
-
-  function changeChapter(chapterName) {
-    if (!chapters[chapterName]) return;
-
-    state.currentChapter = chapterName;
-    state.pages = chapters[chapterName];
-    state.pageIndex = 0;
-    state.scale = 1;
-    state.pan = { x: 0, y: 0 };
-    
-    render();
-    saveProgress();
-  }
-
-  // ==================== EVENT HANDLERS ====================
-  
-  function attachEventHandlers() {
-    // Book turn promo click handler
-    const bookTurnPromo = document.getElementById('bookTurnPromo');
-    if (bookTurnPromo) {
-      bookTurnPromo.addEventListener('click', () => {
-        window.open('https://bwondercomics.bigcartel.com/product/battle-bros-volume-1', '_blank', 'noopener,noreferrer');
-      });
-    }
-
-    // Navigation buttons
-    if (el.prevBtn) el.prevBtn.addEventListener('click', prevPage);
-    if (el.nextBtn) el.nextBtn.addEventListener('click', nextPage);
-
-    // Zoom and view buttons
-    if (el.zoomIn) el.zoomIn.addEventListener('click', zoomIn);
-    if (el.zoomOut) el.zoomOut.addEventListener('click', zoomOut);
-    if (el.fitBtn) el.fitBtn.addEventListener('click', fitToScreen);
-    if (el.fullscreenBtn) el.fullscreenBtn.addEventListener('click', toggleFullscreen);
-    
-    // Help button
-    const helpBtn = document.getElementById('helpBtn');
-    if (helpBtn) helpBtn.addEventListener('click', toggleShortcutsOverlay);
-
-    if (el.edgeLeftBtn) {
-      el.edgeLeftBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        prevPage();
-      });
-    }
-    if (el.edgeRightBtn) {
-      el.edgeRightBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        nextPage();
-      });
-    }
-
-    if (el.stage) el.stage.addEventListener('pointerdown', onPointerDown);
-    window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
-    window.addEventListener('pointercancel', onPointerUp);
-    if (el.stage) el.stage.addEventListener('wheel', onWheel, { passive: false });
-
-    if (el.viewport) {
-      el.viewport.addEventListener('mousemove', (e) => {
-        updateEdgeZones(e.clientX, e.clientY);
-      });
-
-      el.viewport.addEventListener('pointerup', (e) => {
-        if (!state.isDragging && state.pointers.size === 0) {
-          const now = Date.now();
-          if (state.lastTap && now - state.lastTap < 300) {
-            state.lastTap = 0;
-            fitToScreen();
-          } else {
-            state.lastTap = now;
-          }
-        }
-      });
-    }
-
-    document.addEventListener('keydown', (e) => {
-      // Don't interfere if user is typing in an input
-      if (e.target.matches('input, textarea, select')) return;
-
-      switch (e.key) {
-        case 'ArrowLeft':
-          e.preventDefault();
-          prevPage();
-          break;
-        case 'ArrowRight':
-          e.preventDefault();
-          nextPage();
-          break;
-        case '+':
-        case '=':
-          e.preventDefault();
-          zoomIn();
-          break;
-        case '-':
-          e.preventDefault();
-          zoomOut();
-          break;
-        case '0':
-          e.preventDefault();
-          resetView();
-          break;
-        case 'f':
-        case 'F':
-          e.preventDefault();
-          toggleFullscreen();
-          break;
-        case '?':
-          e.preventDefault();
-          toggleShortcutsOverlay();
-          break;
-        case 'Escape':
-          e.preventDefault();
-          closeShortcutsOverlay();
-          hideEndOfChapter();
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-          }
-          break;
-      }
-    });
-
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-
-    document.addEventListener('mousemove', (e) => {
-      if (document.fullscreenElement) {
-        const nearEdge = e.clientY < 150 || e.clientY > window.innerHeight - 200;
-        if (nearEdge) showControlsBar();
-      }
-    });
-
-    if (el.topbar) {
-      el.topbar.addEventListener('mouseenter', () => {
-        mouseOverControls = true;
-        if (hideTimer) {
-          clearTimeout(hideTimer);
-          hideTimer = null;
-        }
-      });
-      el.topbar.addEventListener('mouseleave', () => {
-        mouseOverControls = false;
-        showControlsBar();
-      });
-    }
-
-    if (el.controls) {
-      el.controls.addEventListener('mouseenter', () => {
-        mouseOverControls = true;
-        if (hideTimer) {
-          clearTimeout(hideTimer);
-          hideTimer = null;
-        }
-      });
-      el.controls.addEventListener('mouseleave', () => {
-        mouseOverControls = false;
-        showControlsBar();
-      });
-    }
-
-    if (el.chapter) {
-      el.chapter.addEventListener('change', (e) => {
-        changeChapter(e.target.value);
-      });
-    }
-
-    // Handle window resize and orientation changes
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      // Debounce resize events to avoid excessive re-renders
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        render();
-      }, 150);
-    });
-
-    // Shortcuts overlay buttons
-    const shortcutsClose = document.getElementById('shortcutsClose');
-    if (shortcutsClose) {
-      shortcutsClose.addEventListener('click', closeShortcutsOverlay);
-    }
-
-    // End of chapter overlay buttons
-    const nextChapterBtn = document.getElementById('nextChapterBtn');
-    const restartChapterBtn = document.getElementById('restartChapterBtn');
-    const closeEndOverlay = document.getElementById('closeEndOverlay');
-    
-    if (nextChapterBtn) {
-      nextChapterBtn.addEventListener('click', goToNextChapter);
-    }
-    if (restartChapterBtn) {
-      restartChapterBtn.addEventListener('click', restartChapter);
-    }
-    if (closeEndOverlay) {
-      closeEndOverlay.addEventListener('click', hideEndOfChapter);
-    }
-  }
-
-  // ==================== QUOTE RANDOMIZER ====================
-
-  function pickRandomQuoteIndexOnce() {
-    if (QUOTES.length === 0) return -1;
-    return Math.floor(Math.random() * QUOTES.length);
-  }
-
-  function setInitialSubtitle() {
-    if (!el.subtitle) return;
-    const idx = pickRandomQuoteIndexOnce();
-    if (idx >= 0) el.subtitle.textContent = QUOTES[idx];
-  }
-
-  // ==================== SHORTCUTS OVERLAY ====================
-  
-  function toggleShortcutsOverlay() {
-    const overlay = document.getElementById('shortcutsOverlay');
-    if (overlay) {
-      overlay.classList.toggle('active');
-    }
-  }
-
-  function closeShortcutsOverlay() {
-    const overlay = document.getElementById('shortcutsOverlay');
-    if (overlay) {
-      overlay.classList.remove('active');
-    }
-  }
-
-  // ==================== END OF CHAPTER ====================
-  
-  function showEndOfChapter() {
-    const overlay = document.getElementById('chapterEndOverlay');
-    if (overlay) {
-      overlay.classList.add('active');
-    }
-  }
-
-  function hideEndOfChapter() {
-    const overlay = document.getElementById('chapterEndOverlay');
-    if (overlay) {
-      overlay.classList.remove('active');
-    }
-  }
-
-  function goToNextChapter() {
-    const chapterNames = Object.keys(chapters);
-    const currentIndex = chapterNames.indexOf(state.currentChapter);
-    if (currentIndex >= 0 && currentIndex < chapterNames.length - 1) {
-      const nextChapter = chapterNames[currentIndex + 1];
-      if (el.chapter) el.chapter.value = nextChapter;
-      changeChapter(nextChapter);
-      hideEndOfChapter();
-    }
-  }
-
-  function restartChapter() {
-    state.pageIndex = 0;
-    render();
-    saveProgress();
-    hideEndOfChapter();
-  }
-
-  // ==================== EMAIL SIGNUP FORM ====================
-  
-  function initEmailSignupForm() {
-    const form = document.getElementById('emailSignupForm');
-    const messageDiv = document.getElementById('emailFormMessage');
-    
-    if (!form) return;
-    
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const emailInput = document.getElementById('emailInput');
-      const submitBtn = form.querySelector('.email-submit-btn');
-      const email = emailInput.value.trim();
-      
-      if (!email) return;
-      
-      // Disable form during submission
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'SENDING...';
-      messageDiv.style.display = 'none';
-      
-      try {
-        // Submit to Formspree
-        const response = await fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-        
-        if (response.ok) {
-          // Success
-          messageDiv.textContent = 'Thanks for signing up! Check your inbox!';
-          messageDiv.className = 'email-form-message success';
-          messageDiv.style.display = 'block';
-          emailInput.value = '';
-          
-          // Hide success message after 5 seconds
-          setTimeout(() => {
-            messageDiv.style.display = 'none';
-          }, 5000);
+      function fitToScreen() {
+        if (document.fullscreenElement) {
+          fitHeightFullscreen();
         } else {
-          throw new Error('Form submission failed');
+          resetView();
         }
-      } catch (error) {
-        // Error
-        messageDiv.textContent = 'Oops! Something went wrong. Try again?';
-        messageDiv.className = 'email-form-message error';
-        messageDiv.style.display = 'block';
-        
-        // Hide error message after 5 seconds
-        setTimeout(() => {
-          messageDiv.style.display = 'none';
-        }, 5000);
-      } finally {
-        // Re-enable form
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'SUBMIT';
       }
-    });
-  }
 
-  // ==================== LOAD CHAPTER DATA ====================
-  
-  async function loadChapterData() {
-    try {
-      const response = await fetch('admin/data.json');
-      if (!response.ok) {
-        throw new Error(`Failed to load chapter data: ${response.status} ${response.statusText}`);
+      function fitHeightFullscreen() {
+        const img = el.leftImg;
+        const stage = el.stage;
+        if (!img || !img.complete || !img.naturalHeight || !stage) {
+          state.scale = 1;
+          state.pan = { x: 0, y: 0 };
+          applyTransform();
+          return;
+        }
+
+        if (el.stage) {
+          if (state.prevTransformOrigin === null) {
+            state.prevTransformOrigin = window.getComputedStyle(el.stage).transformOrigin || '50% 50%';
+          }
+          el.stage.style.transformOrigin = 'center center';
+        }
+
+        const vpWidth = el.viewport.clientWidth;
+        const vpHeight = el.viewport.clientHeight;
+
+        // Temporarily reset scale to 1 to get true dimensions
+        // Apply transform SYNCHRONOUSLY, not via RAF
+        state.scale = 1;
+        state.pan = { x: 0, y: 0 };
+
+        // Cancel any pending RAF and apply transform immediately
+        if (state.rafId) {
+          cancelAnimationFrame(state.rafId);
+          state.rafId = null;
+        }
+        stage.style.transform = `translate(${state.pan.x}px, ${state.pan.y}px) scale(${state.scale})`;
+
+        // Force a reflow to get accurate measurements
+        void stage.offsetHeight;
+
+        // Get the actual rendered size of the stage at scale 1
+        const stageBounds = stage.getBoundingClientRect();
+        const stageWidth = stageBounds.width;
+        const stageHeight = stageBounds.height;
+
+        // Calculate scale to fit the ENTIRE stage to viewport
+        const scaleToFitWidth = vpWidth / stageWidth;
+        const scaleToFitHeight = vpHeight / stageHeight;
+
+        // Use the smaller scale to ensure everything fits
+        let targetScale = Math.min(scaleToFitWidth, scaleToFitHeight);
+        targetScale = Math.max(CONFIG.ZOOM_MIN, Math.min(CONFIG.ZOOM_MAX, targetScale));
+
+        state.scale = targetScale;
+        state.pan = { x: 0, y: 0 };
+        applyTransform();
       }
-      const data = await response.json();
-      
-      if (!data.chapters || typeof data.chapters !== 'object') {
-        throw new Error('Invalid chapter data structure in admin/data.json');
+
+      // ==================== POINTER INTERACTIONS ====================
+
+      function getDistance(a, b) {
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        return Math.sqrt(dx * dx + dy * dy);
       }
-      
-      chapters = data.chapters;
-      console.log('✓ Chapter data loaded from admin/data.json');
-      return true;
-    } catch (error) {
-      console.error('Failed to load chapter data:', error);
-      
-      // Show user-friendly error message
-      const viewport = document.getElementById('viewport');
-      if (viewport) {
-        viewport.innerHTML = `
+
+      function onPointerDown(e) {
+        try {
+          e.target.setPointerCapture(e.pointerId);
+        } catch (err) { }
+
+        state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        const pointerCount = state.pointers.size;
+
+        if (pointerCount === 1) {
+          state.touchStart = {
+            x: e.clientX,
+            y: e.clientY,
+            time: Date.now()
+          };
+          state.dragStart = { x: e.clientX, y: e.clientY };
+          state.panStart = { ...state.pan };
+          state.isDragging = state.scale > 1.01;
+        } else if (pointerCount === 2) {
+          const points = Array.from(state.pointers.values());
+          state.pinchDistance = getDistance(points[0], points[1]);
+          state.pinchScale = state.scale;
+          state.pinchCenter = {
+            x: (points[0].x + points[1].x) / 2,
+            y: (points[0].y + points[1].y) / 2
+          };
+          state.panStart = { ...state.pan };
+          state.isDragging = false;
+        }
+
+        if (document.fullscreenElement) {
+          const nearEdge = e.clientY < 150 || e.clientY > window.innerHeight - 200;
+          if (nearEdge) showControlsBar();
+        }
+      }
+
+      function onPointerMove(e) {
+        if (!state.pointers.has(e.pointerId)) return;
+
+        state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        updateEdgeZones(e.clientX, e.clientY);
+
+        const pointerCount = state.pointers.size;
+
+        if (pointerCount === 1) {
+          if (state.isDragging) {
+            const point = Array.from(state.pointers.values())[0];
+            state.pan.x = state.panStart.x + (point.x - state.dragStart.x);
+            state.pan.y = state.panStart.y + (point.y - state.dragStart.y);
+            applyTransform();
+          }
+        } else if (pointerCount >= 2) {
+          const points = Array.from(state.pointers.values());
+          const newDist = getDistance(points[0], points[1]);
+
+          if (state.pinchDistance && state.pinchScale != null) {
+            const scale = state.pinchScale * (newDist / state.pinchDistance);
+            const newScale = Math.max(CONFIG.ZOOM_MIN, Math.min(CONFIG.ZOOM_MAX, scale));
+
+            const newCenter = {
+              x: (points[0].x + points[1].x) / 2,
+              y: (points[0].y + points[1].y) / 2
+            };
+
+            state.scale = newScale;
+            state.pan.x = state.panStart.x + (newCenter.x - state.pinchCenter.x);
+            state.pan.y = state.panStart.y + (newCenter.y - state.pinchCenter.y);
+            applyTransform();
+          }
+        }
+      }
+
+      function onPointerUp(e) {
+        try {
+          e.target.releasePointerCapture(e.pointerId);
+        } catch (err) { }
+
+        state.pointers.delete(e.pointerId);
+
+        if (state.pointers.size === 0) {
+          const wasPinching = state.pinchDistance !== null;
+
+          if (!wasPinching && state.touchStart) {
+            const dx = e.clientX - state.touchStart.x;
+            const dy = e.clientY - state.touchStart.y;
+            const dt = Date.now() - state.touchStart.time;
+
+            const isHorizontalSwipe = Math.abs(dx) > CONFIG.SWIPE_THRESHOLD;
+            const isDominantlyHorizontal = Math.abs(dx) > Math.abs(dy);
+            const isFastEnough = dt < CONFIG.SWIPE_TIMEOUT;
+            const isNotZoomed = state.scale <= 1.01;
+
+            if (isHorizontalSwipe && isDominantlyHorizontal && isFastEnough && isNotZoomed) {
+              dx > 0 ? prevPage() : nextPage();
+            }
+          }
+
+          state.isDragging = false;
+          state.touchStart = null;
+          state.pinchDistance = null;
+          state.pinchCenter = null;
+          state.pinchScale = state.scale;
+        } else if (state.pointers.size === 1) {
+          const remaining = Array.from(state.pointers.values())[0];
+          state.dragStart = { x: remaining.x, y: remaining.y };
+          state.panStart = { ...state.pan };
+          state.isDragging = state.scale > 1.01;
+        }
+      }
+
+      function onWheel(e) {
+        if (e.ctrlKey) {
+          e.preventDefault();
+          const delta = e.deltaY > 0 ? -0.1 : 0.1;
+          state.scale = Math.max(CONFIG.ZOOM_MIN, Math.min(CONFIG.ZOOM_MAX, state.scale + delta));
+          applyTransform();
+        }
+      }
+
+      // ==================== EDGE ZONES ====================
+
+      function updateEdgeZones(x, y) {
+        if (!el.viewport) return;
+
+        if (state.isDragging || state.pointers.size > 0) {
+          if (el.edgeLeft) el.edgeLeft.classList.remove('active');
+          if (el.edgeRight) el.edgeRight.classList.remove('active');
+          if (el.viewport) el.viewport.style.cursor = '';
+          return;
+        }
+
+        const rect = el.viewport.getBoundingClientRect();
+        const relX = x - rect.left;
+        const pct = relX / rect.width;
+
+        if (pct < CONFIG.EDGE_ZONE_THRESHOLD) {
+          if (el.edgeLeft) el.edgeLeft.classList.add('active');
+          if (el.edgeRight) el.edgeRight.classList.remove('active');
+          if (el.viewport) el.viewport.style.cursor = 'pointer';
+        } else if (pct > 1 - CONFIG.EDGE_ZONE_THRESHOLD) {
+          if (el.edgeRight) el.edgeRight.classList.add('active');
+          if (el.edgeLeft) el.edgeLeft.classList.remove('active');
+          if (el.viewport) el.viewport.style.cursor = 'pointer';
+        } else {
+          if (el.edgeLeft) el.edgeLeft.classList.remove('active');
+          if (el.edgeRight) el.edgeRight.classList.remove('active');
+          if (el.viewport) el.viewport.style.cursor = '';
+        }
+      }
+
+      // ==================== FULLSCREEN CONTROLS ====================
+
+      let hideTimer = null;
+      let mouseOverControls = false;
+
+      function showControlsBar() {
+        if (el.topbar) el.topbar.classList.remove('hidden');
+        if (el.controls) el.controls.classList.remove('hidden');
+
+        if (hideTimer) {
+          clearTimeout(hideTimer);
+          hideTimer = null;
+        }
+
+        if (document.fullscreenElement && !mouseOverControls) {
+          hideTimer = setTimeout(() => {
+            if (!mouseOverControls) {
+              if (el.topbar) el.topbar.classList.add('hidden');
+              if (el.controls) el.controls.classList.add('hidden');
+            }
+          }, CONFIG.CONTROLS_HIDE_DELAY);
+        }
+      }
+
+      function onFullscreenChange() {
+        if (document.fullscreenElement) {
+          document.body.classList.add('fullscreen-active');
+          if (el.fullscreenBtn) el.fullscreenBtn.textContent = '✕';
+          showControlsBar();
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              try {
+                fitHeightFullscreen();
+              } catch (e) {
+                console.warn('Fit failed on fullscreen enter:', e);
+              }
+            });
+          });
+        } else {
+          document.body.classList.remove('fullscreen-active');
+          if (el.fullscreenBtn) el.fullscreenBtn.textContent = '⛶';
+          if (el.topbar) el.topbar.classList.remove('hidden');
+          if (el.controls) el.controls.classList.remove('hidden');
+
+          if (el.stage && state.prevTransformOrigin !== null) {
+            el.stage.style.transformOrigin = state.prevTransformOrigin;
+            state.prevTransformOrigin = null;
+          }
+
+          if (hideTimer) {
+            clearTimeout(hideTimer);
+            hideTimer = null;
+          }
+        }
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => { });
+        } else {
+          document.exitFullscreen();
+        }
+      }
+
+      // ==================== CHAPTER MANAGEMENT ====================
+
+      function initChapterSelect() {
+        if (!el.chapter) return;
+
+        Object.keys(chapters).forEach(name => {
+          const option = document.createElement('option');
+          option.value = name;
+          option.textContent = name;
+          el.chapter.appendChild(option);
+        });
+      }
+
+      function changeChapter(chapterName) {
+        if (!chapters[chapterName]) return;
+
+        state.currentChapter = chapterName;
+        state.pages = chapters[chapterName];
+        state.pageIndex = 0;
+        state.scale = 1;
+        state.pan = { x: 0, y: 0 };
+
+        render();
+        saveProgress();
+      }
+
+      // ==================== EVENT HANDLERS ====================
+
+      function attachEventHandlers() {
+        // Book turn promo click handler
+        const bookTurnPromo = document.getElementById('bookTurnPromo');
+        if (bookTurnPromo) {
+          bookTurnPromo.addEventListener('click', () => {
+            window.open('https://bwondercomics.bigcartel.com/product/battle-bros-volume-1', '_blank', 'noopener,noreferrer');
+          });
+        }
+
+        // Navigation buttons
+        if (el.prevBtn) el.prevBtn.addEventListener('click', prevPage);
+        if (el.nextBtn) el.nextBtn.addEventListener('click', nextPage);
+
+        // Zoom and view buttons
+        if (el.zoomIn) el.zoomIn.addEventListener('click', zoomIn);
+        if (el.zoomOut) el.zoomOut.addEventListener('click', zoomOut);
+        if (el.fitBtn) el.fitBtn.addEventListener('click', fitToScreen);
+        if (el.fullscreenBtn) el.fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // Help button
+        const helpBtn = document.getElementById('helpBtn');
+        if (helpBtn) helpBtn.addEventListener('click', toggleShortcutsOverlay);
+
+        if (el.edgeLeftBtn) {
+          el.edgeLeftBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            prevPage();
+          });
+        }
+        if (el.edgeRightBtn) {
+          el.edgeRightBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            nextPage();
+          });
+        }
+
+        if (el.stage) el.stage.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+        if (el.stage) el.stage.addEventListener('wheel', onWheel, { passive: false });
+
+        if (el.viewport) {
+          el.viewport.addEventListener('mousemove', (e) => {
+            updateEdgeZones(e.clientX, e.clientY);
+          });
+
+          el.viewport.addEventListener('pointerup', (e) => {
+            if (!state.isDragging && state.pointers.size === 0) {
+              const now = Date.now();
+              if (state.lastTap && now - state.lastTap < 300) {
+                state.lastTap = 0;
+                fitToScreen();
+              } else {
+                state.lastTap = now;
+              }
+            }
+          });
+        }
+
+        document.addEventListener('keydown', (e) => {
+          // Don't interfere if user is typing in an input
+          if (e.target.matches('input, textarea, select')) return;
+
+          switch (e.key) {
+            case 'ArrowLeft':
+              e.preventDefault();
+              prevPage();
+              break;
+            case 'ArrowRight':
+              e.preventDefault();
+              nextPage();
+              break;
+            case '+':
+            case '=':
+              e.preventDefault();
+              zoomIn();
+              break;
+            case '-':
+              e.preventDefault();
+              zoomOut();
+              break;
+            case '0':
+              e.preventDefault();
+              resetView();
+              break;
+            case 'f':
+            case 'F':
+              e.preventDefault();
+              toggleFullscreen();
+              break;
+            case '?':
+              e.preventDefault();
+              toggleShortcutsOverlay();
+              break;
+            case 'Escape':
+              e.preventDefault();
+              closeShortcutsOverlay();
+              hideEndOfChapter();
+              if (document.fullscreenElement) {
+                document.exitFullscreen();
+              }
+              break;
+          }
+        });
+
+        document.addEventListener('fullscreenchange', onFullscreenChange);
+
+        document.addEventListener('mousemove', (e) => {
+          if (document.fullscreenElement) {
+            const nearEdge = e.clientY < 150 || e.clientY > window.innerHeight - 200;
+            if (nearEdge) showControlsBar();
+          }
+        });
+
+        if (el.topbar) {
+          el.topbar.addEventListener('mouseenter', () => {
+            mouseOverControls = true;
+            if (hideTimer) {
+              clearTimeout(hideTimer);
+              hideTimer = null;
+            }
+          });
+          el.topbar.addEventListener('mouseleave', () => {
+            mouseOverControls = false;
+            showControlsBar();
+          });
+        }
+
+        if (el.controls) {
+          el.controls.addEventListener('mouseenter', () => {
+            mouseOverControls = true;
+            if (hideTimer) {
+              clearTimeout(hideTimer);
+              hideTimer = null;
+            }
+          });
+          el.controls.addEventListener('mouseleave', () => {
+            mouseOverControls = false;
+            showControlsBar();
+          });
+        }
+
+        if (el.chapter) {
+          el.chapter.addEventListener('change', (e) => {
+            changeChapter(e.target.value);
+          });
+        }
+
+        // Handle window resize and orientation changes
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+          // Debounce resize events to avoid excessive re-renders
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            render();
+          }, 150);
+        });
+
+        // Shortcuts overlay buttons
+        const shortcutsClose = document.getElementById('shortcutsClose');
+        if (shortcutsClose) {
+          shortcutsClose.addEventListener('click', closeShortcutsOverlay);
+        }
+
+        // End of chapter overlay buttons
+        const nextChapterBtn = document.getElementById('nextChapterBtn');
+        const restartChapterBtn = document.getElementById('restartChapterBtn');
+        const closeEndOverlay = document.getElementById('closeEndOverlay');
+
+        if (nextChapterBtn) {
+          nextChapterBtn.addEventListener('click', goToNextChapter);
+        }
+        if (restartChapterBtn) {
+          restartChapterBtn.addEventListener('click', restartChapter);
+        }
+        if (closeEndOverlay) {
+          closeEndOverlay.addEventListener('click', hideEndOfChapter);
+        }
+      }
+
+      // ==================== QUOTE RANDOMIZER ====================
+
+      function pickRandomQuoteIndexOnce() {
+        if (QUOTES.length === 0) return -1;
+        return Math.floor(Math.random() * QUOTES.length);
+      }
+
+      function setInitialSubtitle() {
+        if (!el.subtitle) return;
+        const idx = pickRandomQuoteIndexOnce();
+        if (idx >= 0) el.subtitle.textContent = QUOTES[idx];
+      }
+
+      // ==================== SHORTCUTS OVERLAY ====================
+
+      function toggleShortcutsOverlay() {
+        const overlay = document.getElementById('shortcutsOverlay');
+        if (overlay) {
+          overlay.classList.toggle('active');
+        }
+      }
+
+      function closeShortcutsOverlay() {
+        const overlay = document.getElementById('shortcutsOverlay');
+        if (overlay) {
+          overlay.classList.remove('active');
+        }
+      }
+
+      // ==================== END OF CHAPTER ====================
+
+      function showEndOfChapter() {
+        const overlay = document.getElementById('chapterEndOverlay');
+        if (overlay) {
+          overlay.classList.add('active');
+        }
+      }
+
+      function hideEndOfChapter() {
+        const overlay = document.getElementById('chapterEndOverlay');
+        if (overlay) {
+          overlay.classList.remove('active');
+        }
+      }
+
+      function goToNextChapter() {
+        const chapterNames = Object.keys(chapters);
+        const currentIndex = chapterNames.indexOf(state.currentChapter);
+        if (currentIndex >= 0 && currentIndex < chapterNames.length - 1) {
+          const nextChapter = chapterNames[currentIndex + 1];
+          if (el.chapter) el.chapter.value = nextChapter;
+          changeChapter(nextChapter);
+          hideEndOfChapter();
+        }
+      }
+
+      function restartChapter() {
+        state.pageIndex = 0;
+        render();
+        saveProgress();
+        hideEndOfChapter();
+      }
+
+      // ==================== EMAIL SIGNUP FORM ====================
+
+      function initEmailSignupForm() {
+        const form = document.getElementById('emailSignupForm');
+        const messageDiv = document.getElementById('emailFormMessage');
+
+        if (!form) return;
+
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          const emailInput = document.getElementById('emailInput');
+          const submitBtn = form.querySelector('.email-submit-btn');
+          const email = emailInput.value.trim();
+
+          if (!email) return;
+
+          // Disable form during submission
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'SENDING...';
+          messageDiv.style.display = 'none';
+
+          try {
+            // Submit to Formspree
+            const response = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: {
+                'Accept': 'application/json'
+              }
+            });
+
+            if (response.ok) {
+              // Success
+              messageDiv.textContent = 'Thanks for signing up! Check your inbox!';
+              messageDiv.className = 'email-form-message success';
+              messageDiv.style.display = 'block';
+              emailInput.value = '';
+
+              // Hide success message after 5 seconds
+              setTimeout(() => {
+                messageDiv.style.display = 'none';
+              }, 5000);
+            } else {
+              throw new Error('Form submission failed');
+            }
+          } catch (error) {
+            // Error
+            messageDiv.textContent = 'Oops! Something went wrong. Try again?';
+            messageDiv.className = 'email-form-message error';
+            messageDiv.style.display = 'block';
+
+            // Hide error message after 5 seconds
+            setTimeout(() => {
+              messageDiv.style.display = 'none';
+            }, 5000);
+          } finally {
+            // Re-enable form
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'SUBMIT';
+          }
+        });
+      }
+
+      // ==================== LOAD CHAPTER DATA ====================
+
+      async function loadChapterData() {
+        try {
+          const response = await fetch('admin/data.json');
+          if (!response.ok) {
+            throw new Error(`Failed to load chapter data: ${response.status} ${response.statusText}`);
+          }
+          const data = await response.json();
+
+          if (!data.chapters || typeof data.chapters !== 'object') {
+            throw new Error('Invalid chapter data structure in admin/data.json');
+          }
+
+          chapters = data.chapters;
+          console.log('✓ Chapter data loaded from admin/data.json');
+          return true;
+        } catch (error) {
+          console.error('Failed to load chapter data:', error);
+
+          // Show user-friendly error message
+          const viewport = document.getElementById('viewport');
+          if (viewport) {
+            viewport.innerHTML = `
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 20px; text-align: center; gap: 16px;">
             <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--danger); text-transform: uppercase; letter-spacing: 2px;">
               ⚠️ ERROR LOADING COMIC DATA
@@ -2785,65 +2846,236 @@ a:focus-visible,
             </button>
           </div>
         `;
+          }
+
+          return false;
+        }
       }
-      
-      return false;
-    }
-  }
 
-  // ==================== INITIALIZATION ====================
-  
-  function init() {
-    initElements();
-    initChapterSelect();
-    setInitialSubtitle();
-    initEmailSignupForm();
+      // ==================== INITIALIZATION ====================
 
-    const saved = loadProgress();
-    if (saved && chapters[saved.chapter]) {
-      state.currentChapter = saved.chapter;
-      state.pages = chapters[saved.chapter];
-      state.pageIndex = saved.page || 0;
-    } else {
-      const firstChapter = Object.keys(chapters)[0];
-      state.currentChapter = firstChapter;
-      state.pages = chapters[firstChapter] || [];
-      state.pageIndex = 0;
-    }
+      function init() {
+        initElements();
+        initChapterSelect();
+        setInitialSubtitle();
+        initEmailSignupForm();
 
-    if (el.chapter) el.chapter.value = state.currentChapter;
+        const saved = loadProgress();
+        if (saved && chapters[saved.chapter]) {
+          state.currentChapter = saved.chapter;
+          state.pages = chapters[saved.chapter];
+          state.pageIndex = saved.page || 0;
+        } else {
+          const firstChapter = Object.keys(chapters)[0];
+          state.currentChapter = firstChapter;
+          state.pages = chapters[firstChapter] || [];
+          state.pageIndex = 0;
+        }
 
-    attachEventHandlers();
-    render();
+        if (el.chapter) el.chapter.value = state.currentChapter;
 
-    console.log('✓ Battle Bros Reader initialized');
-  }
+        attachEventHandlers();
+        render();
 
-  // ==================== START ====================
-  
-  async function start() {
-    const success = await loadChapterData();
-    if (success) {
-      init();
-    }
-  }
-  
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(start, 0);
-  } else {
-    document.addEventListener('DOMContentLoaded', start);
-  }
+        console.log('✓ Battle Bros Reader initialized');
+      }
 
-  window.BattleBros = {
-    setSubtitle: (text) => { 
-      if (el.subtitle) el.subtitle.textContent = String(text); 
-    },
-    setRandomSubtitleNow: () => { 
-      setInitialSubtitle(); 
-    }
-  };
+      // ==================== START ====================
 
-})();
-</script>
+      async function start() {
+        const success = await loadChapterData();
+        if (success) {
+          init();
+        }
+      }
+
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(start, 0);
+      } else {
+        document.addEventListener('DOMContentLoaded', start);
+      }
+
+      window.BattleBros = {
+        setSubtitle: (text) => {
+          if (el.subtitle) el.subtitle.textContent = String(text);
+        },
+        setRandomSubtitleNow: () => {
+          setInitialSubtitle();
+        }
+      };
+
+    })();
+  </script>
+  <script>
+    (function () {
+      'use strict';
+
+      const CONFIG_KEY = 'battlebros_page_config';
+
+      // Default config matches original HTML
+      const defaultConfig = {
+        theme: {
+          primary: '#00d9ff',
+          secondary: '#ff00ea',
+          accent: '#ffed00',
+          bgDark: '#0a0a12',
+          bgPanel: '#1a1a2e',
+          text: '#ffffff',
+          danger: '#ff3838'
+        },
+        layout: {
+          leftPanel: { enabled: true, order: 1 },
+          viewport: { enabled: true, order: 2 },
+          rightPanel: { enabled: true, order: 3 }
+        },
+        content: {
+          header: { title: "BATTLE BROS", subtitle: "/// GUESS WHO'S BACK IN TOWN? ///" },
+          leftPanel: {
+            topText: "TO GO EVEN FURTHER BEYOND",
+            bottomText: "WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!",
+            image: "bookturn.gif"
+          },
+          rightPanel: {
+            image: "banner3.png",
+            buttons: [
+              { icon: "🦋", text: "Bluesky", url: "https://bsky.app/profile/bwondercomics.com" },
+              { icon: "💎", text: "Patreon", url: "https://patreon.com/doylemelville2" },
+              { icon: "🎨", text: "ArtStation", url: "https://doyle-melvilleii.artstation.com" },
+              { icon: "📖", text: "Buy Print", url: "https://bwondercomics.bigcartel.com/product/battle-bros-volume-1" }
+            ]
+          }
+        }
+      };
+
+      async function initCustomization() {
+        let config = null;
+        const urlParams = new URLSearchParams(window.location.search);
+        const isPreview = urlParams.get('preview') === 'true';
+
+        try {
+          if (isPreview) {
+            // Try loading draft from localStorage
+            const draft = localStorage.getItem(CONFIG_KEY);
+            if (draft) {
+              config = JSON.parse(draft);
+              console.log('Loaded config from localStorage (Preview Mode)');
+            }
+          }
+
+          if (!config) {
+            // Try loading from file
+            const response = await fetch('admin/page-config.json');
+            if (response.ok) {
+              config = await response.json();
+              console.log('Loaded config from page-config.json');
+            }
+          }
+        } catch (e) {
+          console.warn('Failed to load config, using defaults', e);
+        }
+
+        applyConfig(config || defaultConfig);
+      }
+
+      function applyConfig(config) {
+        if (!config) return;
+
+        // 1. Apply Theme
+        if (config.theme) {
+          const root = document.documentElement;
+          Object.entries(config.theme).forEach(([key, value]) => {
+            // Convert camelCase to kebab-case for CSS vars (e.g. bgDark -> --bg-dark)
+            const cssVar = '--' + key.replace(/([A-Z])/g, '-$1').toLowerCase();
+            root.style.setProperty(cssVar, value);
+          });
+        }
+
+        // 2. Apply Content
+        if (config.content) {
+          // Header
+          if (config.content.header) {
+            const titleEl = document.querySelector('.title h1');
+            if (titleEl) titleEl.textContent = config.content.header.title;
+
+            const subEl = document.getElementById('subtitle');
+            if (subEl) subEl.textContent = config.content.header.subtitle;
+          }
+
+          // Left Panel
+          if (config.content.leftPanel) {
+            const topText = document.querySelector('.left-panel-text-top');
+            if (topText) topText.textContent = config.content.leftPanel.topText;
+
+            const botText = document.querySelector('.left-panel-text-bottom');
+            if (botText) botText.textContent = config.content.leftPanel.bottomText;
+
+            const img = document.querySelector('#leftPreview img');
+            if (img && config.content.leftPanel.image) {
+              img.src = config.content.leftPanel.image;
+            }
+          }
+
+          // Right Panel
+          if (config.content.rightPanel) {
+            const img = document.querySelector('#rightPreview img');
+            if (img && config.content.rightPanel.image) {
+              img.src = config.content.rightPanel.image;
+            }
+
+            // Buttons
+            if (config.content.rightPanel.buttons) {
+              const btnContainer = document.querySelector('.panel-buttons');
+              if (btnContainer) {
+                btnContainer.innerHTML = config.content.rightPanel.buttons.map(btn => `
+              <a href="${btn.url}" target="_blank" rel="noopener noreferrer" class="panel-btn">
+                <div class="panel-btn-icon">${btn.icon}</div>
+                <div class="panel-btn-text">${btn.text}</div>
+              </a>
+            `).join('');
+              }
+            }
+          }
+        }
+
+        // 3. Apply Layout
+        if (config.layout) {
+          const container = document.querySelector('.viewerWrap');
+          const leftPanel = document.getElementById('leftPanel');
+          const mainContent = document.getElementById('mainContent');
+          const rightPanel = document.getElementById('rightPanel');
+
+          if (container && leftPanel && mainContent && rightPanel) {
+            const elements = [
+              { el: leftPanel, conf: config.layout.leftPanel },
+              { el: mainContent, conf: config.layout.viewport },
+              { el: rightPanel, conf: config.layout.rightPanel }
+            ];
+
+            // Sort by order
+            elements.sort((a, b) => (a.conf?.order || 0) - (b.conf?.order || 0));
+
+            // Re-append in new order
+            elements.forEach(item => {
+              if (item.conf && item.conf.enabled === false) {
+                item.el.style.display = 'none';
+              } else {
+                item.el.style.display = ''; // Reset display
+                container.appendChild(item.el);
+              }
+            });
+          }
+        }
+      }
+
+      // Run initialization
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCustomization);
+      } else {
+        initCustomization();
+      }
+
+    })();
+  </script>
 </body>
+
 </html>

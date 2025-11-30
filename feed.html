@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+    <title>Battle Bros - Updates Feed</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --secondary: #ff00ea;
+            --accent: #ffed00;
+            --bg-dark: #0a0a12;
+            --bg-panel: #1a1a2e;
+            --text: #ffffff;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            font-family: 'Righteous', cursive;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            background: var(--bg-panel);
+            border-bottom: 3px solid var(--primary);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            font-family: 'Bebas Neue', cursive;
+            color: var(--primary);
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0 var(--secondary);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .post {
+            background: var(--bg-panel);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .post-title {
+            font-family: 'Bebas Neue', cursive;
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .post-date {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .post-content {
+            line-height: 1.6;
+            font-size: 1.1rem;
+            white-space: pre-wrap;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--text);
+            text-decoration: none;
+            border: 1px solid var(--text);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .back-btn:hover {
+            background: var(--text);
+            color: var(--bg-dark);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Battle Bros Feed</h1>
+        <a href="index.html" class="back-btn">← Back to Comic</a>
+    </header>
+
+    <div class="container" id="feedContainer">
+        <div style="text-align: center; padding: 40px;">Loading updates...</div>
+    </div>
+
+    <script>
+        async function loadFeed() {
+            const container = document.getElementById('feedContainer');
+            try {
+                const response = await fetch('posts.json');
+                if (!response.ok) throw new Error('Failed to load posts');
+                const posts = await response.json();
+
+                container.innerHTML = '';
+
+                if (posts.length === 0) {
+                    container.innerHTML = '<div style="text-align: center;">No updates yet!</div>';
+                    return;
+                }
+
+                // Sort new to old
+                posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                posts.forEach(post => {
+                    const article = document.createElement('article');
+                    article.className = 'post';
+                    article.id = post.id;
+
+                    let imageHtml = '';
+                    if (post.image) {
+                        imageHtml = `<img src="${post.image}" alt="${post.title}" class="post-image" loading="lazy">`;
+                    }
+
+                    article.innerHTML = `
+                <h2 class="post-title">${post.title}</h2>
+                <div class="post-date">${new Date(post.date).toLocaleDateString()}</div>
+                ${imageHtml}
+                <div class="post-content">${post.content}</div>
+            `;
+                    container.appendChild(article);
+                });
+
+            } catch (e) {
+                container.innerHTML = '<div style="text-align: center; color: var(--secondary);">Failed to load updates.</div>';
+                console.error(e);
+            }
+        }
+
+        loadFeed();
+    </script>
+</body>
+
+</html>
