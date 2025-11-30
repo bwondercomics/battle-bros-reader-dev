@@ -1,0 +1,34 @@
+Here’s a quick how-it-works guide for the feed and admin, so you can wire it up on the main site.
+
+Feed System
+
+Data: posts.json (array of { id, title, content, date, image }) at site root. Saved via admin POST to /api/save (handled by server.py).
+RSS: server.py regenerates rss.xml whenever posts.json is saved.
+Public pages:
+feed.html fetches posts.json (no-cache), sorts newest-first, renders posts with safe HTML escaping, and links to rss.xml. Comment block is a placeholder—drop in Cusdis/Giscus embed where marked.
+index.html right panel has “Latest Update” widget that fetches posts.json, picks the newest entry, and links to feed.html#<id>.
+Assets: banner3.png is used as the right-panel background; latest widget/buttons have their own backgrounds.
+Server
+
+server.py extends SimpleHTTPRequestHandler.
+POST /api/save with JSON body { filename, content } writes to disk (path normalized against repo root; blocks traversal). If filename == 'posts.json', RSS is regenerated.
+Serves static files for GET as usual.
+Admin (admin/index.html)
+
+Auth: simple password check (battlebros2024, in-page). Session stored in sessionStorage.
+Tabs/Sections:
+Chapter Management (default view): Manage chapters and pages; edits saved to admin/data.json via /api/save (and also stored in localStorage for draft safety).
+Blog / Feed: Hidden until you click “Blog / Feed”. Load existing posts from posts.json; add/edit/delete posts. Saving calls /api/save to update posts.json (triggers RSS). Post form fields: Title, Image URL, Content.
+Preview/Export: Shows chapter JSON, copy/download.
+Settings (modal): Store GitHub token (for legacy GitHub publish features).
+Buttons:
+“Blog / Feed” toggles the feed tab and loads posts.
+“Publish Post” saves/updates post to posts.json.
+“Publish to GitHub” is legacy; current local server persists directly to disk via /api/save.
+What to plug in on main site
+
+Ensure server.py (or equivalent backend) serves static files and accepts POST /api/save to write posts.json and admin/data.json, with RSS regeneration on posts.json save.
+Place posts.json and rss.xml at site root; admin/data.json in admin/.
+Keep feed.html at root; index.html expects posts.json at root for the Latest Update widget.
+Add your comment provider snippet inside the placeholder in feed.html.
+Optional: add favicon.ico to silence 404s.

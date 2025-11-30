@@ -1092,6 +1092,7 @@
           <textarea id="postContent" class="form-input" placeholder="Post content..."
             style="min-height: 100px; margin-bottom: 10px;"></textarea>
           <button class="btn-primary" id="btnSavePost">Publish Post</button>
+          <div id="postStatus" class="success-message" style="display: none; margin-top: 10px;"></div>
         </div>
 
         <h3 class="section-title" style="font-size: 1.2rem; margin-top: 30px;">Recent Posts</h3>
@@ -1232,8 +1233,13 @@
         dataFile: 'admin/data.json'
       };
 
+      const API_ENDPOINT = '/api/save';
+      const POSTS_FILE = 'posts.json';
+
       let chapters = {};
       let currentEditingChapter = null;
+      let posts = [];
+      let editingPostId = null;
 
       // Image upload state
       let selectedFiles = [];
@@ -1262,6 +1268,7 @@
         postContent: document.getElementById('postContent'),
         btnSavePost: document.getElementById('btnSavePost'),
         postList: document.getElementById('postList'),
+        postStatus: document.getElementById('postStatus'),
         btnPreview: document.getElementById('btnPreview'),
         btnPublish: document.getElementById('btnPublish'),
         previewSection: document.getElementById('previewSection'),
@@ -1349,12 +1356,62 @@
         chapters = {};
       }
 
+      // ==================== PERSISTENCE HELPERS ====================
+
+      async function saveToServer(filename, content) {
+        const response = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename, content })
+        });
+
+        if (!response.ok) {
+          let message = `Failed to save ${filename}`;
+          try {
+            const errorText = await response.text();
+            if (errorText) {
+              message += `: ${errorText}`;
+            }
+          } catch (error) {
+            console.error('Error reading save response', error);
+          }
+          throw new Error(message);
+        }
+
+        return true;
+      }
+
+      async function saveChapters(showMessage = false) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(chapters));
+        } catch (error) {
+          console.warn('Unable to persist chapters to localStorage:', error);
+        }
+
+        const payload = {
+          chapters,
+          lastUpdated: new Date().toISOString(),
+          publishedBy: 'Admin Panel'
+        };
+
+        try {
+          await saveToServer('admin/data.json', payload);
+          if (showMessage) {
+            showSuccess('Chapters saved to disk.');
+          }
+        } catch (error) {
+          console.error('Save chapters failed:', error);
+          showError('Failed to save chapters to disk. A draft is stored in your browser.');
+        }
+      }
+
       // ==================== UI RENDERING ====================
 
       async function showDashboard() {
         el.loginScreen.style.display = 'none';
         el.adminDashboard.style.display = 'block';
         await loadChapters();
+        await loadPosts();
         renderChapterList();
       }
 
@@ -1587,6 +1644,189 @@
         currentPages.splice(index, 1);
         renderPageList(currentPages);
         markUnsaved();
+      }
+
+      // ==================== BLOG / FEED MANAGEMENT ====================
+
+      function getPostsUrl() {
+        return POSTS_FILE.startsWith('/') ? POSTS_FILE : `/${POSTS_FILE}`;
+      }
+
+      async function loadPosts() {
+        try {
+          const response = await fetch(getPostsUrl(), { cache: 'no-cache' });
+          if (!response.ok) throw new Error('Failed to load posts.json');
+
+          const data = await response.json();
+          posts = Array.isArray(data) ? data : [];
+          renderPosts();
+        } catch (error) {
+          console.error('Error loading posts:', error);
+          posts = [];
+          renderPosts();
+          setPostStatus('Could not load existing posts. Create a new one to get started.', true);
+        }
+      }
+
+      function renderPosts() {
+        el.postList.innerHTML = '';
+
+        if (!posts.length) {
+          const empty = document.createElement('div');
+          empty.className = 'chapter-item';
+          empty.textContent = 'No posts yet. Create the first update!';
+          el.postList.appendChild(empty);
+          return;
+        }
+
+        const sorted = [...posts].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+        sorted.forEach(post => {
+          const item = document.createElement('div');
+          item.className = 'chapter-item';
+          const dateLabel = formatPostDate(post.date);
+          const preview = getPostPreview(post.content);
+          item.innerHTML = `
+        <div class="chapter-info">
+          <div class="chapter-name">${escapeHtml(post.title || 'Untitled')}</div>
+          <div class="chapter-meta">${dateLabel}</div>
+          <div class="chapter-meta" style="opacity:0.8;">${escapeHtml(preview)}</div>
+        </div>
+        <div class="chapter-actions">
+          <button class="btn-small btn-edit" data-post="${post.id}">Edit</button>
+          <button class="btn-small btn-delete" data-post="${post.id}">Delete</button>
+        </div>
+      `;
+          el.postList.appendChild(item);
+        });
+
+        document.querySelectorAll('[data-post]').forEach(btn => {
+          const id = btn.getAttribute('data-post');
+          if (btn.classList.contains('btn-edit')) {
+            btn.addEventListener('click', () => populatePostForm(id));
+          } else if (btn.classList.contains('btn-delete')) {
+            btn.addEventListener('click', () => deletePost(id));
+          }
+        });
+      }
+
+      function getPostPreview(content = '') {
+        const trimmed = content.trim();
+        if (trimmed.length <= 140) return trimmed || 'No preview text';
+        return `${trimmed.slice(0, 140)}...`;
+      }
+
+      function formatPostDate(dateStr) {
+        if (!dateStr) return 'Date not set';
+        const date = new Date(dateStr);
+        if (Number.isNaN(date.getTime())) return 'Date not set';
+        return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+      }
+
+      function resetPostForm() {
+        editingPostId = null;
+        el.postTitle.value = '';
+        el.postImage.value = '';
+        el.postContent.value = '';
+        el.btnSavePost.textContent = 'Publish Post';
+      }
+
+      function setPostStatus(message, isError = false) {
+        if (!el.postStatus) return;
+        el.postStatus.textContent = message;
+        el.postStatus.style.display = 'block';
+        el.postStatus.style.background = isError ? 'var(--danger)' : 'var(--success)';
+        el.postStatus.style.color = isError ? 'var(--text)' : 'var(--bg-dark)';
+
+        setTimeout(() => {
+          el.postStatus.style.display = 'none';
+        }, 4000);
+      }
+
+      function generatePostId() {
+        if (window.crypto?.randomUUID) {
+          return window.crypto.randomUUID();
+        }
+        return `post-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+      }
+
+      async function persistPosts() {
+        posts.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+        try {
+          await saveToServer(POSTS_FILE, posts);
+          setPostStatus('Post saved and feed updated.');
+        } catch (error) {
+          console.error('Failed to save posts:', error);
+          setPostStatus('Failed to save posts to disk. Copy your text before refreshing.', true);
+        }
+      }
+
+      async function savePost() {
+        const title = el.postTitle.value.trim();
+        const image = el.postImage.value.trim();
+        const content = el.postContent.value.trim();
+
+        if (!title || !content) {
+          setPostStatus('Title and content are required.', true);
+          return;
+        }
+
+        const now = new Date().toISOString();
+
+        if (editingPostId) {
+          const idx = posts.findIndex(p => p.id === editingPostId);
+          if (idx !== -1) {
+            posts[idx] = { ...posts[idx], title, image, content, date: now };
+          }
+        } else {
+          posts.unshift({
+            id: generatePostId(),
+            title,
+            image,
+            content,
+            date: now
+          });
+        }
+
+        await persistPosts();
+        renderPosts();
+        resetPostForm();
+      }
+
+      function populatePostForm(postId) {
+        const post = posts.find(p => p.id === postId);
+        if (!post) return;
+
+        editingPostId = post.id;
+        el.postTitle.value = post.title || '';
+        el.postImage.value = post.image || '';
+        el.postContent.value = post.content || '';
+        el.btnSavePost.textContent = 'Update Post';
+        el.blogSection.style.display = 'block';
+        el.blogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      async function deletePost(postId) {
+        const post = posts.find(p => p.id === postId);
+        if (!post) return;
+
+        if (!confirm(`Delete the post "${post.title}"? This cannot be undone.`)) {
+          return;
+        }
+
+        posts = posts.filter(p => p.id !== postId);
+        await persistPosts();
+        renderPosts();
+        resetPostForm();
+      }
+
+      function showBlogSection() {
+        el.blogSection.style.display = 'block';
+        if (el.previewSection) {
+          el.previewSection.style.display = 'none';
+        }
+        el.blogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        loadPosts();
       }
 
       // ==================== IMAGE UPLOAD HANDLERS ====================
@@ -2371,6 +2611,11 @@
         el.btnPreview.addEventListener('click', showPreview);
         el.btnCopy.addEventListener('click', copyToClipboard);
         el.btnDownload.addEventListener('click', downloadJSON);
+        el.btnBlog.addEventListener('click', showBlogSection);
+        el.btnSavePost.addEventListener('click', async (e) => {
+          e.preventDefault();
+          await savePost();
+        });
 
         // GitHub integration
         el.btnSettings.addEventListener('click', showSettingsModal);

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<rss version="2.0">
+  <channel>
+    <title>Battle Bros Comics Updates</title>
+    <link>https://bwondercomics.com</link>
+    <description>Latest updates from the Battle Bros universe.</description>
+    <language>en-us</language>
+    <item>
+      <title>test</title>
+      <link>https://bwondercomics.com/feed.html#a0f952eb-730b-43c6-b896-b6f9a2f9b3bb</link>
+      <guid>a0f952eb-730b-43c6-b896-b6f9a2f9b3bb</guid>
+      <pubDate>Sun, 30 Nov 2025 12:41:46 +0000</pubDate>
+      <description>&lt;img src=&quot;http://localhost:8000/banner3.png&quot; /&gt;&lt;br/&gt;teset2</description>
+    </item>
+  </channel>
+</rss>

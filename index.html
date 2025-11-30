@@ -546,32 +546,122 @@
       flex-direction: column;
       gap: 12px;
       padding: 16px;
+      background-image: url('banner3.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .right-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1 1 auto;
+    }
+
+    .latest-update {
+      border: 2px solid var(--accent);
+      background: linear-gradient(135deg, rgba(255, 237, 0, 0.2), rgba(0, 217, 255, 0.18)),
+        radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.25), transparent 40%),
+        rgba(10, 10, 18, 0.95);
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.65);
+    }
+
+    .latest-heading {
+      font-family: 'Bebas Neue', cursive;
+      letter-spacing: 1px;
+      font-size: 1.2rem;
+      color: var(--bg-dark);
+      background: var(--accent);
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: inline-flex;
+      margin-bottom: 10px;
+    }
+
+    .latest-body {
+      display: grid;
+      gap: 10px;
+    }
+
+    .latest-thumb {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid rgba(0, 217, 255, 0.4);
+      background: #05050a;
+    }
+
+    .latest-thumb.placeholder {
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    .latest-meta {
+      display: grid;
+      gap: 4px;
+    }
+
+    .latest-label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+    }
+
+    .latest-name {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    .latest-date {
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .latest-preview {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+
+    .latest-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      color: var(--bg-dark);
+      background: var(--primary);
+      border: 2px solid var(--primary);
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .latest-link:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg-dark);
+    }
+
+    .latest-loading,
+    .latest-empty {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
     }
 
     .side-panel.right .preview {
-      flex: 0 0 auto;
-      width: 100%;
-      max-height: 40%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-    }
-
-    .side-panel.right .preview .panel-preview-img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      border: 3px solid rgba(0, 217, 255, 0.3);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
-
-    .side-panel.right .preview .panel-preview-img:hover {
-      transform: scale(1.05);
-      border-color: var(--accent);
+      display: none;
     }
 
     .panel-buttons {
@@ -589,7 +679,9 @@
       align-items: center;
       gap: 14px;
       padding: 14px;
-      background: linear-gradient(135deg, rgba(0, 217, 255, 0.12), rgba(255, 0, 234, 0.08));
+      background:
+        linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 0, 234, 0.16)),
+        rgba(10, 10, 18, 0.94);
       border: 3px solid var(--primary);
       border-radius: 0;
       cursor: pointer;
@@ -598,8 +690,8 @@
       color: var(--text);
       position: relative;
       box-shadow:
-        0 4px 0 rgba(0, 0, 0, 0.3),
-        0 0 10px rgba(0, 217, 255, 0.2);
+        0 6px 12px rgba(0, 0, 0, 0.55),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
     .panel-btn::before {
@@ -1715,33 +1807,42 @@
 
       <!-- Right Preview Panel -->
       <aside class="side-panel right" id="rightPanel">
-        <div class="preview" id="rightPreview" aria-hidden="false">
-          <picture>
-            <source srcset="banner3.png" type="image/webp">
-            <img class="panel-preview-img" src="banner3.png" alt="Right illustration preview">
-          </picture>
+        <div class="latest-update" id="latestUpdate">
+          <div class="latest-heading">Latest Update</div>
+          <div class="latest-body" id="latestBody">
+            <div class="latest-loading">Loading...</div>
+          </div>
         </div>
-        <div class="panel-buttons">
-          <a href="https://bsky.app/profile/bwondercomics.com" target="_blank" rel="noopener noreferrer"
-            class="panel-btn" id="customBtn1">
-            <div class="panel-btn-icon">🦋</div>
-            <div class="panel-btn-text">Bluesky</div>
-          </a>
-          <a href="https://patreon.com/doylemelville2" target="_blank" rel="noopener noreferrer" class="panel-btn"
-            id="customBtn2">
-            <div class="panel-btn-icon">💎</div>
-            <div class="panel-btn-text">Patreon</div>
-          </a>
-          <a href="https://doyle-melvilleii.artstation.com" target="_blank" rel="noopener noreferrer" class="panel-btn"
-            id="customBtn3">
-            <div class="panel-btn-icon">🎨</div>
-            <div class="panel-btn-text">ArtStation</div>
-          </a>
-          <a href="https://bwondercomics.bigcartel.com/product/battle-bros-volume-1" target="_blank"
-            rel="noopener noreferrer" class="panel-btn" id="customBtn4">
-            <div class="panel-btn-icon">📖</div>
-            <div class="panel-btn-text">Buy Print</div>
-          </a>
+
+        <div class="right-stack">
+          <div class="preview" id="rightPreview" aria-hidden="false">
+            <picture>
+              <source srcset="banner3.png" type="image/webp">
+              <img class="panel-preview-img" src="banner3.png" alt="Right illustration preview">
+            </picture>
+          </div>
+          <div class="panel-buttons">
+            <a href="https://bsky.app/profile/bwondercomics.com" target="_blank" rel="noopener noreferrer"
+              class="panel-btn" id="customBtn1">
+              <div class="panel-btn-icon">🦋</div>
+              <div class="panel-btn-text">Bluesky</div>
+            </a>
+            <a href="https://patreon.com/doylemelville2" target="_blank" rel="noopener noreferrer" class="panel-btn"
+              id="customBtn2">
+              <div class="panel-btn-icon">💎</div>
+              <div class="panel-btn-text">Patreon</div>
+            </a>
+            <a href="https://doyle-melvilleii.artstation.com" target="_blank" rel="noopener noreferrer"
+              class="panel-btn" id="customBtn3">
+              <div class="panel-btn-icon">🎨</div>
+              <div class="panel-btn-text">ArtStation</div>
+            </a>
+            <a href="https://bwondercomics.bigcartel.com/product/battle-bros-volume-1" target="_blank"
+              rel="noopener noreferrer" class="panel-btn" id="customBtn4">
+              <div class="panel-btn-icon">📖</div>
+              <div class="panel-btn-text">Buy Print</div>
+            </a>
+          </div>
         </div>
       </aside>
 
@@ -2807,6 +2908,92 @@
         });
       }
 
+      // ==================== LATEST UPDATE WIDGET ====================
+
+      function latestPreviewText(text = '') {
+        const condensed = text.replace(/\s+/g, ' ').trim();
+        if (!condensed) return 'No summary yet.';
+        return condensed.length > 120 ? `${condensed.slice(0, 120)}...` : condensed;
+      }
+
+      function renderLatestUpdate(post) {
+        const body = document.getElementById('latestBody');
+        if (!body) return;
+
+        body.innerHTML = '';
+
+        const thumb = document.createElement(post.image ? 'img' : 'div');
+        thumb.className = post.image ? 'latest-thumb' : 'latest-thumb placeholder';
+        if (post.image) {
+          thumb.src = post.image;
+          thumb.alt = post.title || 'Latest update image';
+          thumb.loading = 'lazy';
+        } else {
+          thumb.textContent = 'No image';
+        }
+
+        const meta = document.createElement('div');
+        meta.className = 'latest-meta';
+
+        const label = document.createElement('div');
+        label.className = 'latest-label';
+        label.textContent = 'Newest drop';
+
+        const name = document.createElement('div');
+        name.className = 'latest-name';
+        name.textContent = post.title || 'Untitled update';
+
+        const date = document.createElement('div');
+        date.className = 'latest-date';
+        const parsedDate = post.date ? new Date(post.date) : null;
+        date.textContent = parsedDate && !Number.isNaN(parsedDate) ?
+          parsedDate.toLocaleDateString(undefined, { dateStyle: 'medium' }) :
+          'Date not set';
+
+        const preview = document.createElement('div');
+        preview.className = 'latest-preview';
+        preview.textContent = latestPreviewText(post.content || '');
+
+        const link = document.createElement('a');
+        link.className = 'latest-link';
+        link.href = `feed.html#${post.id || ''}`;
+        link.textContent = 'Open feed';
+        link.setAttribute('aria-label', 'Open feed for latest update');
+
+        meta.appendChild(label);
+        meta.appendChild(name);
+        meta.appendChild(date);
+        meta.appendChild(preview);
+        meta.appendChild(link);
+
+        body.appendChild(thumb);
+        body.appendChild(meta);
+      }
+
+      async function loadLatestUpdate() {
+        const body = document.getElementById('latestBody');
+        if (!body) return;
+
+        body.innerHTML = '<div class="latest-loading">Loading...</div>';
+
+        try {
+          const response = await fetch('posts.json', { cache: 'no-cache' });
+          if (!response.ok) throw new Error('Failed to load latest post');
+          const posts = await response.json();
+
+          if (!Array.isArray(posts) || posts.length === 0) {
+            body.innerHTML = '<div class="latest-empty">No updates yet.</div>';
+            return;
+          }
+
+          const latest = [...posts].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))[0];
+          renderLatestUpdate(latest);
+        } catch (error) {
+          console.error('Latest update widget error:', error);
+          body.innerHTML = '<div class="latest-empty" style="color: var(--danger);">Could not load updates.</div>';
+        }
+      }
+
       // ==================== LOAD CHAPTER DATA ====================
 
       async function loadChapterData() {
@@ -2884,6 +3071,7 @@
 
       async function start() {
         const success = await loadChapterData();
+        loadLatestUpdate();
         if (success) {
           init();
         }

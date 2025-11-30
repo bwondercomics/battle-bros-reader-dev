@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+  <title>BWonderComics | Read Battle Bros Comics</title>
+  <meta name="description" content="BWonderComics official website, and Battle Bros comic reader" />
+  <meta name="keywords" content="battle bros, comic reader, online comics, free comics, webcomic, manga reader" />
+  <meta name="author" content="Battle Bros Comics" />
+  <meta name="theme-color" content="#00d9ff" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bwondercomics.com/" />
+  <meta property="og:title" content="BWonderComics - Free Online Comic Reader" />
+  <meta property="og:description" content="BWonderComics official website, and Battle Bros comic reader" />
+  <meta property="og:image" content="https://bwondercomics.com/banner1.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://bwondercomics.com/" />
+  <meta property="twitter:title" content="BWonderComics - Free Online Comic Reader" />
+  <meta property="twitter:description" content="BWonderComics official website, and Battle Bros comic reader" />
+  <meta property="twitter:image" content="https://bwondercomics.com/banner1.png" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="panel.png" />
+  <link rel="apple-touch-icon" href="panel.png" />
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Performance optimizations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+  <!-- Schema.org structured data for SEO -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "BWonderComics Battle Bros Comic Reader",
+  "url": "https://bwondercomics.com/",
+  "description": "BWonderComics official website, and Battle Bros comic reader",
+  "potentialAction": {
+    "@type": "ReadAction",
+    "target": "https://bwondercomics.com/"
+  }
+}
+</script>
+
+  <style>
+    /* ==================== CSS VARIABLES ==================== */
+    :root {
+      --primary: #00d9ff;
+      --secondary: #ff00ea;
+      --accent: #ffed00;
+      --bg-dark: #0a0a12;
+      --bg-panel: #1a1a2e;
+      --text: #ffffff;
+      --danger: #ff3838;
+    }
+
+    /* ==================== RESET ==================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ==================== ANIMATIONS ==================== */
+    @keyframes glitchText {
+
+      0%,
+      100% {
+        text-shadow: 2px 2px 0 var(--primary), -2px -2px 0 var(--secondary);
+      }
+
+      25% {
+        text-shadow: -2px 2px 0 var(--secondary), 2px -2px 0 var(--primary);
+      }
+
+      50% {
+        text-shadow: 2px -2px 0 var(--primary), -2px 2px 0 var(--secondary);
+      }
+
+      75% {
+        text-shadow: -2px -2px 0 var(--secondary), 2px 2px 0 var(--primary);
+      }
+    }
+
+    @keyframes scanline {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    @keyframes neonPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+      }
+
+      50% {
+        box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      }
+    }
+
+    @keyframes pixelShift {
+
+      0%,
+      100% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(2px, 0);
+      }
+
+      50% {
+        transform: translate(0, 2px);
+      }
+
+      75% {
+        transform: translate(-2px, 0);
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ==================== BASE LAYOUT ==================== */
+    html,
+    body {
+      height: 100%;
+      font-family: 'Righteous', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 72px);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg,
+          transparent 0px,
+          transparent 2px,
+          rgba(0, 217, 255, 0.02) 2px,
+          rgba(0, 217, 255, 0.02) 4px),
+        radial-gradient(circle at 20% 80%, rgba(255, 237, 0, 0.05), transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 234, 0.05), transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.05) 50%);
+      background-size: 100% 3px;
+      pointer-events: none;
+      z-index: 1;
+      animation: scanline 6s linear infinite;
+      opacity: 0.4;
+    }
+
+    /* ==================== HEADER ==================== */
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, rgba(10, 10, 18, 0.95), rgba(26, 26, 46, 0.95));
+      border-bottom: 3px solid var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
