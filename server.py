@@ -86,8 +86,12 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
             ET.SubElement(channel, 'description').text = 'Latest updates from the Battle Bros universe.'
             ET.SubElement(channel, 'language').text = 'en-us'
 
-            # Sort posts by date (newest first) just in case
-            sorted_posts = sorted(posts, key=lambda x: x.get('date', ''), reverse=True)
+            # Sort posts by date (newest first) and include only items marked for sharing
+            sorted_posts = sorted(
+                [p for p in posts if p.get('share', True)],
+                key=lambda x: x.get('date', ''),
+                reverse=True
+            )
 
             for post in sorted_posts:
                 item = ET.SubElement(channel, 'item')

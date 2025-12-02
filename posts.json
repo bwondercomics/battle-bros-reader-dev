@@ -1,9 +1,18 @@
 [
   {
+    "id": "8f36252d-29b6-4972-84c3-0ea98d5bfca0",
+    "title": "test eee",
+    "image": "",
+    "content": "bdafawsfawsfawefewafaj",
+    "date": "2025-11-30T13:47:56.986Z",
+    "share": false
+  },
+  {
     "id": "a0f952eb-730b-43c6-b896-b6f9a2f9b3bb",
     "title": "test",
     "image": "http://localhost:8000/banner3.png",
     "content": "teset2",
-    "date": "2025-11-30T12:41:46.796Z"
+    "date": "2025-11-30T12:41:46.796Z",
+    "share": true
   }
 ]

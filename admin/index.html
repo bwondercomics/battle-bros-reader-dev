@@ -1091,6 +1091,10 @@
             placeholder="Image URL (e.g., issues-images/issue7/page1.png)" style="margin-bottom: 10px;">
           <textarea id="postContent" class="form-input" placeholder="Post content..."
             style="min-height: 100px; margin-bottom: 10px;"></textarea>
+          <label style="display: flex; align-items: center; gap: 8px; margin: 6px 0 12px;">
+            <input type="checkbox" id="postShare" checked>
+            <span style="font-size: 0.9rem; color: var(--text);">Send to RSS / Social automations</span>
+          </label>
           <button class="btn-primary" id="btnSavePost">Publish Post</button>
           <div id="postStatus" class="success-message" style="display: none; margin-top: 10px;"></div>
         </div>
@@ -1266,6 +1270,7 @@
         postTitle: document.getElementById('postTitle'),
         postImage: document.getElementById('postImage'),
         postContent: document.getElementById('postContent'),
+        postShare: document.getElementById('postShare'),
         btnSavePost: document.getElementById('btnSavePost'),
         postList: document.getElementById('postList'),
         postStatus: document.getElementById('postStatus'),
@@ -1658,7 +1663,7 @@
           if (!response.ok) throw new Error('Failed to load posts.json');
 
           const data = await response.json();
-          posts = Array.isArray(data) ? data : [];
+          posts = Array.isArray(data) ? data.map(p => ({ ...p, share: p.share !== false })) : [];
           renderPosts();
         } catch (error) {
           console.error('Error loading posts:', error);
@@ -1686,10 +1691,11 @@
           item.className = 'chapter-item';
           const dateLabel = formatPostDate(post.date);
           const preview = getPostPreview(post.content);
+          const shareLabel = post.share === false ? '<span style="color: var(--danger); font-size: 0.85rem;">Not broadcasting</span>' : '<span style="color: var(--success); font-size: 0.85rem;">Broadcasting</span>';
           item.innerHTML = `
         <div class="chapter-info">
           <div class="chapter-name">${escapeHtml(post.title || 'Untitled')}</div>
-          <div class="chapter-meta">${dateLabel}</div>
+          <div class="chapter-meta">${dateLabel} • ${shareLabel}</div>
           <div class="chapter-meta" style="opacity:0.8;">${escapeHtml(preview)}</div>
         </div>
         <div class="chapter-actions">
@@ -1728,6 +1734,7 @@
         el.postTitle.value = '';
         el.postImage.value = '';
         el.postContent.value = '';
+        el.postShare.checked = true;
         el.btnSavePost.textContent = 'Publish Post';
       }
 
@@ -1765,6 +1772,7 @@
         const title = el.postTitle.value.trim();
         const image = el.postImage.value.trim();
         const content = el.postContent.value.trim();
+        const share = el.postShare.checked;
 
         if (!title || !content) {
           setPostStatus('Title and content are required.', true);
@@ -1776,7 +1784,7 @@
         if (editingPostId) {
           const idx = posts.findIndex(p => p.id === editingPostId);
           if (idx !== -1) {
-            posts[idx] = { ...posts[idx], title, image, content, date: now };
+            posts[idx] = { ...posts[idx], title, image, content, date: now, share };
           }
         } else {
           posts.unshift({
@@ -1784,7 +1792,8 @@
             title,
             image,
             content,
-            date: now
+            date: now,
+            share
           });
         }
 
@@ -1801,6 +1810,7 @@
         el.postTitle.value = post.title || '';
         el.postImage.value = post.image || '';
         el.postContent.value = post.content || '';
+        el.postShare.checked = post.share !== false;
         el.btnSavePost.textContent = 'Update Post';
         el.blogSection.style.display = 'block';
         el.blogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
