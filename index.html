@@ -197,6 +197,38 @@
       backdrop-filter: blur(8px);
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-link {
+      color: var(--primary);
+      text-decoration: none;
+      border: 1px solid var(--primary);
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: rgba(0, 217, 255, 0.1);
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+      background: var(--primary);
+      color: var(--bg-dark);
+      box-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+    }
+
     .brand {
       display: flex;
       gap: 12px;
@@ -1706,7 +1738,13 @@
         <p class="subtitle" id="subtitle" aria-live="polite">/// GUESS WHO'S BACK IN TOWN? ///</p>
       </div>
     </div>
-    <select id="chapter" aria-label="Select chapter"></select>
+    <div class="header-actions">
+      <select id="chapter" aria-label="Select chapter"></select>
+      <div class="nav-links">
+        <a class="nav-link" href="feed.html">Feed</a>
+        <a class="nav-link" href="media.html">Media</a>
+      </div>
+    </div>
   </header>
 
   <!-- ==================== MAIN VIEWER ==================== -->

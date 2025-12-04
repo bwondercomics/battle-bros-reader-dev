@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+  <title>Battle Bros Media Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #00d9ff;
+      --secondary: #ff00ea;
+      --accent: #ffed00;
+      --bg-dark: #0a0a12;
+      --bg-panel: #1a1a2e;
+      --text: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, rgba(0, 217, 255, 0.06), transparent 25%),
+        radial-gradient(circle at 90% 10%, rgba(255, 0, 234, 0.06), transparent 25%),
+        linear-gradient(180deg, rgba(10, 10, 18, 0.95) 0%, #05050a 100%);
+      color: var(--text);
+      font-family: 'Righteous', cursive;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.16), rgba(255, 0, 234, 0.12));
+      border-bottom: 3px solid var(--primary);
+      padding: 24px 16px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(6px);
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', cursive;
+      color: var(--primary);
+      margin: 0;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 0 var(--secondary);
+    }
+
+    .subhead {
+      color: rgba(255, 255, 255, 0.75);
+      margin-top: 6px;
+      letter-spacing: 1px;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+    }
+
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+      border: 2px solid var(--text);
+      padding: 10px 14px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background: var(--text);
+      color: var(--bg-dark);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 2px solid var(--primary);
+      background: var(--bg-panel);
+      color: var(--text);
+      font-family: 'Righteous', cursive;
+      font-size: 1rem;
+    }
+
+    .tags-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tag-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--primary);
+      background: rgba(0, 217, 255, 0.12);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .tag-pill.active {
+      background: var(--primary);
+      color: var(--bg-dark);
+      box-shadow: 0 0 12px rgba(0, 217, 255, 0.6);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--bg-panel);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0, 217, 255, 0.18);
+      display: flex;
+      flex-direction: column;
+      min-height: 240px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #05050a;
+    }
+
+    .card-body {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-path {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.9);
+      word-break: break-all;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .card-tag {
+      background: rgba(255, 237, 0, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(255, 237, 0, 0.4);
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: rgba(255, 255, 255, 0.8);
+      border: 2px dashed rgba(0, 217, 255, 0.3);
+      border-radius: 12px;
+      background: rgba(26, 26, 46, 0.6);
+      grid-column: 1 / -1;
+    }
+
+    .error {
+      color: var(--secondary);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .card img {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Battle Bros Media</h1>
+    <div class="subhead">Browse artwork attached to feed posts.</div>
+  </header>
+
+  <div class="container">
+    <div class="nav-row">
+      <a href="index.html" class="back-btn">&#8592; Back to Comic</a>
+      <a href="feed.html" class="back-btn">Feed</a>
+    </div>
+
+    <div class="error" id="error" style="display: none;"></div>
+
+    <div class="search-row">
+      <input type="text" id="search" class="search-input" placeholder="Search by tag or filename...">
+    </div>
+
+    <div class="tags-bar" id="tagsBar"></div>
+
+    <div class="grid" id="grid">
+      <div class="empty-state">Loading media...</div>
+    </div>
+  </div>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const tagsBar = document.getElementById('tagsBar');
+    const searchInput = document.getElementById('search');
+    const errorEl = document.getElementById('error');
+
+    let mediaItems = [];
+    let activeTag = '';
+
+    function setError(message) {
+      if (!errorEl) return;
+      if (message) {
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+      } else {
+        errorEl.style.display = 'none';
+      }
+    }
+
+    function normalizeTags(tags) {
+      return Array.isArray(tags)
+        ? tags.map(t => String(t).trim().toLowerCase()).filter(Boolean)
+        : [];
+    }
+
+    function renderTags() {
+      tagsBar.innerHTML = '';
+      const allTags = Array.from(new Set(mediaItems.flatMap(m => normalizeTags(m.tags || [])))).sort();
+      if (!allTags.length) return;
+
+      const all = document.createElement('button');
+      all.className = `tag-pill ${activeTag === '' ? 'active' : ''}`;
+      all.textContent = 'All';
+      all.addEventListener('click', () => {
+        activeTag = '';
+        renderTags();
+        renderGrid();
+      });
+      tagsBar.appendChild(all);
+
+      allTags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.className = `tag-pill ${activeTag === tag ? 'active' : ''}`;
+        btn.textContent = tag;
+        btn.addEventListener('click', () => {
+          activeTag = activeTag === tag ? '' : tag;
+          renderTags();
+          renderGrid();
+        });
+        tagsBar.appendChild(btn);
+      });
+    }
+
+    function renderGrid() {
+      grid.innerHTML = '';
+      const term = (searchInput.value || '').trim().toLowerCase();
+
+      const filtered = mediaItems.filter(item => {
+        const path = (item.path || '').toLowerCase();
+        const tags = normalizeTags(item.tags || []);
+        const matchesTag = activeTag ? tags.includes(activeTag) : true;
+        const matchesTerm = term
+          ? path.includes(term) || tags.some(t => t.includes(term))
+          : true;
+        return matchesTag && matchesTerm;
+      });
+
+      if (!filtered.length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = 'No media found for that search. Try another tag or term.';
+        grid.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.alt = item.path || 'Media item';
+        img.src = item.path || '';
+        img.onerror = () => { img.style.opacity = '0.3'; };
+        card.appendChild(img);
+
+        const body = document.createElement('div');
+        body.className = 'card-body';
+        const pathEl = document.createElement('div');
+        pathEl.className = 'card-path';
+        pathEl.textContent = item.path || 'Unknown path';
+        body.appendChild(pathEl);
+
+        const tagsWrap = document.createElement('div');
+        tagsWrap.className = 'card-tags';
+        const tags = normalizeTags(item.tags || []);
+        if (tags.length) {
+          tags.forEach(tag => {
+            const pill = document.createElement('span');
+            pill.className = 'card-tag';
+            pill.textContent = tag;
+            tagsWrap.appendChild(pill);
+          });
+        } else {
+          const none = document.createElement('span');
+          none.className = 'card-tag';
+          none.textContent = 'untagged';
+          tagsWrap.appendChild(none);
+        }
+        body.appendChild(tagsWrap);
+
+        card.appendChild(body);
+        grid.appendChild(card);
+      });
+    }
+
+    async function loadMedia() {
+      try {
+        const response = await fetch('media.json', { cache: 'no-cache' });
+        if (!response.ok) throw new Error('Failed to load media.json');
+        const data = await response.json();
+        mediaItems = Array.isArray(data) ? data : [];
+        setError('');
+      } catch (error) {
+        console.error(error);
+        mediaItems = [];
+        setError('Media library could not be loaded. Add items via the admin to generate media.json.');
+      }
+      renderTags();
+      renderGrid();
+    }
+
+    searchInput.addEventListener('input', renderGrid);
+    loadMedia();
+  </script>
+</body>
+
+</html>

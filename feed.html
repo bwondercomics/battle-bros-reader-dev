@@ -142,6 +142,22 @@
       color: rgba(255, 255, 255, 0.92);
     }
 
+    .tag-list {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .tag-pill {
+      background: rgba(0, 217, 255, 0.15);
+      border: 1px solid rgba(0, 217, 255, 0.4);
+      color: var(--primary);
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+
     .empty-state {
       text-align: center;
       padding: 48px 24px;
@@ -195,6 +211,7 @@
     <div class="nav-row">
       <a href="index.html" class="back-btn">&#8592; Back to Comic</a>
       <a class="rss-link" href="rss.xml" target="_blank" rel="noopener">RSS Feed</a>
+      <a href="media.html" class="back-btn">Media</a>
     </div>
 
     <div id="feedContainer">
@@ -249,6 +266,18 @@
         article.appendChild(img);
       }
 
+      if (post.imageTags && post.imageTags.length) {
+        const tagsWrap = document.createElement('div');
+        tagsWrap.className = 'tag-list';
+        post.imageTags.forEach(tag => {
+          const pill = document.createElement('span');
+          pill.className = 'tag-pill';
+          pill.textContent = tag;
+          tagsWrap.appendChild(pill);
+        });
+        article.appendChild(tagsWrap);
+      }
+
       const content = document.createElement('div');
       content.className = 'post-content';
       const safe = escapeHtml(post.content || '').replace(/\n/g, '<br>');
@@ -262,7 +291,15 @@
       try {
         const response = await fetch('posts.json', { cache: 'no-cache' });
         if (!response.ok) throw new Error('Failed to load posts.json');
-        const posts = await response.json();
+        const data = await response.json();
+        const posts = Array.isArray(data)
+          ? data.map(p => ({
+            ...p,
+            imageTags: Array.isArray(p.imageTags)
+              ? p.imageTags
+              : (p.imageTags ? String(p.imageTags).split(',').map(t => t.trim()).filter(Boolean) : [])
+          }))
+          : [];
 
         feedContainer.innerHTML = '';
 

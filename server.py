@@ -56,6 +56,8 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                 self.handle_list_images()
             elif self.path == '/api/create-chapter':
                 self.handle_create_chapter()
+            elif self.path == '/api/upload-media':
+                self.handle_upload_media()
             else:
                 self.send_response(404)
                 self.end_headers()
@@ -329,6 +331,50 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
             return
 
         self._json(200, {'status': 'ok', 'folder': chapter_folder})
+
+    # ----------------------- MEDIA UPLOAD -----------------------
+    def handle_upload_media(self):
+        data = self._read_json()
+        file_info = data.get('file') or {}
+        name = (file_info.get('name') or '').strip()
+        b64_data = file_info.get('data')
+
+        if not name or not b64_data:
+            self._json(400, {'error': 'file (name, data) is required'})
+            return
+
+        ext = os.path.splitext(name)[1].lower()
+        if ext not in ALLOWED_IMAGE_EXTENSIONS:
+            self._json(400, {'error': 'Unsupported file type'})
+            return
+
+        try:
+            raw = base64.b64decode(b64_data)
+        except Exception:
+            self._json(400, {'error': 'Invalid base64 data'})
+            return
+
+        dest_dir = safe_path('media')
+        os.makedirs(dest_dir, exist_ok=True)
+
+        # Ensure unique filename
+        base_name = re.sub(r'[^a-zA-Z0-9_-]', '_', os.path.splitext(name)[0]) or 'media'
+        candidate = f"{base_name}{ext}"
+        counter = 1
+        while os.path.exists(os.path.join(dest_dir, candidate)):
+            candidate = f"{base_name}_{counter}{ext}"
+            counter += 1
+
+        dest_path = os.path.join(dest_dir, candidate)
+        try:
+            with open(dest_path, 'wb') as f:
+                f.write(raw)
+        except Exception as e:
+            self._json(500, {'error': str(e)})
+            return
+
+        rel_path = f"media/{candidate}"
+        self._json(200, {'path': rel_path})
 
     def generate_rss(self, posts):
         try:

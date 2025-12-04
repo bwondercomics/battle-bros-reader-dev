@@ -1063,7 +1063,8 @@
       <h1 class="admin-title">Battle Bros Admin</h1>
       <nav class="admin-nav">
         <button class="btn-secondary" id="btnSettings">⚙️ Settings</button>
-        <button class="btn-secondary" id="btnBlog">📰 Blog / Feed</button>
+        <button class="btn-secondary" id="btnBlog">dY" Blog / Feed</button>
+        <button class="btn-secondary" id="btnMedia">Media</button>
         <button class="btn-secondary" id="btnDesigner" onclick="window.location.href='designer.html'">🎨 Page
           Designer</button>
         <button class="btn-secondary" id="btnPreview">Preview Changes</button>
@@ -1089,6 +1090,12 @@
           <input type="text" id="postTitle" class="form-input" placeholder="Post Title" style="margin-bottom: 10px;">
           <input type="text" id="postImage" class="form-input"
             placeholder="Image URL (e.g., issues-images/issue7/page1.png)" style="margin-bottom: 10px;">
+          <input type="file" id="postImageFile" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+            style="margin-bottom: 10px;">
+          <input type="text" id="postImageTags" class="form-input" placeholder="Image tags (comma separated)"
+            style="margin-bottom: 10px;">
+          <button type="button" class="btn-secondary" id="btnMediaPicker" style="margin-bottom: 10px;">Choose from
+            Media</button>
           <textarea id="postContent" class="form-input" placeholder="Post content..."
             style="min-height: 100px; margin-bottom: 10px;"></textarea>
           <label style="display: flex; align-items: center; gap: 8px; margin: 6px 0 12px;">
@@ -1137,6 +1144,23 @@
           📝 <strong>Instructions:</strong> Copy this JSON and replace the "chapters" object in index.html (around line
           1762)
         </p>
+            </section>
+
+      <!-- Media Library Section -->
+      <section class="section" id="mediaSection" style="display: none;">
+        <h2 class="section-title">Media Library</h2>
+        <div class="form-group">
+          <label class="form-label">Add Media</label>
+          <input type="text" id="mediaPath" class="form-input" placeholder="Image path or URL (e.g., chapters/01/01.png)" style="margin-bottom: 8px;">
+          <input type="text" id="mediaTags" class="form-input" placeholder="Tags (comma separated, e.g., cover,issue1)" style="margin-bottom: 8px;">
+          <button class="btn-primary" id="btnAddMedia" type="button">Add to Library</button>
+          <div id="mediaStatus" class="success-message" style="display: none; margin-top: 8px;"></div>
+        </div>
+        <div class="form-group" style="margin-top: 16px;">
+          <label class="form-label" for="mediaSearch">Search by tag</label>
+          <input type="text" id="mediaSearch" class="form-input" placeholder="e.g., cover" />
+        </div>
+        <div id="mediaList" class="chapter-list" style="margin-top: 16px;"></div>
       </section>
     </main>
   </div>
@@ -1257,13 +1281,16 @@
 
       const API_ENDPOINT = '/api/save';
       const POSTS_FILE = 'posts.json';
+      const MEDIA_FILE = 'media.json';
 
       let chapters = {};
       let chapterFolders = {};
       let currentEditingChapter = null;
       let posts = [];
+      let mediaItems = [];
       let editingPostId = null;
       let previewState = { chapter: '', pages: [], index: 0 };
+      let pendingMediaSelection = null;
 
       // Image upload state
       let selectedFiles = [];
@@ -1289,6 +1316,9 @@
         chapterSection: document.querySelector('.section:first-of-type'), // Assuming first section is chapters
         postTitle: document.getElementById('postTitle'),
         postImage: document.getElementById('postImage'),
+        postImageFile: document.getElementById('postImageFile'),
+        postImageTags: document.getElementById('postImageTags'),
+        btnMediaPicker: document.getElementById('btnMediaPicker'),
         postContent: document.getElementById('postContent'),
         postShare: document.getElementById('postShare'),
         btnSavePost: document.getElementById('btnSavePost'),
@@ -1308,6 +1338,15 @@
         previewNext: document.getElementById('previewNext'),
         previewFrame: document.getElementById('previewFrame'),
         previewEmpty: document.getElementById('previewEmpty'),
+        // Media
+        btnMedia: document.getElementById('btnMedia'),
+        mediaSection: document.getElementById('mediaSection'),
+        mediaList: document.getElementById('mediaList'),
+        mediaPath: document.getElementById('mediaPath'),
+        mediaTags: document.getElementById('mediaTags'),
+        mediaSearch: document.getElementById('mediaSearch'),
+        btnAddMedia: document.getElementById('btnAddMedia'),
+        mediaStatus: document.getElementById('mediaStatus'),
         editModal: document.getElementById('editModal'),
         modalTitle: document.getElementById('modalTitle'),
         editForm: document.getElementById('editForm'),
@@ -1462,6 +1501,7 @@
         el.adminDashboard.style.display = 'block';
         await loadChapters();
         await loadPosts();
+        await loadMedia();
         renderChapterList();
       }
 
@@ -1739,7 +1779,13 @@
           if (!response.ok) throw new Error('Failed to load posts.json');
 
           const data = await response.json();
-          posts = Array.isArray(data) ? data.map(p => ({ ...p, share: p.share !== false })) : [];
+          posts = Array.isArray(data)
+            ? data.map(p => ({
+              ...p,
+              share: p.share !== false,
+              imageTags: Array.isArray(p.imageTags) ? p.imageTags : parseTags(p.imageTags || '')
+            }))
+            : [];
           renderPosts();
         } catch (error) {
           console.error('Error loading posts:', error);
@@ -1768,10 +1814,12 @@
           const dateLabel = formatPostDate(post.date);
           const preview = getPostPreview(post.content);
           const shareLabel = post.share === false ? '<span style="color: var(--danger); font-size: 0.85rem;">Not broadcasting</span>' : '<span style="color: var(--success); font-size: 0.85rem;">Broadcasting</span>';
+          const tagText = post.imageTags && post.imageTags.length ? `Tags: ${post.imageTags.join(', ')}` : '';
           item.innerHTML = `
         <div class="chapter-info">
           <div class="chapter-name">${escapeHtml(post.title || 'Untitled')}</div>
           <div class="chapter-meta">${dateLabel} • ${shareLabel}</div>
+          ${tagText ? `<div class="chapter-meta" style="opacity:0.8;">${escapeHtml(tagText)}</div>` : ''}
           <div class="chapter-meta" style="opacity:0.8;">${escapeHtml(preview)}</div>
         </div>
         <div class="chapter-actions">
@@ -1809,6 +1857,8 @@
         editingPostId = null;
         el.postTitle.value = '';
         el.postImage.value = '';
+        if (el.postImageFile) el.postImageFile.value = '';
+        if (el.postImageTags) el.postImageTags.value = '';
         el.postContent.value = '';
         el.postShare.checked = true;
         el.btnSavePost.textContent = 'Publish Post';
@@ -1832,6 +1882,30 @@
         }
         return `post-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
       }
+      function generateMediaId() {
+        if (window.crypto?.randomUUID) {
+          return window.crypto.randomUUID();
+        }
+        return `media-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+      }
+
+      function setMediaStatus(message, isError = false) {
+        if (!el.mediaStatus) return;
+        el.mediaStatus.textContent = message;
+        el.mediaStatus.style.display = 'block';
+        el.mediaStatus.style.background = isError ? 'var(--danger)' : 'var(--success)';
+        el.mediaStatus.style.color = isError ? 'var(--text)' : 'var(--bg-dark)';
+        setTimeout(() => {
+          el.mediaStatus.style.display = 'none';
+        }, 3000);
+      }
+
+      function generateMediaId() {
+        if (window.crypto?.randomUUID) {
+          return window.crypto.randomUUID();
+        }
+        return `media-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+      }
 
       async function persistPosts() {
         posts.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
@@ -1846,13 +1920,46 @@
 
       async function savePost() {
         const title = el.postTitle.value.trim();
-        const image = el.postImage.value.trim();
+        const imageTags = parseTags(el.postImageTags?.value || '');
         const content = el.postContent.value.trim();
         const share = el.postShare.checked;
+        let image = el.postImage.value.trim();
+        const uploadFile = el.postImageFile?.files?.[0];
 
         if (!title || !content) {
           setPostStatus('Title and content are required.', true);
           return;
+        }
+
+        // If a file is attached, upload it and add to media library
+        if (uploadFile) {
+          try {
+            setPostStatus('Uploading image...', false);
+            const payload = {
+              name: uploadFile.name,
+              data: await readFileAsBase64(uploadFile)
+            };
+            const response = await fetch('/api/upload-media', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ file: payload })
+            });
+            const result = await response.json();
+            if (!response.ok) {
+              throw new Error(result.error || 'Upload failed');
+            }
+            image = result.path || image;
+            el.postImage.value = image;
+            if (el.postImageFile) el.postImageFile.value = '';
+            await upsertMediaEntry(image, imageTags);
+            setPostStatus('Image uploaded and added to media library.');
+          } catch (error) {
+            console.error('Post image upload failed:', error);
+            setPostStatus(`Image upload failed: ${error.message}`, true);
+            return;
+          }
+        } else if (image) {
+          await upsertMediaEntry(image, imageTags);
         }
 
         const now = new Date().toISOString();
@@ -1860,13 +1967,14 @@
         if (editingPostId) {
           const idx = posts.findIndex(p => p.id === editingPostId);
           if (idx !== -1) {
-            posts[idx] = { ...posts[idx], title, image, content, date: now, share };
+            posts[idx] = { ...posts[idx], title, image, imageTags, content, date: now, share };
           }
         } else {
           posts.unshift({
             id: generatePostId(),
             title,
             image,
+            imageTags,
             content,
             date: now,
             share
@@ -1885,6 +1993,7 @@
         editingPostId = post.id;
         el.postTitle.value = post.title || '';
         el.postImage.value = post.image || '';
+        if (el.postImageTags) el.postImageTags.value = (post.imageTags || []).join(', ');
         el.postContent.value = post.content || '';
         el.postShare.checked = post.share !== false;
         el.btnSavePost.textContent = 'Update Post';
@@ -1910,6 +2019,9 @@
         el.blogSection.style.display = 'block';
         if (el.previewSection) {
           el.previewSection.style.display = 'none';
+        }
+        if (el.mediaSection) {
+          el.mediaSection.style.display = 'none';
         }
         el.blogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         loadPosts();
@@ -2615,28 +2727,158 @@
           return nameA.localeCompare(nameB);
         });
       }
-
-      function normalizePages(pages = []) {
-        return pages
-          .filter(p => typeof p === 'string')
-          .map(p => p.trim())
+      function parseTags(text = '') {
+        return text
+          .split(',')
+          .map(t => t.trim().toLowerCase())
           .filter(Boolean);
       }
 
-      function pagesEqual(a = [], b = []) {
-        if (a.length !== b.length) return false;
-        for (let i = 0; i < a.length; i++) {
-          if (a[i] !== b[i]) return false;
+
+      async function loadMedia() {
+        try {
+          const response = await fetch(MEDIA_FILE, { cache: 'no-cache' });
+          if (!response.ok) throw new Error('Failed to load media.json');
+          const data = await response.json();
+          mediaItems = Array.isArray(data)
+            ? data.map(m => ({
+              id: m.id || `media-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`,
+              path: m.path || '',
+              tags: Array.isArray(m.tags) ? m.tags : parseTags(m.tags || '')
+            }))
+            : [];
+        } catch (error) {
+          console.warn('Error loading media.json, starting empty:', error);
+          mediaItems = [];
         }
-        return true;
+        renderMedia();
       }
 
-      function getPreviewPages(chapterName) {
-        if (!chapterName) return [];
-        if (chapterName === currentEditingChapter && currentPages.length) {
-          return normalizePages(currentPages);
+      async function saveMedia(showMessage = false) {
+        try {
+          await saveToServer(MEDIA_FILE, mediaItems);
+          if (showMessage) setMediaStatus('Media library saved.');
+        } catch (error) {
+          console.error('Failed to save media:', error);
+          setMediaStatus('Failed to save media.json', true);
         }
-        return normalizePages(chapters[chapterName] || []);
+      }
+
+      function showMediaSection() {
+        if (el.blogSection) el.blogSection.style.display = 'none';
+        if (el.previewSection) el.previewSection.style.display = 'none';
+        if (el.mediaSection) {
+          el.mediaSection.style.display = 'block';
+          el.mediaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        renderMedia();
+      }
+
+      function renderMedia() {
+        if (!el.mediaList) return;
+        const term = (el.mediaSearch?.value || '').trim().toLowerCase();
+        el.mediaList.innerHTML = '';
+
+        const filtered = mediaItems.filter(item => {
+          if (!term) return true;
+          return (
+            item.path.toLowerCase().includes(term) ||
+            (item.tags || []).some(t => t.includes(term))
+          );
+        });
+
+        if (!filtered.length) {
+          const empty = document.createElement('div');
+          empty.className = 'chapter-item';
+          empty.textContent = 'No media found. Add an item above.';
+          el.mediaList.appendChild(empty);
+          return;
+        }
+
+        filtered.forEach(item => {
+          const tagsText = (item.tags || []).join(', ');
+          const div = document.createElement('div');
+          div.className = 'chapter-item';
+          div.innerHTML = `
+        <div class="chapter-info">
+          <div class="chapter-name">${escapeHtml(item.path)}</div>
+          <div class="chapter-meta" style="opacity:0.8;">${escapeHtml(tagsText || 'No tags')}</div>
+        </div>
+        <div class="chapter-actions">
+          <button class="btn-small btn-edit" data-use="${escapeHtml(item.id)}">Use</button>
+        </div>
+      `;
+          el.mediaList.appendChild(div);
+        });
+
+        el.mediaList.querySelectorAll('[data-use]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-use');
+            const item = mediaItems.find(m => m.id === id);
+            if (item) {
+              applyMediaToPost(item);
+            }
+          });
+        });
+      }
+
+      async function upsertMediaEntry(path, tags = []) {
+        if (!path) return;
+        const normalizedTags = Array.isArray(tags) ? tags : parseTags(tags || '');
+        const existing = mediaItems.find(m => m.path === path);
+        if (existing) {
+          if (normalizedTags.length) {
+            existing.tags = normalizedTags;
+          }
+        } else {
+          mediaItems.push({
+            id: generateMediaId(),
+            path,
+            tags: normalizedTags
+          });
+        }
+        renderMedia();
+        await saveMedia();
+      }
+
+      async function addMediaItem() {
+        const path = (el.mediaPath?.value || '').trim();
+        const tags = parseTags(el.mediaTags?.value || '');
+        if (!path) {
+          setMediaStatus('Path is required.', true);
+          return;
+        }
+
+        const existing = mediaItems.find(m => m.path === path);
+        if (existing) {
+          existing.tags = tags;
+          setMediaStatus('Updated existing media tags.');
+        } else {
+          mediaItems.push({
+            id: generateMediaId(),
+            path,
+            tags
+          });
+          setMediaStatus('Added media item.');
+        }
+
+        el.mediaPath.value = '';
+        if (el.mediaTags) el.mediaTags.value = '';
+        renderMedia();
+        await saveMedia();
+      }
+
+      function applyMediaToPost(item) {
+        if (el.postImage) el.postImage.value = item.path || '';
+        if (el.postImageTags) el.postImageTags.value = (item.tags || []).join(', ');
+        if (pendingMediaSelection) {
+          pendingMediaSelection = null;
+        }
+        if (el.blogSection) {
+          el.blogSection.style.display = 'block';
+          el.blogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setPostStatus('Image selected from media.');
       }
 
       // ==================== EVENT HANDLERS ====================
@@ -2679,6 +2921,24 @@
           e.preventDefault();
           await savePost();
         });
+        if (el.btnMedia) {
+          el.btnMedia.addEventListener('click', () => {
+            pendingMediaSelection = null;
+            showMediaSection();
+          });
+        }
+        if (el.btnMediaPicker) {
+          el.btnMediaPicker.addEventListener('click', () => {
+            pendingMediaSelection = 'post';
+            showMediaSection();
+          });
+        }
+        if (el.btnAddMedia) {
+          el.btnAddMedia.addEventListener('click', addMediaItem);
+        }
+        if (el.mediaSearch) {
+          el.mediaSearch.addEventListener('input', renderMedia);
+        }
         if (el.previewChapterSelect) {
           el.previewChapterSelect.addEventListener('change', (e) => {
             setPreviewChapter(e.target.value);
@@ -2756,3 +3016,4 @@
 </body>
 
 </html>
+
