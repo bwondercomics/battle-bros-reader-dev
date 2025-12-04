@@ -1154,6 +1154,7 @@
           <input type="text" id="mediaPath" class="form-input" placeholder="Image path or URL (e.g., chapters/01/01.png)" style="margin-bottom: 8px;">
           <input type="text" id="mediaTags" class="form-input" placeholder="Tags (comma separated, e.g., cover,issue1)" style="margin-bottom: 8px;">
           <button class="btn-primary" id="btnAddMedia" type="button">Add to Library</button>
+          <button class="btn-secondary" id="btnSyncMedia" type="button" style="margin-left: 8px;">Sync from media folder</button>
           <div id="mediaStatus" class="success-message" style="display: none; margin-top: 8px;"></div>
         </div>
         <div class="form-group" style="margin-top: 16px;">
@@ -1346,6 +1347,7 @@
         mediaTags: document.getElementById('mediaTags'),
         mediaSearch: document.getElementById('mediaSearch'),
         btnAddMedia: document.getElementById('btnAddMedia'),
+        btnSyncMedia: document.getElementById('btnSyncMedia'),
         mediaStatus: document.getElementById('mediaStatus'),
         editModal: document.getElementById('editModal'),
         modalTitle: document.getElementById('modalTitle'),
@@ -2751,6 +2753,7 @@
           console.warn('Error loading media.json, starting empty:', error);
           mediaItems = [];
         }
+        await syncMediaFromDisk(false);
         renderMedia();
       }
 
@@ -2820,6 +2823,63 @@
             }
           });
         });
+      }
+
+      async function syncMediaFromDisk(showMessage = true) {
+        try {
+          const response = await fetch('/api/list-media', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.error || 'Failed to list media folder');
+          }
+          const diskPaths = result.paths || [];
+          const existingMap = new Map(mediaItems.map(m => [m.path, m]));
+          const postTagMap = new Map(
+            (posts || [])
+              .filter(p => p.image)
+              .map(p => [p.image, Array.isArray(p.imageTags) ? p.imageTags : parseTags(p.imageTags || '')])
+          );
+
+          let added = 0;
+          let updated = 0;
+
+          diskPaths.forEach(p => {
+            const existing = existingMap.get(p);
+            const postTags = postTagMap.get(p) || [];
+            if (existing) {
+              if ((!existing.tags || existing.tags.length === 0) && postTags.length) {
+                existing.tags = postTags;
+                updated += 1;
+              }
+            } else {
+              mediaItems.push({
+                id: generateMediaId(),
+                path: p,
+                tags: postTags
+              });
+              added += 1;
+            }
+          });
+
+          const changed = added > 0 || updated > 0;
+          if (changed) {
+            await saveMedia();
+            renderMedia();
+          }
+          if (showMessage) {
+            if (changed) {
+              setMediaStatus(`Synced ${added} new item(s)${updated ? `, updated ${updated} tag set(s)` : ''}.`);
+            } else {
+              setMediaStatus('Media folder is already synced.');
+            }
+          }
+        } catch (error) {
+          console.error('Media sync failed:', error);
+          if (showMessage) setMediaStatus('Failed to sync media folder.', true);
+        }
       }
 
       async function upsertMediaEntry(path, tags = []) {
@@ -2935,6 +2995,9 @@
         }
         if (el.btnAddMedia) {
           el.btnAddMedia.addEventListener('click', addMediaItem);
+        }
+        if (el.btnSyncMedia) {
+          el.btnSyncMedia.addEventListener('click', () => syncMediaFromDisk(true));
         }
         if (el.mediaSearch) {
           el.mediaSearch.addEventListener('input', renderMedia);

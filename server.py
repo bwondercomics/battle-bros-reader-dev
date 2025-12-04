@@ -58,6 +58,8 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                 self.handle_create_chapter()
             elif self.path == '/api/upload-media':
                 self.handle_upload_media()
+            elif self.path == '/api/list-media':
+                self.handle_list_media()
             else:
                 self.send_response(404)
                 self.end_headers()
@@ -375,6 +377,25 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
 
         rel_path = f"media/{candidate}"
         self._json(200, {'path': rel_path})
+
+    # ----------------------- LIST MEDIA FILES -----------------------
+    def handle_list_media(self):
+        media_dir = safe_path('media')
+        if not os.path.exists(media_dir):
+            self._json(200, {'paths': []})
+            return
+
+        paths = []
+        for root, _, files in os.walk(media_dir):
+            for name in files:
+                ext = os.path.splitext(name)[1].lower()
+                if ext in ALLOWED_IMAGE_EXTENSIONS:
+                    abs_path = os.path.join(root, name)
+                    rel = os.path.relpath(abs_path, BASE_DIR).replace(os.sep, '/')
+                    paths.append(rel)
+
+        paths.sort()
+        self._json(200, {'paths': paths})
 
     def generate_rss(self, posts):
         try:
