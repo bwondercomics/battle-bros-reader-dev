@@ -279,6 +279,8 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: stretch;
     }
 
     .btn-secondary {
@@ -317,6 +319,60 @@
       background: var(--danger);
       color: var(--text);
       box-shadow: 0 0 15px rgba(255, 56, 56, 0.5);
+    }
+
+    /* Navigation button styling (placed after base button styles for override) */
+    .admin-nav .nav-btn {
+      position: relative;
+      border: 1px solid rgba(0, 217, 255, 0.6);
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(255, 0, 234, 0.1));
+      color: var(--text);
+      padding: 10px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      font-family: 'Bebas Neue', cursive;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      box-shadow: 0 0 12px rgba(0, 217, 255, 0.25);
+      text-shadow: 0 0 6px rgba(0, 217, 255, 0.4);
+      overflow: hidden;
+    }
+
+    .admin-nav .nav-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      box-shadow: 0 0 18px rgba(255, 237, 0, 0.35);
+    }
+
+    .admin-nav .nav-btn:active {
+      transform: translateY(0);
+    }
+
+    .admin-nav .nav-btn--primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--bg-dark);
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(255, 237, 0, 0.45);
+      text-shadow: none;
+    }
+
+    .admin-nav .nav-btn--danger {
+      border-color: var(--danger);
+      color: var(--danger);
+      background: linear-gradient(135deg, rgba(255, 56, 56, 0.12), rgba(255, 0, 234, 0.08));
+      box-shadow: 0 0 12px rgba(255, 56, 56, 0.25);
+    }
+
+    .admin-nav .nav-btn--danger:hover {
+      background: linear-gradient(135deg, rgba(255, 56, 56, 0.2), rgba(255, 237, 0, 0.1));
+      color: var(--text);
+      border-color: var(--accent);
     }
 
     .admin-content {
@@ -1062,14 +1118,13 @@
     <header class="admin-header">
       <h1 class="admin-title">Battle Bros Admin</h1>
       <nav class="admin-nav">
-        <button class="btn-secondary" id="btnSettings">⚙️ Settings</button>
-        <button class="btn-secondary" id="btnBlog">dY" Blog / Feed</button>
-        <button class="btn-secondary" id="btnMedia">Media</button>
-        <button class="btn-secondary" id="btnDesigner" onclick="window.location.href='designer.html'">🎨 Page
-          Designer</button>
-        <button class="btn-secondary" id="btnPreview">Preview Changes</button>
-        <button class="btn-primary" id="btnPublish">🚀 Publish to GitHub</button>
-        <button class="btn-logout" id="btnLogout">Logout</button>
+        <button class="btn-secondary nav-btn" id="btnSettings">Settings</button>
+        <button class="btn-secondary nav-btn" id="btnBlog">Blog / Feed</button>
+        <button class="btn-secondary nav-btn" id="btnMedia">Media</button>
+        <button class="btn-secondary nav-btn" id="btnDesigner" onclick="window.location.href='designer.html'">Page Designer</button>
+        <button class="btn-secondary nav-btn" id="btnPreview">Preview Changes</button>
+        <button class="btn-primary nav-btn nav-btn--primary" id="btnPublish">Publish to GitHub</button>
+        <button class="btn-logout nav-btn nav-btn--danger" id="btnLogout">Logout</button>
       </nav>
     </header>
 
