@@ -1077,6 +1077,17 @@
       <!-- Chapter Management Section -->
       <section class="section">
         <h2 class="section-title">Chapter Management</h2>
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Status Message (Reader Header)</label>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="statusMessageInput" class="form-input" placeholder="issue_7_friday"
+              style="max-width: 260px; padding: 10px 12px;">
+            <button class="btn-small btn-edit" id="btnSaveStatus" type="button">Save Status</button>
+            <div id="statusMessageStatus" class="success-message" style="display: none; margin: 0;"></div>
+          </div>
+          <p style="font-size: 0.85rem; opacity: 0.8; margin-top: 6px;">Appears next to the chapter selector on the
+            reader.</p>
+        </div>
         <div id="chapterList" class="chapter-list"></div>
         <button class="btn-small btn-add" id="btnAddChapter">+ Add New Chapter</button>
       </section>
@@ -1286,6 +1297,7 @@
 
       let chapters = {};
       let chapterFolders = {};
+      let statusMessage = '';
       let currentEditingChapter = null;
       let posts = [];
       let mediaItems = [];
@@ -1310,6 +1322,9 @@
         adminDashboard: document.getElementById('adminDashboard'),
         chapterList: document.getElementById('chapterList'),
         btnAddChapter: document.getElementById('btnAddChapter'),
+        statusMessageInput: document.getElementById('statusMessageInput'),
+        btnSaveStatus: document.getElementById('btnSaveStatus'),
+        statusMessageStatus: document.getElementById('statusMessageStatus'),
         btnLogout: document.getElementById('btnLogout'),
         btnSettings: document.getElementById('btnSettings'),
         btnBlog: document.getElementById('btnBlog'),
@@ -1405,6 +1420,7 @@
             if (data.chapters && typeof data.chapters === 'object') {
               chapters = data.chapters;
               chapterFolders = data.chapterFolders || {};
+              statusMessage = data.statusMessage || '';
               // Infer missing folder mappings from existing pages
               Object.keys(chapters).forEach(name => {
                 if (!chapterFolders[name]) {
@@ -1430,6 +1446,7 @@
             if (parsed && parsed.chapters) {
               chapters = parsed.chapters;
               chapterFolders = parsed.chapterFolders || {};
+              statusMessage = parsed.statusMessage || '';
             } else {
               chapters = parsed || {};
               chapterFolders = {};
@@ -1473,7 +1490,7 @@
 
       async function saveChapters(showMessage = false) {
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify({ chapters, chapterFolders }));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ chapters, chapterFolders, statusMessage }));
         } catch (error) {
           console.warn('Unable to persist chapters to localStorage:', error);
         }
@@ -1481,6 +1498,7 @@
         const payload = {
           chapters,
           chapterFolders,
+          statusMessage,
           lastUpdated: new Date().toISOString(),
           publishedBy: 'Admin Panel'
         };
@@ -1504,6 +1522,7 @@
         await loadChapters();
         await loadPosts();
         await loadMedia();
+        renderStatusMessageInput();
         renderChapterList();
       }
 
@@ -1536,6 +1555,34 @@
         document.querySelectorAll('.btn-delete').forEach(btn => {
           btn.addEventListener('click', () => deleteChapter(btn.dataset.chapter));
         });
+      }
+
+      function renderStatusMessageInput() {
+        if (el.statusMessageInput) {
+          el.statusMessageInput.value = statusMessage || '';
+        }
+      }
+
+      function setStatusMessageFeedback(message, isError = false) {
+        if (!el.statusMessageStatus) return;
+        el.statusMessageStatus.textContent = message;
+        el.statusMessageStatus.style.display = 'block';
+        el.statusMessageStatus.style.background = isError ? 'var(--danger)' : 'var(--success)';
+        el.statusMessageStatus.style.color = isError ? 'var(--text)' : 'var(--bg-dark)';
+        setTimeout(() => {
+          el.statusMessageStatus.style.display = 'none';
+        }, 2500);
+      }
+
+      async function saveStatusMessage() {
+        statusMessage = (el.statusMessageInput?.value || '').trim();
+        try {
+          await saveChapters(false);
+          setStatusMessageFeedback('Status updated.');
+        } catch (error) {
+          console.error('Save status failed:', error);
+          setStatusMessageFeedback('Failed to save status.', true);
+        }
       }
 
       function renderPageList(pages) {
@@ -2960,6 +3007,9 @@
 
         // Add chapter
         el.btnAddChapter.addEventListener('click', addNewChapter);
+        if (el.btnSaveStatus) {
+          el.btnSaveStatus.addEventListener('click', saveStatusMessage);
+        }
 
         // Modal controls
         el.btnCloseModal.addEventListener('click', hideModal);

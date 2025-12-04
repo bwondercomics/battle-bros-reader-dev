@@ -229,6 +229,48 @@
       box-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
     }
 
+    .status-panel {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(10, 10, 18, 0.9);
+      border: 1px solid var(--primary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+      color: #7ef5e3;
+      box-shadow: 0 0 10px rgba(0, 217, 255, 0.18);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 260px;
+    }
+
+    .status-panel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.03) 50%, transparent 100%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .status-text {
+      letter-spacing: 0.5px;
+    }
+
+    .status-cursor {
+      display: inline-block;
+      width: 8px;
+      animation: statusBlink 1.2s steps(1) infinite;
+    }
+
+    @keyframes statusBlink {
+      50% {
+        opacity: 0;
+      }
+    }
+
     .brand {
       display: flex;
       gap: 12px;
@@ -1721,6 +1763,31 @@
         min-width: 220px;
       }
     }
+
+    @media (max-width: 900px) {
+      .status-panel {
+        padding: 3px 6px;
+        max-width: 170px;
+        font-size: 11px;
+      }
+
+      .status-text {
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .status-panel {
+        max-width: 120px;
+        font-size: 10px;
+      }
+
+      .status-text {
+        max-width: 80px;
+      }
+    }
   </style>
 </head>
 
@@ -1739,6 +1806,9 @@
       </div>
     </div>
     <div class="header-actions">
+      <div class="status-panel" id="statusPanel" aria-label="Status">
+        <span class="status-text" id="statusText"></span><span class="status-cursor" id="statusCursor">█</span>
+      </div>
       <select id="chapter" aria-label="Select chapter"></select>
       <div class="nav-links">
         <a class="nav-link" href="feed.html">Feed</a>
@@ -1846,7 +1916,7 @@
       <!-- Right Preview Panel -->
       <aside class="side-panel right" id="rightPanel">
         <div class="latest-update" id="latestUpdate">
-          <div class="latest-heading">Latest Update</div>
+          <div class="latest-heading">BWC FEED</div>
           <div class="latest-body" id="latestBody">
             <div class="latest-loading">Loading...</div>
           </div>
@@ -1987,6 +2057,8 @@
       // ==================== CHAPTER DATA ====================
       // Chapter data is loaded dynamically from admin/data.json
       let chapters = {};
+      let statusMessage = '';
+      let statusTimer = null;
 
       // ==================== APPLICATION STATE ====================
       const state = {
@@ -2019,6 +2091,9 @@
         el.stage = document.getElementById('stage');
         el.viewport = document.getElementById('viewport');
         el.topbar = document.getElementById('topbar');
+        el.statusPanel = document.getElementById('statusPanel');
+        el.statusText = document.getElementById('statusText');
+        el.statusCursor = document.getElementById('statusCursor');
         el.controls = document.getElementById('controls');
         el.leftPage = document.getElementById('leftPage');
         el.rightPage = document.getElementById('rightPage');
@@ -2040,6 +2115,28 @@
         el.edgeLeftBtn = document.getElementById('edgeLeftBtn');
         el.edgeRightBtn = document.getElementById('edgeRightBtn');
         el.subtitle = document.getElementById('subtitle');
+      }
+
+      // ==================== STATUS PANEL ====================
+
+      function renderStatusPanel(message) {
+        statusMessage = message || '';
+        if (!el.statusText) return;
+        el.statusText.textContent = '';
+        if (statusTimer) {
+          clearTimeout(statusTimer);
+          statusTimer = null;
+        }
+
+        const text = statusMessage || 'ready';
+        let i = 0;
+        const step = () => {
+          if (i < text.length) {
+            el.statusText.textContent += text[i++];
+            statusTimer = setTimeout(step, 35);
+          }
+        };
+        step();
       }
 
       // ==================== IMAGE LOADING ====================
@@ -3047,6 +3144,7 @@
           }
 
           chapters = data.chapters;
+          statusMessage = data.statusMessage || '';
           console.log('✓ Chapter data loaded from admin/data.json');
           return true;
         } catch (error) {
@@ -3083,6 +3181,7 @@
         initElements();
         initChapterSelect();
         setInitialSubtitle();
+        renderStatusPanel(statusMessage || 'ready');
         initEmailSignupForm();
 
         const saved = loadProgress();
