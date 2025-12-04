@@ -9,6 +9,8 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Righteous&family=Roboto:wght@400;700&display=swap"
         rel="stylesheet">
     <style>
+        /* Default subtitles for header rotation */
+        /* Kept in JS too; this list is the single source we load into the textarea when missing in config */
         :root {
             --primary: #00d9ff;
             --secondary: #ff00ea;
@@ -583,8 +585,9 @@
                     <input type="text" class="form-input" id="headerTitle" value="BATTLE BROS">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Subtitle</label>
-                    <input type="text" class="form-input" id="headerSubtitle" value="/// GUESS WHO'S BACK IN TOWN? ///">
+                    <label class="form-label">Subtitle Options (one per line)</label>
+                    <textarea class="form-textarea" id="headerSubtitles" rows="4"
+                        placeholder="Add multiple subtitles to rotate through on reload. The first line is also used as the default subtitle."></textarea>
                 </div>
             </div>
 
@@ -682,8 +685,14 @@
                     const savedDraft = localStorage.getItem(CONFIG_KEY);
                     if (savedDraft) {
                         pageConfig = JSON.parse(savedDraft);
-                        showMessage('Loaded saved draft from browser storage.', 'success');
-                    } else {
+                        const hasSubtitles = Array.isArray(pageConfig?.content?.header?.subtitles);
+                        if (!hasSubtitles) {
+                            pageConfig = null; // force fallback if draft missing subtitles
+                        } else {
+                            showMessage('Loaded saved draft from browser storage.', 'success');
+                        }
+                    }
+                    if (!pageConfig) {
                         // Fallback to file
                         const response = await fetch('page-config.json');
                         if (response.ok) {
@@ -718,7 +727,11 @@
                         "danger": "#ff3838"
                     },
                     "content": {
-                        "header": { "title": "BATTLE BROS", "subtitle": "/// GUESS WHO'S BACK IN TOWN? ///" },
+                        "header": {
+                            "title": "BATTLE BROS",
+                            "subtitle": "",
+                            "subtitles": []
+                        },
                         "leftPanel": { "topText": "TO GO EVEN FURTHER BEYOND", "bottomText": "WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!", "image": "" },
                         "rightPanel": { "image": "", "buttons": [] }
                     },
@@ -742,7 +755,8 @@
                 // Content
                 if (pageConfig.content) {
                     document.getElementById('headerTitle').value = pageConfig.content.header.title || '';
-                    document.getElementById('headerSubtitle').value = pageConfig.content.header.subtitle || '';
+                    const subs = Array.isArray(pageConfig.content.header.subtitles) ? pageConfig.content.header.subtitles : [];
+                    document.getElementById('headerSubtitles').value = subs.join('\n');
                     document.getElementById('leftTopText').value = pageConfig.content.leftPanel.topText || '';
                     document.getElementById('leftBottomText').value = pageConfig.content.leftPanel.bottomText || '';
 
@@ -790,7 +804,10 @@
 
                 // Content
                 pageConfig.content.header.title = document.getElementById('headerTitle').value;
-                pageConfig.content.header.subtitle = document.getElementById('headerSubtitle').value;
+                const subtitlesRaw = document.getElementById('headerSubtitles').value;
+                const subtitleList = subtitlesRaw.split('\n').map(s => s.trim()).filter(Boolean);
+                pageConfig.content.header.subtitles = subtitleList;
+                pageConfig.content.header.subtitle = "";
                 pageConfig.content.leftPanel.topText = document.getElementById('leftTopText').value;
                 pageConfig.content.leftPanel.bottomText = document.getElementById('leftBottomText').value;
                 pageConfig.content.leftPanel.image = document.getElementById('leftImageUrl').value;
@@ -1180,7 +1197,7 @@
             }
 
             // Add listeners to text inputs for real-time updates
-            ['headerTitle', 'headerSubtitle', 'leftTopText', 'leftBottomText', 'leftImageUrl', 'rightImageUrl'].forEach(id => {
+            ['headerTitle', 'headerSubtitles', 'leftTopText', 'leftBottomText', 'leftImageUrl', 'rightImageUrl'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.addEventListener('input', broadcastUpdate);
             });
@@ -1197,6 +1214,10 @@
                         // Update config object but don't broadcast back to avoid loop
                         if (inputId === 'headerTitle') pageConfig.content.header.title = value;
                         if (inputId === 'headerSubtitle') pageConfig.content.header.subtitle = value;
+                        if (inputId === 'headerSubtitles') {
+                            const list = value.split('\n').map(s => s.trim()).filter(Boolean);
+                            pageConfig.content.header.subtitles = list;
+                        }
                         if (inputId === 'leftTopText') pageConfig.content.leftPanel.topText = value;
                         if (inputId === 'leftBottomText') pageConfig.content.leftPanel.bottomText = value;
                     }

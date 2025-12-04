@@ -1802,7 +1802,7 @@
       <div class="logo">BWC</div>
       <div class="title">
         <h1>BATTLE BROS</h1>
-        <p class="subtitle" id="subtitle" aria-live="polite">/// GUESS WHO'S BACK IN TOWN? ///</p>
+        <p class="subtitle" id="subtitle" aria-live="polite"></p>
       </div>
     </div>
     <div class="header-actions">
@@ -2028,31 +2028,12 @@
         SWIPE_TIMEOUT: 500
       };
 
-      // ==================== QUOTES ==================== DO NOT CHANGE OR REMOVE THESE
-      const QUOTES = [
-        "/// GUESS WHO'S BACK IN TOWN? (IT'S THE BROS) ///",
-        "/// LIKE A BATTLE ROYAL BUT MORE FUN ///",
-        "/// DRAGON BALL Z ABRIDGED IS COOL ///",
-        "/// SINGLE SMACK GUY ///",
-        "/// MAOI SAMI POW! ///",
-        "/// NOW WITH 20% ///",
-        "/// LITTLE BIDEN ///",
-        "/// THAT MEANS NOTHING TO ME ///",
-        "/// BATTLE BROS ///",
-        "/// DIGIMON THE MOVIE 2000 ///",
-        "/// CHINESE CHICKEN ///",
-        "/// 9001 ///",
-        "/// LOVE THE FIT BUTTON ///",
-        "/// YO SAMURAI ///",
-        "/// PENISDOTCLOWNFART ///",
-        "/// BE LIKE WATER ///",
-        "/// PNEUMATICS RULE ///",
-        "/// SONICS FRICKS ///",
-        "/// I LOVE YOU ///",
-        "/// BOUNCE ON A BROTHA ///",
-        "/// EPIC BATTLES AWAIT ///",
-        "/// kill your family ///"
-      ];
+      // ==================== SUBTITLES ====================
+      let SUBTITLES = [];
+      function setSubtitles(list) {
+        SUBTITLES = Array.isArray(list) ? list.filter(Boolean) : [];
+        setInitialSubtitle();
+      }
 
       // ==================== CHAPTER DATA ====================
       // Chapter data is loaded dynamically from admin/data.json
@@ -2918,15 +2899,14 @@
 
       // ==================== QUOTE RANDOMIZER ====================
 
-      function pickRandomQuoteIndexOnce() {
-        if (QUOTES.length === 0) return -1;
-        return Math.floor(Math.random() * QUOTES.length);
-      }
-
       function setInitialSubtitle() {
         if (!el.subtitle) return;
-        const idx = pickRandomQuoteIndexOnce();
-        if (idx >= 0) el.subtitle.textContent = QUOTES[idx];
+        if (!SUBTITLES.length) {
+          el.subtitle.textContent = '';
+          return;
+        }
+        const idx = Math.floor(Math.random() * SUBTITLES.length);
+        el.subtitle.textContent = SUBTITLES[idx];
       }
 
       // ==================== SHORTCUTS OVERLAY ====================
@@ -3175,6 +3155,32 @@
         }
       }
 
+      // ==================== LOAD PAGE CONFIG ====================
+
+      async function loadPageConfig() {
+        try {
+          const response = await fetch('admin/page-config.json');
+          if (!response.ok) {
+            console.warn(`Failed to load page config: ${response.status} ${response.statusText}`);
+            return false;
+          }
+          const config = await response.json();
+
+          // Extract subtitles from config
+          if (config.content && config.content.header && Array.isArray(config.content.header.subtitles)) {
+            setSubtitles(config.content.header.subtitles);
+            console.log('✓ Page config loaded from admin/page-config.json');
+          } else {
+            console.warn('No subtitles found in page-config.json');
+          }
+
+          return true;
+        } catch (error) {
+          console.error('Failed to load page config:', error);
+          return false;
+        }
+      }
+
       // ==================== INITIALIZATION ====================
 
       function init() {
@@ -3208,6 +3214,7 @@
 
       async function start() {
         const success = await loadChapterData();
+        await loadPageConfig();
         loadLatestUpdate();
         if (success) {
           init();
@@ -3226,7 +3233,8 @@
         },
         setRandomSubtitleNow: () => {
           setInitialSubtitle();
-        }
+        },
+        setSubtitles: setSubtitles
       };
 
     })();
@@ -3254,7 +3262,11 @@
           rightPanel: { enabled: true, order: 3 }
         },
         content: {
-          header: { title: "BATTLE BROS", subtitle: "/// GUESS WHO'S BACK IN TOWN? ///" },
+          header: {
+            title: "BATTLE BROS",
+            subtitle: "",
+            subtitles: []
+          },
           leftPanel: {
             topText: "TO GO EVEN FURTHER BEYOND",
             bottomText: "WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!",
@@ -3322,8 +3334,12 @@
             const titleEl = document.querySelector('.title h1');
             if (titleEl) titleEl.textContent = config.content.header.title;
 
-            const subEl = document.getElementById('subtitle');
-            if (subEl) subEl.textContent = config.content.header.subtitle;
+            const customSubs = Array.isArray(config.content.header.subtitles)
+              ? config.content.header.subtitles.filter(Boolean)
+              : [];
+            if (window.BattleBros?.setSubtitles) {
+              window.BattleBros.setSubtitles(customSubs);
+            }
           }
 
           // Left Panel
