@@ -4,7 +4,7 @@ import { state, saveProgress, loadProgress } from './state.js';
 import { loadChapterData, loadPageConfig, loadLatestPost } from './data.js';
 import { el, initElements } from './dom.js';
 import { renderStatusPanel, render } from './render.js';
-import { prevPage, nextPage, restartChapter, initNavigationHandlers, hideEndOfChapter } from './controls.js';
+import { prevPage, nextPage, restartChapter, hideEndOfChapter } from './controls.js';
 import { fitHeightFullscreen, fitToScreen, zoomIn, zoomOut, resetView } from './transform.js';
 import { initPointerHandlers } from './pointer.js';
 import { toggleShortcutsOverlay, closeShortcutsOverlay, goToNextChapter, changeChapter } from './overlays.js';

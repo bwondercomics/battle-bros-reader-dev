@@ -1,5 +1,17 @@
+/**
+ * Data loading utilities for the Battle Bros comic reader
+ * Handles fetching and parsing chapter data, page config, and latest posts
+ */
+
 import { sanitizeChapters } from './chapters.js';
 
+/**
+ * Loads chapter data from admin/data.json
+ * Fetches chapter list, page URLs, and status message from the admin panel
+ * @async
+ * @returns {Promise<{chapters: Object, chapterOrder: string[], statusMessage: string}>} Normalized chapter data
+ * @throws {Error} If fetch fails or data structure is invalid
+ */
 export async function loadChapterData() {
   try {
     const response = await fetch('admin/data.json', { cache: 'no-store' });
@@ -24,6 +36,13 @@ export async function loadChapterData() {
   }
 }
 
+/**
+ * Loads page configuration from admin/page-config.json
+ * Applies custom subtitles and theme overrides if available
+ * @async
+ * @param {Function} setSubtitlesFn - Callback function to set subtitles in the UI
+ * @returns {Promise<boolean>} True if config loaded successfully, false otherwise
+ */
 export async function loadPageConfig(setSubtitlesFn) {
   try {
     const response = await fetch('admin/page-config.json', { cache: 'no-store' });
@@ -47,6 +66,12 @@ export async function loadPageConfig(setSubtitlesFn) {
   }
 }
 
+/**
+ * Loads the latest post from posts.json for the "Latest Update" widget
+ * Displays loading state and handles errors gracefully
+ * @async
+ * @returns {Promise<Object|null>} Latest post object sorted by date, or null if none available
+ */
 export async function loadLatestPost() {
   const body = document.getElementById('latestBody');
   if (!body) return null;

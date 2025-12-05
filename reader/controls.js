@@ -1,13 +1,12 @@
 import { CONFIG } from './config.js';
 import { state, saveProgress } from './state.js';
 import { el } from './dom.js';
-import { render } from './render.js';
+import { render, isTwoPageMode } from './render.js';
 
-export function initNavigationHandlers() {
-  if (el.prevBtn) el.prevBtn.addEventListener('click', prevPage);
-  if (el.nextBtn) el.nextBtn.addEventListener('click', nextPage);
-}
-
+/**
+ * Navigate to the previous page(s)
+ * In two-page mode, moves back by 2 pages; otherwise by 1 page
+ */
 export function prevPage() {
   if (state.isTransitioning) return;
 
@@ -23,6 +22,11 @@ export function prevPage() {
   });
 }
 
+/**
+ * Navigate to the next page(s)
+ * In two-page mode, moves forward by 2 pages; otherwise by 1 page
+ * Shows end-of-chapter overlay when reaching the last page
+ */
 export function nextPage() {
   if (state.isTransitioning) return;
 
@@ -74,13 +78,11 @@ export function hideEndOfChapter() {
   }
 }
 
-function isTwoPageMode() {
-  const aspectRatio = window.innerWidth / window.innerHeight;
-  const hasMinWidth = window.innerWidth >= CONFIG.TWO_PAGE_BREAKPOINT;
-  const isWideEnough = aspectRatio > 0.714;
-  return hasMinWidth && isWideEnough;
-}
-
+/**
+ * Animates page transitions with slide effects
+ * @param {string} direction - Either 'next' or 'prev' to determine slide direction
+ * @param {Function} onMid - Callback to execute at the midpoint of the animation
+ */
 function animatePageChange(direction, onMid) {
   if (state.isTransitioning) return;
   if (!el.stageWrap) {

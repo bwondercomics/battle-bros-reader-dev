@@ -7,6 +7,7 @@ This document maps how the site loads, where data lives, and how the admin tools
 - Dynamic data: JSON files at the repo root and in `admin/` drive most content (`admin/data.json`, `posts.json`, `media.json`, `admin/page-config.json`).
 - Admin: `admin/index.html` edits chapters, posts, media, and status text; relies on the local API in `server.py`.
 - Assets: chapter images under `/chapters/`; media under `/media/`; marketing art at root (`banner*.png`, `panel.png`, `bookturn.gif`).
+- Related docs and diagrams: `docs/reader-overview.md`, `docs/admin-overview.md`.
 
 ## Reader (index.html)
 - Layout: sticky top bar (logo, status ticker, chapter select, gallery/media links), left promo panel (book GIF + email signup), central viewport (single/two-page stage), right panel (latest update + CTA buttons).

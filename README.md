@@ -16,17 +16,17 @@ These agents work together to create features that are both delightful and techn
 
 ## Features
 
-- 📖 Smooth page-by-page navigation
-- 🔍 Zoom and pan for detailed viewing
-- 📱 Fully responsive design (mobile, tablet, desktop)
-- ⌨️ Keyboard shortcuts
-- 🎨 Retro cyberpunk aesthetic with neon effects
-- 💾 Progress saving (remembers your place)
-- 🖼️ Two-page spread mode on larger screens
-- ⚡ Fullscreen reading mode
-- 🎯 Edge-zone navigation
-- 🎨 Animated page transitions
-- 🔄 Dynamic chapter loading from admin panel
+- Smooth page-by-page navigation
+- Zoom and pan for detailed viewing
+- Fully responsive design (mobile, tablet, desktop)
+- Keyboard shortcuts
+- Retro cyberpunk aesthetic with neon effects
+- Progress saving (remembers your place)
+- Two-page spread mode on larger screens
+- Fullscreen reading mode
+- Edge-zone navigation
+- Animated page transitions
+- Dynamic chapter loading from admin panel
 
 ## Usage
 
@@ -34,8 +34,8 @@ Simply open `index.html` in a web browser to start reading. The reader automatic
 
 ### Keyboard Shortcuts
 
-- `←/→` - Previous/Next page
-- `+/-` - Zoom in/out
+- Left/Right - Previous/Next page
+- `+ / -` - Zoom in/out
 - `0` - Reset zoom
 - `F` - Toggle fullscreen
 - Double-click - Fit to screen
@@ -68,3 +68,9 @@ To contribute or modify:
 
 For questions about UX/design improvements, consult **ComicBot**.  
 For technical implementation or performance questions, consult **TechAdvisor**.
+
+## Architecture & Docs
+- High-level architecture: `docs/ARCHITECTURE.md`
+- Reader overview + diagrams: `docs/reader-overview.md`
+- Admin overview + diagrams: `docs/admin-overview.md`
+
