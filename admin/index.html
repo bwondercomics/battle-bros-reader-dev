@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -1121,7 +1121,8 @@
         <button class="btn-secondary nav-btn" id="btnSettings">Settings</button>
         <button class="btn-secondary nav-btn" id="btnBlog">Blog / Feed</button>
         <button class="btn-secondary nav-btn" id="btnMedia">Media</button>
-        <button class="btn-secondary nav-btn" id="btnDesigner" onclick="window.location.href='designer.html'">Page Designer</button>
+        <button class="btn-secondary nav-btn" id="btnDesigner" onclick="window.location.href='designer.html'">Page
+          Designer</button>
         <button class="btn-secondary nav-btn" id="btnPreview">Preview Changes</button>
         <button class="btn-primary nav-btn nav-btn--primary" id="btnPublish">Publish to GitHub</button>
         <button class="btn-logout nav-btn nav-btn--danger" id="btnLogout">Logout</button>
@@ -1196,31 +1197,37 @@
             <div id="previewPageLabel" style="font-size: 0.9rem; opacity: 0.8;"></div>
           </div>
           <div id="previewEmpty" class="chapter-item" style="display: none;">No pages to preview.</div>
-          <div id="previewFrame" style="position: relative; background: #0f1629; border: 1px solid var(--primary); border-radius: 8px; padding: 12px; display: none;">
+          <div id="previewFrame"
+            style="position: relative; background: #0f1629; border: 1px solid var(--primary); border-radius: 8px; padding: 12px; display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
               <button class="btn-small btn-move" id="previewPrev" type="button">Prev</button>
               <button class="btn-small btn-move" id="previewNext" type="button">Next</button>
             </div>
             <div style="width: 100%; max-height: 60vh; overflow: hidden; display: flex; justify-content: center;">
-              <img id="previewImg" src="" alt="Preview page" style="max-width: 100%; max-height: 60vh; object-fit: contain; background: #0a0d1a; border-radius: 6px;" />
+              <img id="previewImg" src="" alt="Preview page"
+                style="max-width: 100%; max-height: 60vh; object-fit: contain; background: #0a0d1a; border-radius: 6px;" />
             </div>
           </div>
         </div>
         <p style="margin-top: 20px; color: var(--accent); font-size: 0.9rem;">
-          📝 <strong>Instructions:</strong> Copy this JSON and replace the "chapters" object in index.html (around line
+          <strong>Instructions:</strong> Copy this JSON and replace the "chapters" object in index.html (around line
           1762)
         </p>
-            </section>
+        </p>
+      </section>
 
       <!-- Media Library Section -->
       <section class="section" id="mediaSection" style="display: none;">
         <h2 class="section-title">Media Library</h2>
         <div class="form-group">
           <label class="form-label">Add Media</label>
-          <input type="text" id="mediaPath" class="form-input" placeholder="Image path or URL (e.g., chapters/01/01.png)" style="margin-bottom: 8px;">
-          <input type="text" id="mediaTags" class="form-input" placeholder="Tags (comma separated, e.g., cover,issue1)" style="margin-bottom: 8px;">
+          <input type="text" id="mediaPath" class="form-input"
+            placeholder="Image path or URL (e.g., chapters/01/01.png)" style="margin-bottom: 8px;">
+          <input type="text" id="mediaTags" class="form-input" placeholder="Tags (comma separated, e.g., cover,issue1)"
+            style="margin-bottom: 8px;">
           <button class="btn-primary" id="btnAddMedia" type="button">Add to Library</button>
-          <button class="btn-secondary" id="btnSyncMedia" type="button" style="margin-left: 8px;">Sync from media folder</button>
+          <button class="btn-secondary" id="btnSyncMedia" type="button" style="margin-left: 8px;">Sync from media
+            folder</button>
           <div id="mediaStatus" class="success-message" style="display: none; margin-top: 8px;"></div>
         </div>
         <div class="form-group" style="margin-top: 16px;">
@@ -1249,10 +1256,10 @@
           <label class="form-label">Pages (Image Paths)</label>
           <div class="page-list-controls">
             <div id="unsavedIndicator" style="display: none;" class="unsaved-indicator">
-              ⚠️ Unsaved Changes
+              Unsaved Changes
             </div>
             <button type="button" class="btn-renumber" id="btnRenumberPages">
-              🔢 Renumber Pages
+              Renumber Pages
             </button>
           </div>
           <div id="pageList" class="page-list"></div>
@@ -1264,13 +1271,13 @@
               <input type="file" id="imageUpload" accept="image/png,image/jpeg,image/jpg,image/gif,image/webp" multiple
                 style="display: none;" />
               <div class="upload-prompt" id="uploadPrompt">
-                <p>📁 Click to browse or drag & drop images here</p>
+                <p>Click to browse or drag & drop images here</p>
                 <p style="font-size: 0.8rem; opacity: 0.7;">Supports: PNG, JPG, GIF, WebP</p>
               </div>
               <div id="uploadPreview" class="upload-preview"></div>
             </div>
             <button type="button" class="btn-small btn-add-page" id="btnUploadImages" style="display: none;">
-              ⬆️ Upload Selected Images
+              Upload Selected Images
             </button>
             <div id="uploadProgress" class="upload-progress" style="display: none;"></div>
           </div>
@@ -1301,7 +1308,7 @@
           <label class="form-label">Your GitHub Personal Access Token</label>
           <input type="password" id="githubToken" class="form-input" placeholder="ghp_xxxxxxxxxxxx" />
           <p style="font-size: 0.8rem; color: var(--accent); margin-top: 5px;">
-            ⚠️ This token is stored in your browser only and never sent to the server.
+            This token is stored in your browser only and never sent to the server.
             <br>Create one at: <a href="https://github.com/settings/tokens" target="_blank"
               style="color: var(--primary);">github.com/settings/tokens</a>
             <br>Required scope: <strong>repo</strong>
@@ -1485,7 +1492,7 @@
                   }
                 }
               });
-              console.log('✓ Loaded chapter data from data.json');
+              console.log(' Loaded chapter data from data.json');
               return;
             }
           }
@@ -1506,7 +1513,7 @@
               chapters = parsed || {};
               chapterFolders = {};
             }
-            console.log('✓ Loaded chapter data from localStorage');
+            console.log(' Loaded chapter data from localStorage');
             return;
           } catch (e) {
             console.error('Error loading saved data:', e);
@@ -1574,9 +1581,21 @@
       async function showDashboard() {
         el.loginScreen.style.display = 'none';
         el.adminDashboard.style.display = 'block';
-        await loadChapters();
-        await loadPosts();
-        await loadMedia();
+        try {
+          await loadChapters();
+        } catch (e) {
+          console.error('Chapters failed to load:', e);
+        }
+        try {
+          await loadPosts();
+        } catch (e) {
+          console.error('Posts failed to load:', e);
+        }
+        try {
+          await loadMedia();
+        } catch (e) {
+          console.error('Media failed to load:', e);
+        }
         renderStatusMessageInput();
         renderChapterList();
       }
@@ -1691,8 +1710,8 @@
         <span class="page-number">#${index + 1}</span>
         <span class="page-path">${escapeHtml(path)}</span>
         <div class="page-actions">
-          <button type="button" class="btn-move btn-move-up" data-index="${index}" title="Move up" ${index === 0 ? 'disabled' : ''}>▲</button>
-          <button type="button" class="btn-move btn-move-down" data-index="${index}" title="Move down" ${index === currentPages.length - 1 ? 'disabled' : ''}>▼</button>
+          <button type="button" class="btn-move btn-move-up" data-index="${index}" title="Move up" ${index === 0 ? 'disabled' : ''}>UP</button>
+          <button type="button" class="btn-move btn-move-down" data-index="${index}" title="Move down" ${index === currentPages.length - 1 ? 'disabled' : ''}>DOWN</button>
           <button type="button" class="btn-remove" data-index="${index}" data-path="${escapeHtml(path)}">Remove</button>
         </div>
       `;
@@ -1922,7 +1941,7 @@
           item.innerHTML = `
         <div class="chapter-info">
           <div class="chapter-name">${escapeHtml(post.title || 'Untitled')}</div>
-          <div class="chapter-meta">${dateLabel} • ${shareLabel}</div>
+          <div class="chapter-meta">${dateLabel} - ${shareLabel}</div>
           ${tagText ? `<div class="chapter-meta" style="opacity:0.8;">${escapeHtml(tagText)}</div>` : ''}
           <div class="chapter-meta" style="opacity:0.8;">${escapeHtml(preview)}</div>
         </div>
@@ -2228,7 +2247,7 @@
             previewItem.innerHTML = `
           <img src="${e.target.result}" alt="${file.name}">
           <div class="preview-name" title="${file.name}">${file.name}</div>
-          <button class="preview-remove" data-index="${index}" title="Remove">×</button>
+          <button class="preview-remove" data-index="${index}" title="Remove">Remove</button>
         `;
 
             // Remove button handler
@@ -2590,7 +2609,7 @@
       function copyToClipboard() {
         const jsonData = JSON.stringify(chapters, null, 2);
         navigator.clipboard.writeText(jsonData).then(() => {
-          el.copySuccess.textContent = '✓ Copied to clipboard!';
+          el.copySuccess.textContent = 'Copied to clipboard!';
           el.copySuccess.className = 'success-message';
           el.copySuccess.style.display = 'block';
           setTimeout(() => {
@@ -2637,7 +2656,7 @@
         }
 
         localStorage.setItem(GITHUB_TOKEN_KEY, token);
-        el.tokenSaveSuccess.textContent = '✓ Token saved successfully!';
+        el.tokenSaveSuccess.textContent = 'Token saved successfully!';
         el.tokenSaveSuccess.className = 'success-message';
         el.tokenSaveSuccess.style.display = 'block';
 
@@ -2667,7 +2686,7 @@
 
         try {
           publishBtn.disabled = true;
-          publishBtn.textContent = '⏳ Publishing...';
+          publishBtn.textContent = 'Publishing...';
 
           // Prepare data
           const dataToCommit = {
@@ -2723,8 +2742,8 @@
             throw new Error(`GitHub API error: ${response.status} - ${errorData.message || 'Unknown error'}`);
           }
 
-          publishBtn.textContent = '✅ Published!';
-          alert('✅ Published successfully!\n\nGitHub Action is updating the site.\nCheck back in 1-2 minutes.\n\nView workflow status at:\nhttps://github.com/bwondercomics/battle-bros-reader/actions');
+          publishBtn.textContent = 'Published!';
+          alert('Published successfully!\n\nGitHub Action is updating the site.\nCheck back in 1-2 minutes.\n\nView workflow status at:\nhttps://github.com/bwondercomics/battle-bros-reader/actions');
 
           // Reset button after delay
           setTimeout(() => {
@@ -2736,7 +2755,7 @@
           console.error('Publish error:', error);
           publishBtn.textContent = originalText;
           publishBtn.disabled = false;
-          alert(`❌ Publish failed:\n\n${error.message}\n\nPlease check:\n1. Your GitHub token has 'repo' permissions\n2. You have access to the repository\n3. Your internet connection is working`);
+          alert('Publish failed: \n\n\n\nPlease check: \n1. Your GitHub token has \'repo\' permissions\n2. You have access to the repository\n3. Your internet connection is working');
         }
       }
 
@@ -3050,10 +3069,13 @@
         el.loginForm.addEventListener('submit', async (e) => {
           e.preventDefault();
           const password = document.getElementById('password').value;
-          if (!(await login(password))) {
+          const success = await login(password);
+          if (!success) {
             el.loginError.textContent = 'Invalid password';
             el.loginError.className = 'error-message';
             el.loginError.style.display = 'block';
+          } else {
+            el.loginError.style.display = 'none';
           }
         });
 
@@ -3164,11 +3186,12 @@
       async function init() {
         attachEventHandlers();
         initUploadHandlers();
-        if (!(await checkSession())) {
+        const isAuthenticated = await checkSession();
+        if (!isAuthenticated) {
           el.loginScreen.style.display = 'flex';
           el.adminDashboard.style.display = 'none';
         }
-        console.log('✓ Battle Bros Admin initialized');
+        console.log('Battle Bros Admin initialized');
       }
 
       // ==================== START ====================
@@ -3184,4 +3207,3 @@
 </body>
 
 </html>
-

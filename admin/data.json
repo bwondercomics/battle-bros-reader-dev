@@ -65,10 +65,37 @@
     ],
     "Chapter 6": [
       "chapters/06/01.png",
-      "chapters/06/02.png"
+      "chapters/06/02.png",
+      "chapters/06/03.png",
+      "chapters/06/04.png",
+      "chapters/06/05.png",
+      "chapters/06/06.png",
+      "chapters/06/07.png",
+      "chapters/06/08.png",
+      "chapters/06/09.png",
+      "chapters/06/10.png",
+      "chapters/06/11.png",
+      "chapters/06/12.png",
+      "chapters/06/13.png",
+      "chapters/06/14.png"
     ],
-    "chapter 7": [
-      "chapters/07/01.png"
+    "Chapter 7": [
+      "chapters/07/01.png",
+      "chapters/07/02.png",
+      "chapters/07/03.png",
+      "chapters/07/04.png",
+      "chapters/07/05.png",
+      "chapters/07/06.png",
+      "chapters/07/07.png",
+      "chapters/07/08.png",
+      "chapters/07/09.png",
+      "chapters/07/10.png",
+      "chapters/07/11.png",
+      "chapters/07/12.png",
+      "chapters/07/13.png",
+      "chapters/07/14.png",
+      "chapters/07/15.png",
+      "chapters/07/16.png"
     ]
   },
   "chapterFolders": {
@@ -79,10 +106,9 @@
     "Chapter 4": "chapters/04",
     "Chapter 5": "chapters/05",
     "Chapter 6": "chapters/06",
-    "Chapter 7": "chapters/yesy",
-    "chapter 7": "chapters/07"
+    "Chapter 7": "chapters/07"
   },
   "statusMessage": "issue 7 coming soon",
-  "lastUpdated": "2025-12-04T15:05:07.639Z",
+  "lastUpdated": "2025-12-05T07:20:07.468Z",
   "publishedBy": "Admin Panel"
 }

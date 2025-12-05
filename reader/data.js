@@ -1,0 +1,73 @@
+import { sanitizeChapters } from './chapters.js';
+
+export async function loadChapterData() {
+  try {
+    const response = await fetch('admin/data.json', { cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`Failed to load chapter data: ${response.status} ${response.statusText}`);
+    }
+    const data = await response.json();
+
+    if (!data.chapters || typeof data.chapters !== 'object') {
+      throw new Error('Invalid chapter data structure in admin/data.json');
+    }
+
+    const normalized = sanitizeChapters(data.chapters);
+    return {
+      chapters: normalized.chapters,
+      chapterOrder: normalized.order,
+      statusMessage: data.statusMessage || ''
+    };
+  } catch (error) {
+    console.error('Failed to load chapter data:', error);
+    throw error;
+  }
+}
+
+export async function loadPageConfig(setSubtitlesFn) {
+  try {
+    const response = await fetch('admin/page-config.json', { cache: 'no-store' });
+    if (!response.ok) {
+      console.warn(`Failed to load page config: ${response.status} ${response.statusText}`);
+      return false;
+    }
+    const config = await response.json();
+
+    if (config.content && config.content.header && Array.isArray(config.content.header.subtitles)) {
+      setSubtitlesFn(config.content.header.subtitles);
+      console.log('? Page config loaded from admin/page-config.json');
+    } else {
+      console.warn('No subtitles found in page-config.json');
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Failed to load page config:', error);
+    return false;
+  }
+}
+
+export async function loadLatestPost() {
+  const body = document.getElementById('latestBody');
+  if (!body) return null;
+
+  body.innerHTML = '<div class="latest-loading">Loading...</div>';
+
+  try {
+    const response = await fetch('posts.json', { cache: 'no-cache' });
+    if (!response.ok) throw new Error('Failed to load latest post');
+    const posts = await response.json();
+
+    if (!Array.isArray(posts) || posts.length === 0) {
+      body.innerHTML = '<div class="latest-empty">No updates yet.</div>';
+      return null;
+    }
+
+    const latest = [...posts].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))[0];
+    return latest;
+  } catch (error) {
+    console.error('Latest update widget error:', error);
+    body.innerHTML = '<div class="latest-empty" style="color: var(--danger);">Could not load updates.</div>';
+    return null;
+  }
+}
