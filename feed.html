@@ -149,11 +149,29 @@
       animation: fadeIn 0.45s ease-out;
     }
 
+    .post-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .post-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 2px solid var(--primary);
+      background: #05050a;
+      object-fit: cover;
+      box-shadow: 0 0 12px rgba(0, 217, 255, 0.25);
+      margin-top: 2px;
+    }
+
     .post-title {
       font-family: 'Bebas Neue', cursive;
       color: var(--accent);
       font-size: 2.1rem;
-      margin: 0 0 6px;
+      margin: 0;
       letter-spacing: 1px;
     }
 
@@ -283,6 +301,15 @@
       article.className = 'post';
       article.id = post.id || '';
 
+      const header = document.createElement('div');
+      header.className = 'post-header';
+
+      const icon = document.createElement('img');
+      icon.className = 'post-icon';
+      icon.src = 'boywondericon.png';
+      icon.alt = 'Boy Wonder icon';
+      icon.loading = 'lazy';
+
       const title = document.createElement('h2');
       title.className = 'post-title';
       title.textContent = post.title || 'Untitled';
@@ -292,8 +319,13 @@
       const parsedDate = post.date ? new Date(post.date) : null;
       date.textContent = parsedDate && !Number.isNaN(parsedDate) ? parsedDate.toLocaleString() : 'Date not set';
 
-      article.appendChild(title);
-      article.appendChild(date);
+      const titleWrap = document.createElement('div');
+      titleWrap.appendChild(title);
+      titleWrap.appendChild(date);
+
+      header.appendChild(icon);
+      header.appendChild(titleWrap);
+      article.appendChild(header);
 
       if (post.image) {
         const img = document.createElement('img');

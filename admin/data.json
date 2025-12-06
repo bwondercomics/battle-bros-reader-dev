@@ -9,7 +9,10 @@
       "chapters/01/06.png",
       "chapters/01/07.png",
       "chapters/01/08.png",
-      "chapters/01/09.png"
+      "chapters/01/09.png",
+      "chapters/01/10.png",
+      "chapters/01/11.png",
+      "chapters/01/12.png"
     ],
     "Chapter 2": [
       "chapters/02/01.png",
@@ -96,6 +99,20 @@
       "chapters/07/14.png",
       "chapters/07/15.png",
       "chapters/07/16.png"
+    ],
+    "undefined": [
+      "chapters/01/01.png",
+      "chapters/01/02.png",
+      "chapters/01/03.png",
+      "chapters/01/04.png",
+      "chapters/01/05.png",
+      "chapters/01/06.png",
+      "chapters/01/07.png",
+      "chapters/01/08.png",
+      "chapters/01/09.png",
+      "chapters/01/10.png",
+      "chapters/01/11.png",
+      "chapters/01/12.png"
     ]
   },
   "chapterFolders": {
@@ -106,9 +123,11 @@
     "Chapter 4": "chapters/04",
     "Chapter 5": "chapters/05",
     "Chapter 6": "chapters/06",
-    "Chapter 7": "chapters/07"
+    "Chapter 7": "chapters/07",
+    "Chapter": "chapters/01",
+    "undefined": "chapters/01"
   },
-  "statusMessage": "issue 7 coming soon",
-  "lastUpdated": "2025-12-05T07:20:07.468Z",
+  "statusMessage": "new_website_under_construction",
+  "lastUpdated": "2025-12-06T22:30:29.441Z",
   "publishedBy": "Admin Panel"
 }

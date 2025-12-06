@@ -1,12 +1,12 @@
-import { el } from './dom.js';
-import { state } from './state.js';
-import { changeChapter as changeChapterFromOverlays } from './overlays.js';
+import { el } from "./dom.js";
+import { state } from "./state.js";
+import { changeChapter as changeChapterFromOverlays } from "./overlays.js";
 
 export function renderGallery(chapterOrder, chapters) {
-  const grid = document.getElementById('galleryGrid');
+  const grid = document.getElementById("galleryGrid");
   if (!grid) return;
 
-  grid.innerHTML = '';
+  grid.innerHTML = "";
 
   const names = chapterOrder.length ? chapterOrder : Object.keys(chapters);
 
@@ -16,31 +16,30 @@ export function renderGallery(chapterOrder, chapters) {
 
     const coverUrl = pages[0];
 
-    const card = document.createElement('div');
-    card.className = 'chapter-card';
+    const card = document.createElement("div");
+    card.className = "chapter-card";
+    card.style.setProperty("--card-index", index);
     if (name === state.currentChapter) {
-      card.classList.add('active');
+      card.classList.add("active");
     }
 
-    card.style.animationDelay = `${index * 50}ms`;
-
     card.onclick = () => {
-    if (el.chapter) el.chapter.value = name;
+      if (el.chapter) el.chapter.value = name;
       changeChapterFromOverlays(name, chapters);
       toggleGallery();
     };
 
-    const thumb = document.createElement('img');
-    thumb.className = 'chapter-thumb';
+    const thumb = document.createElement("img");
+    thumb.className = "chapter-thumb";
     thumb.src = coverUrl;
     thumb.alt = name;
-    thumb.loading = 'lazy';
+    thumb.loading = "lazy";
 
-    const info = document.createElement('div');
-    info.className = 'chapter-info';
+    const info = document.createElement("div");
+    info.className = "chapter-info";
 
-    const title = document.createElement('div');
-    title.className = 'chapter-title';
+    const title = document.createElement("div");
+    title.className = "chapter-title";
     title.textContent = name;
 
     info.appendChild(title);
@@ -49,22 +48,22 @@ export function renderGallery(chapterOrder, chapters) {
     grid.appendChild(card);
   });
 
-  const closeBtn = document.getElementById('galleryClose');
+  const closeBtn = document.getElementById("galleryClose");
   if (closeBtn) {
     closeBtn.onclick = toggleGallery;
   }
 }
 
 export function toggleGallery() {
-  const overlay = document.getElementById('galleryOverlay');
+  const overlay = document.getElementById("galleryOverlay");
   if (overlay) {
-    overlay.classList.toggle('active');
+    overlay.classList.toggle("active");
   }
 }
 
 export function attachGalleryButton() {
-  const galleryBtn = document.getElementById('galleryBtn');
-  if (galleryBtn) galleryBtn.addEventListener('click', toggleGallery);
+  const galleryBtn = document.getElementById("galleryBtn");
+  if (galleryBtn) galleryBtn.addEventListener("click", toggleGallery);
 }
 
 // changeChapter handled via imported alias; no local implementation
