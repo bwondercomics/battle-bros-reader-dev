@@ -1124,6 +1124,8 @@
         flex-direction: column;
         gap: 12px;
         flex: 1 1 auto;
+        justify-content: space-between;
+        min-height: 0;
       }
 
       .latest-update {
@@ -1258,23 +1260,33 @@
 
       .side-panel.right .preview {
         display: none;
+        flex: 0 0 auto;
+        max-height: 0;
+        min-height: 0;
+        height: 0;
+        margin: 0;
       }
 
       .panel-buttons {
         flex: 1 1 auto;
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        justify-content: center;
-        padding: 8px 0;
-        min-height: 0;
+        gap: 8px;
+        justify-content: flex-start;
+        padding: 12px 0 0 0;
+        margin-top: 0;
+        min-height: 50%;
+        max-height: none;
+        overflow-y: auto;
+        padding-right: 4px;
+        scrollbar-width: thin;
       }
 
       .panel-btn {
         display: flex;
         align-items: center;
-        gap: 14px;
-        padding: 14px;
+        gap: 10px;
+        padding: 10px 12px;
         background:
           linear-gradient(
             135deg,
@@ -1290,14 +1302,14 @@
         color: var(--text);
         position: relative;
         box-shadow:
-          0 6px 12px rgba(0, 0, 0, 0.55),
+          0 4px 10px rgba(0, 0, 0, 0.45),
           inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       }
 
       .panel-btn::before {
         content: ">";
         position: absolute;
-        left: -10px;
+        left: -8px;
         color: var(--accent);
         opacity: 0;
         transition: all 0.2s;
@@ -1332,19 +1344,19 @@
       }
 
       .panel-btn-icon {
-        width: 52px;
-        height: 52px;
-        min-width: 52px;
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         border: 3px solid var(--accent);
-        font-size: 28px;
+        font-size: 22px;
         color: var(--bg-dark);
         font-weight: bold;
         box-shadow:
-          0 3px 0 rgba(0, 0, 0, 0.4),
+          0 2px 0 rgba(0, 0, 0, 0.4),
           inset 0 2px 0 rgba(255, 255, 255, 0.3);
         position: relative;
       }
@@ -1363,8 +1375,8 @@
       .panel-btn-text {
         flex: 1;
         font-family: "Bebas Neue";
-        font-size: 20px;
-        letter-spacing: 2px;
+        font-size: 16px;
+        letter-spacing: 1.2px;
         text-transform: uppercase;
         color: var(--text);
         text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
@@ -2225,15 +2237,21 @@
 
         .side-panel.right .preview {
           width: 100%;
-          max-height: none;
-          height: 140px;
-          margin-bottom: 12px;
+          max-height: 0;
+          height: 0;
+          min-height: 0;
+          margin: 0;
+          display: none;
         }
 
         .panel-buttons {
           flex-direction: column;
           padding: 0;
           gap: 8px;
+          min-height: 0;
+          max-height: none;
+          margin-top: 0;
+          flex: 1 1 auto;
         }
 
         .panel-btn {

@@ -1,17 +1,8 @@
 {
   "layout": {
-    "leftPanel": {
-      "enabled": true,
-      "order": 1
-    },
-    "viewport": {
-      "enabled": true,
-      "order": 2
-    },
-    "rightPanel": {
-      "enabled": true,
-      "order": 3
-    }
+    "leftPanel": { "enabled": true, "order": 1 },
+    "viewport": { "enabled": true, "order": 2 },
+    "rightPanel": { "enabled": true, "order": 3 }
   },
   "theme": {
     "primary": "#00d9ff",
@@ -66,25 +57,31 @@
       "buttons": [
         {
           "id": "btn1",
-          "icon": "🦋",
+          "icon": "B",
           "text": "Bluesky",
           "url": "https://bsky.app/profile/bwondercomics.com"
         },
         {
           "id": "btn2",
-          "icon": "💎",
+          "icon": "P",
           "text": "Patreon",
           "url": "https://patreon.com/doylemelville2"
         },
         {
+          "id": "btn5",
+          "icon": "D",
+          "text": "Discord",
+          "url": "https://discord.gg/your-server"
+        },
+        {
           "id": "btn3",
-          "icon": "🎨",
+          "icon": "A",
           "text": "ArtStation",
           "url": "https://doyle-melvilleii.artstation.com"
         },
         {
           "id": "btn4",
-          "icon": "📖",
+          "icon": "S",
           "text": "Buy Print",
           "url": "https://bwondercomics.bigcartel.com/product/battle-bros-volume-1"
         }

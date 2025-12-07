@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -494,11 +494,12 @@
 <body>
 
     <header class="header">
-        <h1 class="title">🎨 Battle Bros Page Designer</h1>
+        <h1 class="title">Battle Bros Page Designer</h1>
         <nav class="nav">
-            <button class="btn btn-secondary" id="btnBackToAdmin">← Back to Admin</button>
-            <button class="btn btn-success" id="btnSave">💾 Save Draft</button>
-            <button class="btn btn-primary" id="btnPublish">🚀 Publish</button>
+            <button class="btn btn-secondary" id="btnBackToAdmin">Back to Admin</button>
+            <button class="btn btn-secondary" id="btnResetConfig">Reset Draft</button>
+            <button class="btn btn-success" id="btnSave">Save Draft</button>
+            <button class="btn btn-primary" id="btnPublish">Publish</button>
         </nav>
     </header>
 
@@ -508,10 +509,10 @@
         </p>
 
         <div class="tabs">
-            <button class="tab-btn active" data-tab="theme">🎨 Theme</button>
-            <button class="tab-btn" data-tab="content">📝 Content</button>
-            <button class="tab-btn" data-tab="layout">📐 Layout</button>
-            <button class="tab-btn" data-tab="preview">👁️ Preview</button>
+            <button class="tab-btn active" data-tab="theme">Theme</button>
+            <button class="tab-btn" data-tab="content">Content</button>
+            <button class="tab-btn" data-tab="layout">Layout</button>
+            <button class="tab-btn" data-tab="preview">Preview</button>
         </div>
 
         <!-- Theme Tab -->
@@ -522,10 +523,10 @@
                 <div class="form-group">
                     <label class="form-label">Quick Presets</label>
                     <div class="preset-grid">
-                        <button class="preset-btn" data-preset="cyberpunk">⚡ Cyberpunk</button>
-                        <button class="preset-btn" data-preset="retro">🕹️ Retro</button>
-                        <button class="preset-btn" data-preset="minimal">✨ Minimal</button>
-                        <button class="preset-btn" data-preset="neon">💫 Neon</button>
+                        <button class="preset-btn" data-preset="cyberpunk">Cyberpunk</button>
+                        <button class="preset-btn" data-preset="retro">Retro</button>
+                        <button class="preset-btn" data-preset="minimal">Minimal</button>
+                        <button class="preset-btn" data-preset="neon">Neon</button>
                     </div>
                 </div>
 
@@ -606,7 +607,7 @@
                     <label class="form-label">Image</label>
                     <div class="upload-area" id="leftImageUpload">
                         <input type="file" id="leftImageFile" accept="image/*" style="display: none;">
-                        <div>📸 Click or drag image here</div>
+                        <div>Click or drag image here</div>
                         <img id="leftImagePreview" class="preview-img">
                     </div>
                     <input type="text" class="form-input" id="leftImageUrl" placeholder="Or enter image URL"
@@ -620,7 +621,7 @@
                     <label class="form-label">Image</label>
                     <div class="upload-area" id="rightImageUpload">
                         <input type="file" id="rightImageFile" accept="image/*" style="display: none;">
-                        <div>📸 Click or drag image here</div>
+                        <div>Click or drag image here</div>
                         <img id="rightImagePreview" class="preview-img">
                     </div>
                     <input type="text" class="form-input" id="rightImageUrl" placeholder="Or enter image URL"
@@ -649,10 +650,10 @@
             <div class="section">
                 <h2 class="section-title">Live Preview</h2>
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <button class="btn btn-secondary" id="btnRefreshPreview">🔄 Refresh</button>
-                    <button class="btn btn-secondary" id="btnPreviewDesktop">🖥️ Desktop</button>
-                    <button class="btn btn-secondary" id="btnPreviewTablet">📱 Tablet</button>
-                    <button class="btn btn-secondary" id="btnPreviewMobile">📱 Mobile</button>
+                    <button class="btn btn-secondary" id="btnRefreshPreview">Refresh</button>
+                    <button class="btn btn-secondary" id="btnPreviewDesktop">Desktop</button>
+                    <button class="btn btn-secondary" id="btnPreviewTablet">Tablet</button>
+                    <button class="btn btn-secondary" id="btnPreviewMobile">Mobile</button>
                 </div>
                 <iframe id="previewFrame" class="preview-frame" src="../index.html?preview=true"></iframe>
             </div>
@@ -675,12 +676,21 @@
                 dataFile: 'admin/page-config.json'
             };
 
+            const DEFAULT_BUTTONS = [
+                { id: 'btn1', icon: 'B', text: 'Bluesky', url: 'https://bsky.app/profile/bwondercomics.com' },
+                { id: 'btn2', icon: 'P', text: 'Patreon', url: 'https://patreon.com/doylemelville2' },
+                { id: 'btn3', icon: 'A', text: 'ArtStation', url: 'https://doyle-melvilleii.artstation.com' },
+                { id: 'btn5', icon: 'D', text: 'Discord', url: 'https://discord.gg/your-server' },
+                { id: 'btn4', icon: 'S', text: 'Buy Print', url: 'https://bwondercomics.bigcartel.com/product/battle-bros-volume-1' }
+            ];
+
             let pageConfig = null;
 
             // --- Config Loading & Saving ---
 
             async function loadConfig() {
                 try {
+                    let fileConfig = null;
                     // Try to load from localStorage first (Draft)
                     const savedDraft = localStorage.getItem(CONFIG_KEY);
                     if (savedDraft) {
@@ -694,12 +704,17 @@
                     }
                     if (!pageConfig) {
                         // Fallback to file
-                        const response = await fetch('page-config.json');
-                        if (response.ok) {
-                            pageConfig = await response.json();
-                        } else {
-                            pageConfig = await getDefaultConfig();
-                        }
+                        fileConfig = await loadFileConfig();
+                        pageConfig = fileConfig || await getDefaultConfig();
+                    } else {
+                        // We have a draft; load file to merge buttons if missing
+                        fileConfig = await loadFileConfig();
+                    }
+
+                    // Ensure buttons exist (merge from file or defaults)
+                    if (!pageConfig?.content?.rightPanel?.buttons || pageConfig.content.rightPanel.buttons.length === 0) {
+                        const fileButtons = fileConfig?.content?.rightPanel?.buttons;
+                        pageConfig.content.rightPanel.buttons = (fileButtons && fileButtons.length ? fileButtons : DEFAULT_BUTTONS).map(b => ({ ...b }));
                     }
                     applyConfigToUI();
                 } catch (error) {
@@ -707,6 +722,18 @@
                     pageConfig = await getDefaultConfig();
                     applyConfigToUI();
                 }
+            }
+
+            async function loadFileConfig() {
+                try {
+                    const response = await fetch('page-config.json');
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                } catch (e) {
+                    console.warn('Could not load page-config.json', e);
+                }
+                return null;
             }
 
             async function getDefaultConfig() {
@@ -733,7 +760,7 @@
                             "subtitles": []
                         },
                         "leftPanel": { "topText": "TO GO EVEN FURTHER BEYOND", "bottomText": "WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!", "image": "" },
-                        "rightPanel": { "image": "", "buttons": [] }
+                        "rightPanel": { "image": "", "buttons": DEFAULT_BUTTONS }
                     },
                     "presets": {} // Presets would normally be loaded from file
                 };
@@ -927,30 +954,104 @@
             setupImageUpload('leftImageUpload', 'leftImageFile', 'leftImagePreview', 'leftImageUrl');
             setupImageUpload('rightImageUpload', 'rightImageFile', 'rightImagePreview', 'rightImageUrl');
 
-            // Buttons
+            // Buttons (enhanced UI)
             function renderButtons() {
                 const container = document.getElementById('buttonsList');
+                if (!container) return;
                 container.innerHTML = '';
 
                 if (!pageConfig.content.rightPanel.buttons) pageConfig.content.rightPanel.buttons = [];
 
+                if (!pageConfig.content.rightPanel.buttons.length) {
+                    const empty = document.createElement('div');
+                    empty.className = 'button-item';
+                    empty.textContent = 'No buttons yet. Add one below.';
+                    container.appendChild(empty);
+                    return;
+                }
+
                 pageConfig.content.rightPanel.buttons.forEach((btn, index) => {
                     const item = document.createElement('div');
                     item.className = 'button-item';
-                    item.innerHTML = `
-                        <input type="text" class="form-input" value="${btn.icon}" placeholder="Icon" onchange="updateButton(${index}, 'icon', this.value)">
-                        <input type="text" class="form-input" value="${btn.text}" placeholder="Text" onchange="updateButton(${index}, 'text', this.value)">
-                        <input type="text" class="form-input" value="${btn.url}" placeholder="URL" onchange="updateButton(${index}, 'url', this.value)">
-                        <button class="btn-remove" onclick="removeButton(${index})">✕</button>
-                    `;
+
+                    const iconInput = document.createElement('input');
+                    iconInput.type = 'text';
+                    iconInput.className = 'form-input';
+                    iconInput.placeholder = 'Icon (emoji or letter)';
+                    iconInput.value = btn.icon || '';
+                    iconInput.addEventListener('input', (e) => updateButton(index, 'icon', e.target.value));
+
+                    const textInput = document.createElement('input');
+                    textInput.type = 'text';
+                    textInput.className = 'form-input';
+                    textInput.placeholder = 'Button text';
+                    textInput.value = btn.text || '';
+                    textInput.addEventListener('input', (e) => updateButton(index, 'text', e.target.value));
+
+                    const urlInput = document.createElement('input');
+                    urlInput.type = 'text';
+                    urlInput.className = 'form-input';
+                    urlInput.placeholder = 'https://example.com';
+                    urlInput.value = btn.url || '';
+                    urlInput.addEventListener('input', (e) => updateButton(index, 'url', e.target.value));
+
+                    const actions = document.createElement('div');
+                    actions.style.display = 'flex';
+                    actions.style.gap = '6px';
+
+                    const upBtn = document.createElement('button');
+                    upBtn.type = 'button';
+                    upBtn.className = 'btn-remove';
+                    upBtn.textContent = '^';
+                    upBtn.title = 'Move up';
+                    upBtn.style.background = 'var(--primary)';
+                    upBtn.style.color = 'var(--bg-dark)';
+                    upBtn.disabled = index === 0;
+                    upBtn.addEventListener('click', () => moveButton(index, -1));
+
+                    const downBtn = document.createElement('button');
+                    downBtn.type = 'button';
+                    downBtn.className = 'btn-remove';
+                    downBtn.textContent = 'v';
+                    downBtn.title = 'Move down';
+                    downBtn.style.background = 'var(--primary)';
+                    downBtn.style.color = 'var(--bg-dark)';
+                    downBtn.disabled = index === (pageConfig.content.rightPanel.buttons.length - 1);
+                    downBtn.addEventListener('click', () => moveButton(index, 1));
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.type = 'button';
+                    removeBtn.className = 'btn-remove';
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.addEventListener('click', () => removeButton(index));
+
+                    actions.appendChild(upBtn);
+                    actions.appendChild(downBtn);
+                    actions.appendChild(removeBtn);
+
+                    item.appendChild(iconInput);
+                    item.appendChild(textInput);
+                    item.appendChild(urlInput);
+                    item.appendChild(actions);
                     container.appendChild(item);
                 });
             }
 
             window.updateButton = (index, field, value) => {
+                if (!pageConfig.content.rightPanel.buttons[index]) return;
                 pageConfig.content.rightPanel.buttons[index][field] = value;
                 broadcastUpdate();
             };
+
+            function moveButton(index, direction) {
+                const buttons = pageConfig.content.rightPanel.buttons;
+                const target = index + direction;
+                if (target < 0 || target >= buttons.length) return;
+                const [btn] = buttons.splice(index, 1);
+                buttons.splice(target, 0, btn);
+                renderButtons();
+                broadcastUpdate();
+            }
 
             window.removeButton = (index) => {
                 pageConfig.content.rightPanel.buttons.splice(index, 1);
@@ -958,11 +1059,19 @@
                 broadcastUpdate();
             };
 
-            document.getElementById('btnAddButton').addEventListener('click', () => {
-                pageConfig.content.rightPanel.buttons.push({ icon: '🔗', text: 'New Link', url: '#' });
+            function addButton() {
+                if (!pageConfig.content.rightPanel.buttons) pageConfig.content.rightPanel.buttons = [];
+                pageConfig.content.rightPanel.buttons.push({
+                    id: `btn-${Date.now()}`,
+                    icon: '*',
+                    text: 'New Link',
+                    url: 'https://'
+                });
                 renderButtons();
                 broadcastUpdate();
-            });
+            }
+
+            document.getElementById('btnAddButton').addEventListener('click', addButton);
 
             // Layout & Drag-and-Drop
             function renderLayoutPanels() {
@@ -970,9 +1079,9 @@
                 container.innerHTML = '';
 
                 const panels = [
-                    { key: 'leftPanel', name: 'Left Panel', icon: '◀️' },
-                    { key: 'viewport', name: 'Comic Viewer', icon: '📖' },
-                    { key: 'rightPanel', name: 'Right Panel', icon: '▶️' }
+                    { key: 'leftPanel', name: 'Left Panel', icon: '<' },
+                    { key: 'viewport', name: 'Comic Viewer', icon: '[ ]' },
+                    { key: 'rightPanel', name: 'Right Panel', icon: '>' }
                 ];
 
                 // Sort by order
@@ -1053,12 +1162,10 @@
 
                     // Update config
                     const panels = [
-                        { key: 'leftPanel', order: pageConfig.layout.leftPanel.order },
-                        { key: 'viewport', order: pageConfig.layout.viewport.order },
-                        { key: 'rightPanel', order: pageConfig.layout.rightPanel.order }
-                    ].sort((a, b) => a.order - b.order);
-
-                    const movedItem = panels.splice(srcIndex, 1)[0];
+                    { key: 'leftPanel', name: 'Left Panel', icon: '<' },
+                    { key: 'viewport', name: 'Comic Viewer', icon: '[ ]' },
+                    { key: 'rightPanel', name: 'Right Panel', icon: '>' }
+                ];
                     panels.splice(targetIndex, 0, movedItem);
 
                     // Reassign orders
@@ -1124,7 +1231,7 @@
                 const btn = document.getElementById('btnPublish');
                 const originalText = btn.innerHTML;
                 btn.disabled = true;
-                btn.innerHTML = '⏳ Publishing...';
+                btn.innerHTML = 'â³ Publishing...';
 
                 try {
                     // 1. Get current file SHA
@@ -1173,13 +1280,13 @@
                         throw new Error(errorData.message || 'GitHub API Error');
                     }
 
-                    showMessage('✅ Successfully published to GitHub!', 'success');
-                    alert('✅ Published successfully!\n\nThe site is updating. Changes should appear in 1-2 minutes.');
+                    showMessage('âœ… Successfully published to GitHub!', 'success');
+                    alert('âœ… Published successfully!\n\nThe site is updating. Changes should appear in 1-2 minutes.');
 
                 } catch (error) {
                     console.error('Publish failed:', error);
-                    showMessage('❌ Publish failed: ' + error.message, 'error');
-                    alert('❌ Publish failed:\n' + error.message);
+                    showMessage('âŒ Publish failed: ' + error.message, 'error');
+                    alert('âŒ Publish failed:\n' + error.message);
                 } finally {
                     btn.disabled = false;
                     btn.innerHTML = originalText;
@@ -1189,6 +1296,16 @@
             document.getElementById('btnBackToAdmin').addEventListener('click', () => {
                 window.location.href = 'index.html';
             });
+
+            const resetBtn = document.getElementById('btnResetConfig');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    if (confirm('Reset designer to the saved file config and clear browser draft?')) {
+                        localStorage.removeItem(CONFIG_KEY);
+                        window.location.reload();
+                    }
+                });
+            }
 
             function showMessage(text, type) {
                 const area = document.getElementById('messageArea');
@@ -1243,3 +1360,13 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+

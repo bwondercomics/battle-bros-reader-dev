@@ -49,17 +49,12 @@
 
       async function initCustomization() {
         let config = null;
-        const urlParams = new URLSearchParams(window.location.search);
-        const isPreview = urlParams.get('preview') === 'true';
-
         try {
-          if (isPreview) {
-            // Try loading draft from localStorage
-            const draft = localStorage.getItem(CONFIG_KEY);
-            if (draft) {
-              config = JSON.parse(draft);
-              console.log('Loaded config from localStorage (Preview Mode)');
-            }
+          // Always try browser draft first so local edits are visible without publishing
+          const draft = localStorage.getItem(CONFIG_KEY);
+          if (draft) {
+            config = JSON.parse(draft);
+            console.log('Loaded config from localStorage draft');
           }
 
           if (!config) {
