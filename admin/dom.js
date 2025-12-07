@@ -22,6 +22,7 @@ export const el = {
   postContent: document.getElementById('postContent'),
   postShare: document.getElementById('postShare'),
   btnSavePost: document.getElementById('btnSavePost'),
+  btnSaveDraft: document.getElementById('btnSaveDraft'),
   postList: document.getElementById('postList'),
   postStatus: document.getElementById('postStatus'),
   btnPreview: document.getElementById('btnPreview'),

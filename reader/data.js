@@ -88,7 +88,17 @@ export async function loadLatestPost() {
       return null;
     }
 
-    const latest = [...posts].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))[0];
+    const filtered = posts.filter(
+      (p) => (p.status || 'published') !== 'draft',
+    );
+    if (!filtered.length) {
+      body.innerHTML = '<div class="latest-empty">No updates yet.</div>';
+      return null;
+    }
+
+    const latest = [...filtered].sort(
+      (a, b) => new Date(b.date || 0) - new Date(a.date || 0),
+    )[0];
     return latest;
   } catch (error) {
     console.error('Latest update widget error:', error);

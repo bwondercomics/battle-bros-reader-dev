@@ -1163,13 +1163,26 @@
             style="margin-bottom: 10px;">
           <button type="button" class="btn-secondary" id="btnMediaPicker" style="margin-bottom: 10px;">Choose from
             Media</button>
-          <textarea id="postContent" class="form-input" placeholder="Post content..."
-            style="min-height: 100px; margin-bottom: 10px;"></textarea>
+          <div id="postToolbar" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:6px;">
+            <button type="button" class="btn-secondary rich-btn" data-cmd="bold">Bold</button>
+            <button type="button" class="btn-secondary rich-btn" data-cmd="italic">Italic</button>
+            <button type="button" class="btn-secondary rich-btn" data-cmd="underline">Underline</button>
+            <button type="button" class="btn-secondary rich-btn" data-cmd="insertUnorderedList">• List</button>
+            <button type="button" class="btn-secondary rich-btn" data-cmd="insertOrderedList">1. List</button>
+            <button type="button" class="btn-secondary rich-btn" data-cmd="formatBlock" data-value="h3">H3</button>
+            <button type="button" class="btn-secondary rich-btn" data-cmd="createLink">Link</button>
+            <button type="button" class="btn-secondary rich-btn" data-cmd="insertImage">Image</button>
+          </div>
+          <div id="postContent" class="form-input" contenteditable="true" aria-label="Post content"
+            style="min-height: 160px; margin-bottom: 10px; overflow: auto;"></div>
           <label style="display: flex; align-items: center; gap: 8px; margin: 6px 0 12px;">
             <input type="checkbox" id="postShare" checked>
             <span style="font-size: 0.9rem; color: var(--text);">Send to RSS / Social automations</span>
           </label>
-          <button class="btn-primary" id="btnSavePost">Publish Post</button>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-secondary" id="btnSaveDraft" type="button">Save Draft</button>
+            <button class="btn-primary" id="btnSavePost" type="button">Publish Post</button>
+          </div>
           <div id="postStatus" class="success-message" style="display: none; margin-top: 10px;"></div>
         </div>
 

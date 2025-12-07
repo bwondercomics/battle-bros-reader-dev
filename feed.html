@@ -260,14 +260,56 @@
   <script>
     const feedContainer = document.getElementById('feedContainer');
 
-    function escapeHtml(str = '') {
-      return str.replace(/[&<>"']/g, (ch) => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      }[ch] || ch));
+    function sanitizeContent(html = '') {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const allowed = new Set(['b','strong','i','em','u','a','p','br','ul','ol','li','span','img','h1','h2','h3','blockquote']);
+      const cleanUrl = (url = '') => {
+        const trimmed = url.trim();
+        if (!trimmed) return '';
+        const lower = trimmed.toLowerCase();
+        if (lower.startsWith('javascript:')) return '';
+        return trimmed;
+      };
+      const walk = (node) => {
+        [...node.children].forEach(child => {
+          const tag = child.tagName.toLowerCase();
+          if (!allowed.has(tag)) {
+            child.replaceWith(...child.childNodes);
+          } else {
+            [...child.attributes].forEach(attr => {
+              const name = attr.name.toLowerCase();
+              const allowedAttrs = tag === 'a'
+                ? ['href','title','target','rel']
+                : tag === 'img'
+                  ? ['src','alt','title']
+                  : [];
+              if (!allowedAttrs.includes(name)) child.removeAttribute(attr.name);
+            });
+            if (tag === 'a') {
+              const href = cleanUrl(child.getAttribute('href') || '');
+              if (!href) child.removeAttribute('href');
+              else {
+                child.setAttribute('href', href);
+                child.setAttribute('target', '_blank');
+                child.setAttribute('rel', 'noopener noreferrer');
+              }
+            }
+            if (tag === 'img') {
+              const src = cleanUrl(child.getAttribute('src') || '');
+              if (!src) {
+                child.remove();
+                return;
+              }
+              child.setAttribute('src', src);
+              child.setAttribute('alt', child.getAttribute('alt') || '');
+            }
+            walk(child);
+          }
+        });
+      };
+      walk(doc.body);
+      return doc.body.innerHTML;
     }
 
     function renderPost(post) {
@@ -324,8 +366,7 @@
 
       const content = document.createElement('div');
       content.className = 'post-content';
-      const safe = escapeHtml(post.content || '').replace(/\n/g, '<br>');
-      content.innerHTML = safe;
+      content.innerHTML = sanitizeContent(post.content || '');
       article.appendChild(content);
 
       feedContainer.appendChild(article);
@@ -336,14 +377,16 @@
         const response = await fetch('posts.json', { cache: 'no-cache' });
         if (!response.ok) throw new Error('Failed to load posts.json');
         const data = await response.json();
-        const posts = Array.isArray(data)
+        let posts = Array.isArray(data)
           ? data.map(p => ({
-            ...p,
-            imageTags: Array.isArray(p.imageTags)
-              ? p.imageTags
-              : (p.imageTags ? String(p.imageTags).split(',').map(t => t.trim()).filter(Boolean) : [])
-          }))
+              ...p,
+              imageTags: Array.isArray(p.imageTags)
+                ? p.imageTags
+                : (p.imageTags ? String(p.imageTags).split(',').map(t => t.trim()).filter(Boolean) : [])
+            }))
           : [];
+
+        posts = posts.filter(p => (p.status || 'published') !== 'draft');
 
         feedContainer.innerHTML = '';
 

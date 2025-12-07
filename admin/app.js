@@ -21,6 +21,8 @@ import {
   getChapterFolder,
 } from "./utils.js";
 
+const POST_DRAFT_KEY = "battlebros_post_draft";
+
 const state = {
   chapters: {},
   chapterFolders: {},
@@ -39,6 +41,88 @@ const state = {
   isUploading: false,
   isDeletingPost: false,
 };
+
+function sanitizeHtml(input = "") {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(input, "text/html");
+  const allowedTags = new Set([
+    "b",
+    "strong",
+    "i",
+    "em",
+    "u",
+    "a",
+    "p",
+    "br",
+    "ul",
+    "ol",
+    "li",
+    "span",
+    "img",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "blockquote",
+  ]);
+
+  const cleanUrl = (url = "") => {
+    const trimmed = url.trim();
+    if (!trimmed) return "";
+    const lowered = trimmed.toLowerCase();
+    if (lowered.startsWith("javascript:")) return "";
+    return trimmed;
+  };
+
+  const sanitizeNode = (node) => {
+    [...node.children].forEach((child) => {
+      if (!allowedTags.has(child.tagName.toLowerCase())) {
+        child.replaceWith(...child.childNodes);
+      } else {
+        // strip unwanted attributes
+        [...child.attributes].forEach((attr) => {
+          const name = attr.name.toLowerCase();
+          const val = attr.value;
+          const tag = child.tagName.toLowerCase();
+          const allowedAttrs =
+            tag === "a"
+              ? ["href", "title", "target", "rel"]
+              : tag === "img"
+                ? ["src", "alt", "title"]
+                : [];
+          if (!allowedAttrs.includes(name)) {
+            child.removeAttribute(attr.name);
+          }
+        });
+
+        if (child.tagName.toLowerCase() === "a") {
+          const href = cleanUrl(child.getAttribute("href") || "");
+          if (!href) {
+            child.removeAttribute("href");
+          } else {
+            child.setAttribute("href", href);
+            child.setAttribute("target", "_blank");
+            child.setAttribute("rel", "noopener noreferrer");
+          }
+        }
+        if (child.tagName.toLowerCase() === "img") {
+          const src = cleanUrl(child.getAttribute("src") || "");
+          if (!src) {
+            child.remove();
+            return;
+          }
+          child.setAttribute("src", src);
+          const alt = child.getAttribute("alt") || "";
+          child.setAttribute("alt", alt);
+        }
+        sanitizeNode(child);
+      }
+    });
+  };
+
+  sanitizeNode(doc.body);
+  return doc.body.innerHTML.trim();
+}
 
 function showError(message) {
   // Fallback to alert to keep UX functional even if a banner is missing
@@ -118,9 +202,10 @@ function resetPostForm() {
   el.postImage.value = "";
   if (el.postImageFile) el.postImageFile.value = "";
   if (el.postImageTags) el.postImageTags.value = "";
-  el.postContent.value = "";
+  if (el.postContent) el.postContent.innerHTML = "";
   el.postShare.checked = true;
   el.btnSavePost.textContent = "Publish Post";
+  if (el.btnSaveDraft) el.btnSaveDraft.textContent = "Save Draft";
 }
 
 function getPostPreview(content = "") {
@@ -158,7 +243,13 @@ function renderPosts() {
     const item = document.createElement("div");
     item.className = "chapter-item";
     const dateLabel = formatPostDate(post.date);
-    const preview = getPostPreview(post.content);
+    const preview = getPostPreview(
+      (post.content || "").replace(/<[^>]+>/g, ""),
+    );
+    const statusLabel =
+      post.status === "draft"
+        ? '<span style="color: var(--accent); font-size: 0.85rem;">Draft</span>'
+        : '<span style="color: var(--success); font-size: 0.85rem;">Published</span>';
     const shareLabel =
       post.share === false
         ? '<span style="color: var(--danger); font-size: 0.85rem;">Not broadcasting</span>'
@@ -171,7 +262,7 @@ function renderPosts() {
     item.innerHTML = `
       <div class="chapter-info">
         <div class="chapter-name">${escapeHtml(post.title || "Untitled")}</div>
-        <div class="chapter-meta">${dateLabel} - ${shareLabel}</div>
+        <div class="chapter-meta">${dateLabel} - ${shareLabel} - ${statusLabel}</div>
         ${tagText ? `<div class="chapter-meta" style="opacity:0.8;">${escapeHtml(tagText)}</div>` : ""}
         <div class="chapter-meta" style="opacity:0.8;">${escapeHtml(preview)}</div>
       </div>
@@ -201,6 +292,7 @@ async function loadPosts() {
     state.posts = Array.isArray(data)
       ? data.map((p) => ({
           ...p,
+          status: p.status || "published",
           share: p.share !== false,
           imageTags: Array.isArray(p.imageTags)
             ? p.imageTags
@@ -219,6 +311,30 @@ async function loadPosts() {
   }
 }
 
+function loadLocalDraft() {
+  try {
+    const raw = localStorage.getItem(POST_DRAFT_KEY);
+    if (!raw) return;
+    const draft = JSON.parse(raw);
+    if (!draft) return;
+    if (state.editingPostId) return;
+    if (el.postTitle && !el.postTitle.value) {
+      el.postTitle.value = draft.title || "";
+      el.postImage.value = draft.image || "";
+      if (el.postImageTags) {
+        el.postImageTags.value = (draft.imageTags || []).join(", ");
+      }
+      if (el.postContent) {
+        el.postContent.innerHTML = draft.content || "";
+      }
+      if (el.postShare) el.postShare.checked = draft.share !== false;
+      setPostStatus("Loaded saved draft from browser storage.");
+    }
+  } catch (e) {
+    console.warn("Could not load local draft", e);
+  }
+}
+
 function populatePostForm(postId) {
   const post = state.posts.find((p) => p.id === postId);
   if (!post) return;
@@ -227,7 +343,7 @@ function populatePostForm(postId) {
   el.postImage.value = post.image || "";
   if (el.postImageTags)
     el.postImageTags.value = (post.imageTags || []).join(", ");
-  el.postContent.value = post.content || "";
+  if (el.postContent) el.postContent.innerHTML = post.content || "";
   el.postShare.checked = post.share !== false;
   el.btnSavePost.textContent = "Update Post";
   if (el.blogSection) {
@@ -276,10 +392,12 @@ function generatePostId() {
   return `post-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
 }
 
-async function savePost() {
+async function savePost(options = {}) {
+  const status = options.status || "published";
   const title = el.postTitle.value.trim();
   const imageTags = parseTags(el.postImageTags?.value || "");
-  const content = el.postContent.value.trim();
+  const rawContent = (el.postContent?.innerHTML || "").trim();
+  const content = sanitizeHtml(rawContent);
   const share = el.postShare.checked;
   let image = el.postImage.value.trim();
   const uploadFile = el.postImageFile?.files?.[0];
@@ -318,6 +436,7 @@ async function savePost() {
   }
 
   const now = new Date().toISOString();
+  const safeShare = status === "draft" ? false : share;
 
   if (state.editingPostId) {
     const idx = state.posts.findIndex((p) => p.id === state.editingPostId);
@@ -328,8 +447,10 @@ async function savePost() {
         image,
         imageTags,
         content,
-        date: now,
-        share,
+        date: state.posts[idx].date || now,
+        share: safeShare,
+        status,
+        updatedAt: now,
       };
     }
   } else {
@@ -340,14 +461,66 @@ async function savePost() {
       imageTags,
       content,
       date: now,
-      share,
+      share: safeShare,
+      status,
+      updatedAt: now,
     });
+  }
+
+  try {
+    localStorage.setItem(
+      POST_DRAFT_KEY,
+      JSON.stringify({
+        title,
+        image,
+        imageTags,
+        content,
+        share: safeShare,
+        status,
+      }),
+    );
+  } catch (e) {
+    console.warn("Could not persist draft locally", e);
   }
 
   await persistPosts();
   renderPosts();
   resetPostForm();
-  setPostStatus("Post saved.");
+  if (status === "draft") {
+    setPostStatus("Draft saved.");
+  } else {
+    setPostStatus("Post saved.");
+    localStorage.removeItem(POST_DRAFT_KEY);
+  }
+}
+
+function bindRichTextToolbar() {
+  const toolbar = document.getElementById("postToolbar");
+  if (!toolbar || !el.postContent) return;
+  toolbar.querySelectorAll(".rich-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const cmd = btn.dataset.cmd;
+      if (!cmd) return;
+      el.postContent.focus();
+      if (cmd === "createLink") {
+        const url = prompt("Enter URL");
+        if (url) document.execCommand("createLink", false, url);
+        return;
+      }
+      if (cmd === "insertImage") {
+        const url = prompt("Enter image URL");
+        if (url) document.execCommand("insertImage", false, url);
+        return;
+      }
+      if (cmd === "formatBlock") {
+        const block = btn.dataset.value || "p";
+        document.execCommand("formatBlock", false, block);
+        return;
+      }
+      document.execCommand(cmd, false, null);
+    });
+  });
 }
 
 // ---------------- MEDIA ----------------
@@ -436,6 +609,7 @@ function renderMedia() {
       </div>
       <div class="chapter-actions">
         <button class="btn-small btn-edit" data-use="${escapeHtml(item.id)}">Use</button>
+        <button class="btn-small btn-delete" data-remove="${escapeHtml(item.id)}">Delete</button>
       </div>
     `;
     el.mediaList.appendChild(div);
@@ -446,6 +620,13 @@ function renderMedia() {
       const id = btn.getAttribute("data-use");
       const item = state.mediaItems.find((m) => m.id === id);
       if (item) applyMediaToPost(item);
+    });
+  });
+
+  el.mediaList.querySelectorAll("[data-remove]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.getAttribute("data-remove");
+      await deleteMediaItem(id);
     });
   });
 }
@@ -626,6 +807,31 @@ function updatePreviewChapters(selectedName = "") {
     state.previewState = { chapter: "", pages: [], index: 0 };
     renderPreviewImage();
   }
+}
+
+async function deleteMediaItem(id) {
+  const item = state.mediaItems.find((m) => m.id === id);
+  if (!item) return;
+  const confirmed = window.confirm(
+    `Delete media item "${item.path}" from the library?`,
+  );
+  if (!confirmed) return;
+
+  // Warn about posts using this image
+  const usedBy = (state.posts || [])
+    .filter((p) => p.image === item.path)
+    .map((p) => p.title || p.id)
+    .slice(0, 5);
+  if (usedBy.length) {
+    const proceed = window.confirm(
+      `This image is used by posts: ${usedBy.join(", ")}. Continue?`,
+    );
+    if (!proceed) return;
+  }
+
+  state.mediaItems = state.mediaItems.filter((m) => m.id !== id);
+  await saveMedia(true);
+  renderMedia();
 }
 
 function setPreviewChapter(name) {
@@ -1112,6 +1318,7 @@ async function showDashboard() {
   } catch (e) {
     console.error("Posts failed to load:", e);
   }
+  loadLocalDraft();
   try {
     await loadMedia();
   } catch (e) {
@@ -1174,6 +1381,13 @@ function attachEventHandlers() {
     e.preventDefault();
     await savePost();
   });
+  if (el.btnSaveDraft) {
+    el.btnSaveDraft.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await savePost({ status: "draft" });
+    });
+  }
+  bindRichTextToolbar();
 
   if (el.btnMedia) {
     el.btnMedia.addEventListener("click", () => {

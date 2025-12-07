@@ -1,5 +1,5 @@
 export function latestPreviewText(text = '') {
-  const condensed = text.replace(/\s+/g, ' ').trim();
+  const condensed = text.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
   if (!condensed) return 'No summary yet.';
   return condensed.length > 120 ? `${condensed.slice(0, 120)}...` : condensed;
 }
