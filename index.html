@@ -828,6 +828,26 @@
         height: 100%;
       }
 
+      .side-panel.left {
+        position: relative;
+      }
+
+      .side-panel.left::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("cityB.png") center/cover no-repeat;
+        opacity: 0.18;
+        filter: saturate(1.1);
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .side-panel.left > * {
+        position: relative;
+        z-index: 1;
+      }
+
       .side-panel.left .left-panel-content {
         display: flex;
         flex-direction: column;
@@ -863,31 +883,89 @@
         font-weight: 500;
         max-width: 100%;
         word-wrap: break-word;
+        display: grid;
+        gap: 4px;
+        text-transform: none;
+      }
+
+      .bubble-em {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 18px;
+        letter-spacing: 1.2px;
+        color: var(--accent);
+        text-shadow:
+          2px 2px 0 rgba(0, 0, 0, 0.5),
+          0 0 12px rgba(255, 237, 0, 0.5);
+      }
+
+      .bubble-bold {
+        font-weight: 800;
+        color: var(--text);
+        background: rgba(0, 217, 255, 0.15);
+        padding: 2px 6px;
+        border-radius: 4px;
+        box-shadow: inset 0 0 0 1px rgba(0, 217, 255, 0.5);
+      }
+
+      .bubble-highlight {
+        font-weight: 900;
+        font-size: 18px;
+        color: var(--bg-dark);
+        background: var(--accent);
+        padding: 4px 8px;
+        border-radius: 5px;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+        letter-spacing: 0.6px;
+        text-shadow: none;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .bubble-highlight:link,
+      .bubble-highlight:visited {
+        color: var(--bg-dark);
+      }
+
+      .bubble-highlight:hover {
+        box-shadow:
+          inset 0 0 0 1px rgba(0, 0, 0, 0.25),
+          0 0 12px rgba(255, 237, 0, 0.35);
+        transform: translateY(-1px);
       }
 
       .side-panel.left .preview {
-        /*flex: 1 1 auto;*/
         width: 100%;
+        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         background: transparent;
         min-height: 0;
+        flex-direction: column;
+        gap: 6px;
       }
 
       .side-panel.left .preview .panel-preview-img {
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
+        width: 100%;
+        max-height: 420px;
         height: auto;
         object-fit: contain;
         display: block;
-        border: 3px solid rgba(0, 217, 255, 0.3);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        border: none;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
         cursor: pointer;
         transition:
           transform 0.3s,
           border-color 0.3s;
+      }
+
+      .preview-arrow {
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 14px solid var(--accent);
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35));
       }
 
       .side-panel.left .preview .panel-preview-img:hover {
@@ -2336,24 +2414,33 @@
         <aside class="side-panel left" id="leftPanel">
           <div class="left-panel-content">
             <div class="left-panel-text-top">TO GO EVEN FURTHER BEYOND</div>
-            <div class="preview" id="leftPreview" aria-hidden="false">
-              <picture>
-                <img
-                  class="panel-preview-img"
-                  src="bookturn.gif"
-                  alt="Battle Bros Volume 1 - Get the physical comic!"
-                  id="bookTurnPromo"
-                />
-              </picture>
-            </div>
+        <div class="preview" id="leftPreview" aria-hidden="false">
+          <picture>
+            <img
+              class="panel-preview-img"
+              src="bookturn.gif"
+              alt="Battle Bros Volume 1 - Get the physical comic!"
+              id="bookTurnPromo"
+            />
+          </picture>
+          <div class="preview-arrow" aria-hidden="true"></div>
+        </div>
             <div class="left-panel-text-bottom">
-              WANT TO SUPPORT THE COMIC? Buy the physical book at the
-              bwondercomics store!
+              <span class="bubble-em">WANT TO SUPPORT THE COMIC?</span>
+              <span class="bubble-bold">Buy the physical book</span> at the
+              <a
+                class="bubble-highlight"
+                href="https://bwondercomics.bigcartel.com/product/battle-bros-volume-1"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="bwondercomics store link"
+                >bwondercomics store!</a
+              >
             </div>
 
             <!-- Email Signup Form -->
             <div class="email-signup-section">
-              <div class="email-signup-label">GET LOVE LETTERS FROM ME:</div>
+              <div class="email-signup-label">JOIN THE EMAIL LIST!</div>
               <form
                 id="emailSignupForm"
                 action="https://formspree.io/f/xjkjkvla"
@@ -2371,7 +2458,9 @@
                 />
                 <button type="submit" class="email-submit-btn">SUBMIT</button>
               </form>
-              <div class="email-signup-cta">JOIN THE EMAIL LIST!</div>
+              <div class="email-signup-cta">
+                Occasional dispatches from the Bros: updates, art, that’s it.
+              </div>
               <div
                 id="emailFormMessage"
                 class="email-form-message"

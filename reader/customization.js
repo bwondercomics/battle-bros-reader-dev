@@ -4,6 +4,11 @@
       const CONFIG_KEY = 'battlebros_page_config';
 
       // Default config matches original HTML
+      const SUPPORT_TEXT_HTML = `<span class="bubble-em">WANT TO SUPPORT THE COMIC?</span>
+              <span class="bubble-bold">Buy the physical book</span> at the
+              <a class="bubble-highlight" href="https://bwondercomics.bigcartel.com/product/battle-bros-volume-1" target="_blank" rel="noopener noreferrer" aria-label="bwondercomics store link">bwondercomics store!</a>`;
+      const SUPPORT_TEXT_PLAIN = "WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!";
+
       const defaultConfig = {
         theme: {
           primary: '#00d9ff',
@@ -27,7 +32,7 @@
           },
           leftPanel: {
             topText: "TO GO EVEN FURTHER BEYOND",
-            bottomText: "WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!",
+            bottomText: SUPPORT_TEXT_HTML,
             image: "bookturn.gif"
           },
           rightPanel: {
@@ -106,7 +111,20 @@
             if (topText) topText.textContent = config.content.leftPanel.topText;
 
             const botText = document.querySelector('.left-panel-text-bottom');
-            if (botText) botText.textContent = config.content.leftPanel.bottomText;
+            if (botText && config.content.leftPanel.bottomText) {
+              const val = config.content.leftPanel.bottomText;
+              if (typeof val === 'string') {
+                if (val.includes('<')) {
+                  botText.innerHTML = val;
+                } else if (val.trim() === SUPPORT_TEXT_PLAIN) {
+                  botText.innerHTML = SUPPORT_TEXT_HTML;
+                } else {
+                  botText.textContent = val;
+                }
+              } else {
+                botText.innerHTML = SUPPORT_TEXT_HTML;
+              }
+            }
 
             const img = document.querySelector('#leftPreview img');
             if (img && config.content.leftPanel.image) {

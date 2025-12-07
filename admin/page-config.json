@@ -56,8 +56,8 @@
       "bottomText": "WANT TO SUPPORT THE COMIC? Buy the physical book at the bwondercomics store!",
       "image": "bookturn.gif",
       "imageAlt": "Battle Bros Volume 1 - Get the physical comic!",
-      "emailLabel": "GET LOVE LETTERS FROM ME:",
-      "emailCta": "JOIN THE EMAIL LIST!",
+      "emailLabel": "JOIN THE EMAIL LIST!",
+      "emailCta": "Occasional dispatches from the Bros: updates, art, that’s it.",
       "emailAction": "https://formspree.io/f/xjkjkvla"
     },
     "rightPanel": {
