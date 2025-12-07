@@ -463,23 +463,48 @@ async function syncMediaFromDisk(showMessage = true) {
     const diskPaths = result.paths || [];
     const existingMap = new Map(state.mediaItems.map((m) => [m.path, m]));
     let added = 0;
+    let updated = 0;
+
+    // Map image paths to tags from posts (if any)
+    const postTagMap = new Map(
+      (state.posts || [])
+        .filter((p) => p.image)
+        .map((p) => [
+          p.image,
+          Array.isArray(p.imageTags) ? p.imageTags : parseTags(p.imageTags || ""),
+        ]),
+    );
 
     diskPaths.forEach((p) => {
-      if (!existingMap.has(p)) {
-        state.mediaItems.push({ id: generateMediaId(), path: p, tags: [] });
+      const inferredTags = inferTagsForPath(p);
+      const postTags = normalizeTags(postTagMap.get(p));
+      const existing = existingMap.get(p);
+      if (existing) {
+        const currentTags = normalizeTags(existing.tags);
+        const merged = mergeTags(currentTags, inferredTags, postTags);
+        if (!tagsEqual(currentTags, merged)) {
+          existing.tags = merged;
+          updated += 1;
+        }
+      } else {
+        state.mediaItems.push({
+          id: generateMediaId(),
+          path: p,
+          tags: mergeTags([], inferredTags, postTags),
+        });
         added += 1;
       }
     });
 
-    if (added > 0) {
+    if (added > 0 || updated > 0) {
       await saveMedia();
       renderMedia();
     }
 
     if (showMessage) {
       setMediaStatus(
-        added
-          ? `Synced ${added} new item(s).`
+        added || updated
+          ? `Synced ${added} new item(s)${updated ? `, updated ${updated} tag set(s)` : ""}.`
           : "Media folder is already synced.",
       );
     }
@@ -491,10 +516,11 @@ async function syncMediaFromDisk(showMessage = true) {
 
 async function upsertMediaEntry(path, tags = []) {
   if (!path) return;
-  const normalizedTags = Array.isArray(tags) ? tags : parseTags(tags || "");
+  const normalizedTags = normalizeTags(tags);
   const existing = state.mediaItems.find((m) => m.path === path);
   if (existing) {
-    if (normalizedTags.length) existing.tags = normalizedTags;
+    const merged = mergeTags(normalizeTags(existing.tags), normalizedTags);
+    existing.tags = merged;
   } else {
     state.mediaItems.push({
       id: generateMediaId(),
@@ -529,6 +555,38 @@ async function addMediaItem() {
   await saveMedia();
 }
 
+function inferTagsForPath(path = "") {
+  const lower = path.toLowerCase();
+  const tags = [];
+  if (lower.includes("patreon")) tags.push("patreon");
+  if (lower.includes("volume")) tags.push("volume", "store");
+  if (lower.includes("cover")) tags.push("cover");
+  return tags;
+}
+
+function normalizeTags(tags) {
+  if (!tags) return [];
+  if (!Array.isArray(tags)) return parseTags(tags || "");
+  return tags.map((t) => String(t).trim().toLowerCase()).filter(Boolean);
+}
+
+function mergeTags(...tagGroups) {
+  const out = [];
+  tagGroups.flat().forEach((tag) => {
+    const t = String(tag).trim().toLowerCase();
+    if (t && !out.includes(t)) out.push(t);
+  });
+  return out;
+}
+
+function tagsEqual(a = [], b = []) {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i += 1) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
 function applyMediaToPost(item) {
   if (el.postImage) el.postImage.value = item.path || "";
   if (el.postImageTags) el.postImageTags.value = (item.tags || []).join(", ");
@@ -543,9 +601,12 @@ function applyMediaToPost(item) {
 // ---------------- PREVIEW ----------------
 function updatePreviewChapters(selectedName = "") {
   if (!el.previewChapterSelect) return;
-  const names = Object.keys(state.chapters);
+  const names = Object.keys(state.chapters).filter(
+    (name) => name && name !== "undefined",
+  );
   if (
     state.currentEditingChapter &&
+    state.currentEditingChapter !== "undefined" &&
     !names.includes(state.currentEditingChapter)
   ) {
     names.push(state.currentEditingChapter);

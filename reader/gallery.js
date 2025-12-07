@@ -1,6 +1,7 @@
 import { el } from "./dom.js";
 import { state } from "./state.js";
 import { changeChapter as changeChapterFromOverlays } from "./overlays.js";
+import { PATREON_COVERS, VOLUME_EXCLUSIVES } from "./patreon.js";
 
 export function renderGallery(chapterOrder, chapters) {
   const grid = document.getElementById("galleryGrid");
@@ -9,8 +10,9 @@ export function renderGallery(chapterOrder, chapters) {
   grid.innerHTML = "";
 
   const names = chapterOrder.length ? chapterOrder : Object.keys(chapters);
+  let cardIndex = 0;
 
-  names.forEach((name, index) => {
+  names.forEach((name) => {
     const pages = chapters[name];
     if (!pages || pages.length === 0) return;
 
@@ -18,7 +20,7 @@ export function renderGallery(chapterOrder, chapters) {
 
     const card = document.createElement("div");
     card.className = "chapter-card";
-    card.style.setProperty("--card-index", index);
+    card.style.setProperty("--card-index", cardIndex++);
     if (name === state.currentChapter) {
       card.classList.add("active");
     }
@@ -47,6 +49,42 @@ export function renderGallery(chapterOrder, chapters) {
     card.appendChild(info);
     grid.appendChild(card);
   });
+
+  const addPromoCard = (cover, variantClass, badgeText) => {
+    const card = document.createElement("div");
+    card.className = `chapter-card ${variantClass}`;
+    card.style.setProperty("--card-index", cardIndex++);
+
+    card.onclick = () => {
+      window.open(cover.href, "_blank", "noopener,noreferrer");
+    };
+
+    const thumb = document.createElement("img");
+    thumb.className = "chapter-thumb";
+    thumb.src = cover.image;
+    thumb.alt = cover.title;
+    thumb.loading = "lazy";
+
+    const info = document.createElement("div");
+    info.className = "chapter-info";
+
+    const title = document.createElement("div");
+    title.className = "chapter-title";
+    title.textContent = cover.title;
+
+    const badge = document.createElement("div");
+    badge.className = `${variantClass}-badge`;
+    badge.textContent = badgeText;
+
+    info.appendChild(title);
+    info.appendChild(badge);
+    card.appendChild(thumb);
+    card.appendChild(info);
+    grid.appendChild(card);
+  };
+
+  PATREON_COVERS.forEach((cover) => addPromoCard(cover, "patreon-card", "Patreon Exclusive"));
+  VOLUME_EXCLUSIVES.forEach((cover) => addPromoCard(cover, "volume-card", "Physical Volume"));
 
   const closeBtn = document.getElementById("galleryClose");
   if (closeBtn) {

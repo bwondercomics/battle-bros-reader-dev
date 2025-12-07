@@ -22,6 +22,10 @@ export function createChaptersApi({ state, el, saveToServer, showSuccess, showEr
           state.chapters = data.chapters;
           state.chapterFolders = data.chapterFolders || {};
           state.statusMessage = data.statusMessage || '';
+          const removed = pruneInvalidChapters();
+          if (removed > 0) {
+            await saveChapters();
+          }
           Object.keys(state.chapters).forEach(name => {
             if (!state.chapterFolders[name]) {
               const inferred = inferFolderFromPages(name, state.chapters, state.currentPages);
@@ -48,6 +52,10 @@ export function createChaptersApi({ state, el, saveToServer, showSuccess, showEr
         } else {
           state.chapters = parsed || {};
           state.chapterFolders = {};
+        }
+        const removed = pruneInvalidChapters();
+        if (removed > 0) {
+          await saveChapters();
         }
         return;
       } catch (e) {
@@ -333,7 +341,7 @@ export function createChaptersApi({ state, el, saveToServer, showSuccess, showEr
 
   function renderChapterList() {
     el.chapterList.innerHTML = '';
-    const chapterNames = Object.keys(state.chapters);
+    const chapterNames = Object.keys(state.chapters).filter(name => name && name !== 'undefined');
     chapterNames.forEach(name => {
       const pages = state.chapters[name];
       const item = document.createElement('div');
@@ -356,6 +364,15 @@ export function createChaptersApi({ state, el, saveToServer, showSuccess, showEr
     el.chapterList.querySelectorAll('.btn-delete').forEach(btn => {
       btn.addEventListener('click', () => deleteChapter(btn.dataset.chapter));
     });
+  }
+
+  function pruneInvalidChapters() {
+    const invalid = Object.keys(state.chapters || {}).filter(name => !name || name === 'undefined' || name === 'null');
+    invalid.forEach(name => {
+      delete state.chapters[name];
+      if (state.chapterFolders[name]) delete state.chapterFolders[name];
+    });
+    return invalid.length;
   }
 
   function getActiveChapterName() {
