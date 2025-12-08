@@ -18,6 +18,7 @@ export const el = {
   postImage: document.getElementById('postImage'),
   postImageFile: document.getElementById('postImageFile'),
   postImageTags: document.getElementById('postImageTags'),
+  postImageFocus: document.getElementById('postImageFocus'),
   btnMediaPicker: document.getElementById('btnMediaPicker'),
   postContent: document.getElementById('postContent'),
   postShare: document.getElementById('postShare'),

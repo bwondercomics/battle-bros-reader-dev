@@ -16,6 +16,10 @@ export function renderLatestUpdate(post) {
     thumb.src = post.image;
     thumb.alt = post.title || 'Latest update image';
     thumb.loading = 'lazy';
+    if (post.imageFocus) {
+      thumb.style.objectPosition = post.imageFocus;
+      thumb.style.objectFit = 'cover';
+    }
   } else {
     thumb.textContent = 'No image';
   }

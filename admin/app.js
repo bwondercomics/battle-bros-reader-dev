@@ -202,6 +202,7 @@ function resetPostForm() {
   el.postImage.value = "";
   if (el.postImageFile) el.postImageFile.value = "";
   if (el.postImageTags) el.postImageTags.value = "";
+  if (el.postImageFocus) el.postImageFocus.value = "center";
   if (el.postContent) el.postContent.innerHTML = "";
   el.postShare.checked = true;
   el.btnSavePost.textContent = "Publish Post";
@@ -293,6 +294,7 @@ async function loadPosts() {
       ? data.map((p) => ({
           ...p,
           status: p.status || "published",
+          imageFocus: p.imageFocus || "center",
           share: p.share !== false,
           imageTags: Array.isArray(p.imageTags)
             ? p.imageTags
@@ -343,6 +345,7 @@ function populatePostForm(postId) {
   el.postImage.value = post.image || "";
   if (el.postImageTags)
     el.postImageTags.value = (post.imageTags || []).join(", ");
+  if (el.postImageFocus) el.postImageFocus.value = post.imageFocus || "center";
   if (el.postContent) el.postContent.innerHTML = post.content || "";
   el.postShare.checked = post.share !== false;
   el.btnSavePost.textContent = "Update Post";
@@ -396,6 +399,7 @@ async function savePost(options = {}) {
   const status = options.status || "published";
   const title = el.postTitle.value.trim();
   const imageTags = parseTags(el.postImageTags?.value || "");
+  const imageFocus = el.postImageFocus?.value || "center";
   const rawContent = (el.postContent?.innerHTML || "").trim();
   const content = sanitizeHtml(rawContent);
   const share = el.postShare.checked;
@@ -445,12 +449,13 @@ async function savePost(options = {}) {
         ...state.posts[idx],
         title,
         image,
-        imageTags,
-        content,
-        date: state.posts[idx].date || now,
-        share: safeShare,
-        status,
-        updatedAt: now,
+      imageTags,
+      imageFocus,
+      content,
+      date: state.posts[idx].date || now,
+      share: safeShare,
+      status,
+      updatedAt: now,
       };
     }
   } else {
@@ -459,6 +464,7 @@ async function savePost(options = {}) {
       title,
       image,
       imageTags,
+      imageFocus,
       content,
       date: now,
       share: safeShare,
@@ -477,6 +483,7 @@ async function savePost(options = {}) {
         content,
         share: safeShare,
         status,
+        imageFocus,
       }),
     );
   } catch (e) {
