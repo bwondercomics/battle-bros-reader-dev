@@ -677,11 +677,11 @@
             };
 
             const DEFAULT_BUTTONS = [
-                { id: 'btn1', icon: 'B', text: 'Bluesky', url: 'https://bsky.app/profile/bwondercomics.com' },
-                { id: 'btn2', icon: 'P', text: 'Patreon', url: 'https://patreon.com/doylemelville2' },
-                { id: 'btn3', icon: 'A', text: 'ArtStation', url: 'https://doyle-melvilleii.artstation.com' },
-                { id: 'btn5', icon: 'D', text: 'Discord', url: 'https://discord.gg/your-server' },
-                { id: 'btn4', icon: 'S', text: 'Buy Print', url: 'https://bwondercomics.bigcartel.com/product/battle-bros-volume-1' }
+                { id: 'btn1', icon: 'button icons/bluesky.webp', text: 'Bluesky', url: 'https://bsky.app/profile/bwondercomics.com' },
+                { id: 'btn2', icon: 'button icons/patrons.webp', text: 'Patreon', url: 'https://patreon.com/doylemelville2' },
+                { id: 'btn5', icon: 'button icons/discord.webp', text: 'Discord', url: 'https://discord.gg/your-server' },
+                { id: 'btn3', icon: 'button icons/artstation.webp', text: 'ArtStation', url: 'https://doyle-melvilleii.artstation.com' },
+                { id: 'btn4', icon: 'button icons/buyprint.webp', text: 'Buy Print', url: 'https://bwondercomics.bigcartel.com/product/battle-bros-volume-1' }
             ];
 
             let pageConfig = null;
@@ -977,7 +977,7 @@
                     const iconInput = document.createElement('input');
                     iconInput.type = 'text';
                     iconInput.className = 'form-input';
-                    iconInput.placeholder = 'Icon (emoji or letter)';
+                    iconInput.placeholder = 'Icon (emoji, letter, or image path)';
                     iconInput.value = btn.icon || '';
                     iconInput.addEventListener('input', (e) => updateButton(index, 'icon', e.target.value));
 
