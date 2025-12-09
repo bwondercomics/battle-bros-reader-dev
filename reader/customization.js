@@ -72,6 +72,38 @@
     applyConfig(config || defaultConfig);
   }
 
+  function wireComicNetPopover() {
+    const panel = document.getElementById('comicNetPanel');
+    const buttonContainer = document.querySelector('.panel-buttons');
+    if (!panel || !buttonContainer) return;
+
+    const hide = () => { panel.style.display = 'none'; };
+    hide();
+
+    const toggle = (e) => {
+      e.preventDefault();
+      const isVisible = panel.style.display === 'block';
+      hide();
+      if (!isVisible) panel.style.display = 'block';
+    };
+
+    // Delegate to survive button re-renders
+    buttonContainer.addEventListener('click', (e) => {
+      const btn = e.target.closest('#comnet');
+      if (!btn) return;
+      toggle(e);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('#comnet') || panel.contains(e.target)) return;
+      hide();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') hide();
+    });
+  }
+
   function applyConfig(config) {
     if (!config) return;
 
@@ -138,19 +170,45 @@
         if (config.content.rightPanel.buttons) {
           const btnContainer = document.querySelector('.panel-buttons');
           if (btnContainer) {
-            btnContainer.innerHTML = config.content.rightPanel.buttons.map(btn => {
-              const icon = btn.icon || '';
-              const isImage = /\.(png|jpe?g|webp|gif|svg)$/i.test(icon);
-              const iconMarkup = isImage
-                ? `<img src="${icon}" alt="${(btn.text || 'icon')}" />`
-                : `<span>${icon}</span>`;
-              return `
-                    <a href="${btn.url}" target="_blank" rel="noopener noreferrer" class="panel-btn">
+            const buttons = [...config.content.rightPanel.buttons];
+            const hasComnet = buttons.some((b) => (b.id || "").toLowerCase() === "comnet");
+            if (!hasComnet) {
+              buttons.push({
+                id: "comnet",
+                icon: "button%20icons/comicnet.webp",
+                text: "COM1C_NET",
+                url: "#",
+              });
+            }
+
+            // Preserve the comicnet-panel if it exists
+            const existingPanel = document.getElementById('comicNetPanel');
+            const panelHTML = existingPanel ? existingPanel.outerHTML : '';
+
+            btnContainer.innerHTML = buttons
+              .map((btn) => {
+                const icon = btn.icon || "";
+                const isImage = /\.(png|jpe?g|webp|gif|svg)$/i.test(icon);
+                const iconSrc = isImage ? icon : "";
+                const iconMarkup = iconSrc
+                  ? `<img src="${iconSrc}" alt="${btn.text || "icon"}" />`
+                  : `<span>${icon}</span>`;
+                const targetAttr =
+                  btn.url && btn.url.startsWith("#")
+                    ? ""
+                    : 'target="_blank" rel="noopener noreferrer"';
+                const idAttr = btn.id ? `id="${btn.id}"` : "";
+                const href = btn.url || "#";
+                return `
+                    <a href="${href}" ${targetAttr} class="panel-btn" ${idAttr}>
                       <div class="panel-btn-icon">${iconMarkup}</div>
                       <div class="panel-btn-text">${btn.text}</div>
                     </a>
                   `;
-            }).join('');
+              })
+              .join("") + panelHTML; // Append the panel HTML after buttons
+
+            wireComicNetPopover();
           }
         }
       }

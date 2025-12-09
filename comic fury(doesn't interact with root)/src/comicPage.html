@@ -1,0 +1,269 @@
+<style>
+.main_inner {
+    width:[v:comicwidth]px;
+}
+</style>
+
+<!-- this pre-loads the image that is displayed once you click the "save my place" button, so we won't have to wait for it loading -->
+<div style="display:none;"><img src="https://comicfury.com/images/layouts/rainbowtables/savebookmark-saved.svg" alt="" /></div>
+
+<div id="comicpage">
+    <div id="comicpage2">
+        <div class="comictitle">
+            [v:comictitle]
+        </div>
+
+        [c:usechapters] <!-- this one checks if the webcomic uses chapters -->
+            [c:haschapter] <!-- this one checks if the comic strip is in a chapter -->
+                <div class="comicchapter">
+                    in <a href="[v:chapterlink]">[v:chaptername]</a>
+                </div>
+            [/]
+        [/]
+
+        <div class="comicdate">[v:posttime]</div>
+
+
+        <div class="comicnav">
+
+            <a href="[v:firstcomic]#content-start" rel="start" class="comicnavlink [c:isfirstcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/first-black.svg" alt="&lt;&lt;First" />
+            </a>
+
+            <a href="[v:prevcomic]#content-start" rel="prev" class="comicnavlink [c:isfirstcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/prev-black.svg" alt="&lt;Previous" />
+            </a>
+
+            <a href="[v:nextcomic]#content-start" rel="next" class="comicnavlink [c:islastcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/next-black.svg" alt="Next&gt;" />
+            </a>
+
+            <a href="[v:lastcomic]#content-start" rel="index" class="comicnavlink [c:islastcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/last-black.svg" alt="Latest&gt;&gt;" />
+            </a>
+
+        </div>
+
+        [c:browse_tag_mode]
+            <div class="browsing-tags-note">
+                You are browsing only comic pages
+                [c:required_tags]
+                    tagged
+                    [l:required_tags]
+                        <a href="[v:l.tag_link]">[v:l.tag_name]</a>[c:!l.is_last],[/]
+                    [/]
+                    [c:excluded_tags]and[/]
+                [/]
+                [c:excluded_tags]
+                    not tagged
+                    [l:excluded_tags]
+                        <a href="[v:l.tag_link]">[v:l.tag_name]</a>[c:!l.is_last],[/]
+                    [/]
+                [/]
+                <div class="browse-all-link">
+                    <a href="[v:browse_all_link]">Click here to browse all pages</a>
+                </div>
+            </div>
+        [/]
+
+        <div class="comicimage">
+            [v:comicimage]
+        </div>
+
+        <div class="comicnav bottomcomicnav">
+
+            <a href="[v:firstcomic]#content-start" rel="start" class="comicnavlink [c:isfirstcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/first-black.svg" alt="&lt;&lt;First" />
+            </a>
+
+            <a href="[v:prevcomic]#content-start" rel="prev" class="comicnavlink [c:isfirstcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/prev-black.svg" alt="&lt;Previous" />
+            </a>
+
+
+            <!-- comic dropdown -->
+            <span class="quicknav">
+                <select onchange="jumpTo(this.options[selectedIndex].value);" class="comicnavlink">
+                    [l:dropdown]
+                        [c:l.newgroup]
+                            <optgroup label="[v:l.grouplabel]">
+                        [/]
+
+                        <option value="[v:l.url]#content-start" [c:l.is_selected]selected="selected"[/] [c:l.is_disabled]disabled="disabled"[/]>[v:l.title]</option>
+
+                        [c:l.endgroup]
+                            </optgroup>
+                        [/]
+                    [/]
+                </select>
+            </span>
+
+            <a href="[v:nextcomic]#content-start" rel="next" class="comicnavlink [c:islastcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/next-black.svg" alt="Next&gt;" />
+            </a>
+
+            <a href="[v:lastcomic]#content-start" rel="index" class="comicnavlink [c:islastcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/last-black.svg" alt="Latest&gt;&gt;" />
+            </a>
+
+        </div>
+
+        <div class="comic-options">
+            [c:allowratings]
+                <div id="comicrating">
+                    [c:rating]
+                        <div>
+                            <b>Average Rating:</b> [v:rating]
+                            <span id="votenumber">([v:votecount] vote[c:votecount!=1]s[/])</span>
+                        </div>
+                    [/]
+                    <div>
+                        <a href="[v:ratelink]" id="ratelink" onclick="rateWindow(event, '[v:ratelink]', [v:rate_jsdata]);" target="_blank">Rate this comic</a>
+                    </div>
+                </div>
+            [/]
+
+            <div id="saveplace">
+                <a href="#" id="loadplace-link" onclick="loadPlace();return false;"><img src="https://comicfury.com/images/layouts/schroedinger/loadbookmark.svg" title="Load my Place" alt="Load my Place"></a>
+
+                <a href="#" id="saveplace-link" onclick="savePlace(this,[v:comicid]);return false;"><img id="saveimage" src="https://comicfury.com/images/layouts/schroedinger/savebookmark.svg" title="Save my Place" alt="Save my Place"></a>
+            </div>
+        </div>
+
+        [c:tags]
+            <div id="tags">
+                <span class="tags-label">Tags:</span>
+                [l:tags]
+                    <a href="[v:l.tag_link]">[v:l.tag_name]</a>[c:!l.is_last], [/]
+                [/]
+            </div>
+        [/]
+
+        [c:showpermalinks]
+            <div class="permalinkhead">Permalink:</div>
+
+            <div class="permalinkcode" onclick="selectElementText(this);">[v:permalink]</div>
+        [/]
+
+        [c:bannerads]
+            <!-- voluntary CF support ads, you can turn these off in your webcomic settings -->
+            <div class="cfvoa">
+                [v:banneradcode]
+            </div>
+        [/]
+
+    </div>
+
+    [c:authornotes]
+        <div class="commentbox">
+
+            <div class="commentboxhead">Author Notes:</div>
+
+            [l:authornotes]
+                <div class="comment" id="[v:l.commentanchor]">
+                    <div class="commentleft" >
+                        <p class="commentusername">
+                            <a href="[v:l.profilelink]">[v:l.authorname]</a>
+                        </p>
+
+                        <p>
+                            [c:l.pfp]<img src="[v:l.pfp]" width="[v:l.pfp_width]" height="[v:l.pfp_height]" class="avatar" alt="" />[/]
+                        </p>
+                    </div>
+
+                    <div class="commentright">
+                        <a href="#[v:l.commentanchor]" class="commenttime">[v:l.posttime]</a>
+                        <p class="commentcontent">
+                            [v:l.comment]
+                        </p>
+
+                        <p class="commentoptions">
+                            <span class="[v:l.editclass]">
+                                <a href="[v:l.editlink]&notitle" onclick="showCommentActionForm(event, [v:l.edit_jsdata]);" target="_blank">edit</a>
+                            </span>
+
+                            <span class="[v:l.deleteclass]">
+                                <a href="[v:l.deletelink]" onclick="showCommentActionForm(event, [v:l.delete_jsdata]);" target="_blank">delete</a>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="replyform-placeholder">
+                    [v:l.replyform]
+                </div>
+
+                [c:!l.is_last]<div class="commentseperator"></div>[/]
+            [/]
+        </div>
+    [/]
+
+    <div class="cflink"><a href="https://comicfury.com"><img src="https://comicfury.com/images/cf-diamond.png" alt="" width="225" height="150" /></a></div>
+
+
+    [c:allowcomments]
+        <div id="commentform" class="commentbox">
+            <a name="comments"></a>
+            [v:commentform]
+        </div>
+    [/]
+
+    [c:showcomments]
+        [c:comments]
+            <div class="commentbox">
+                <div class="commentboxhead">Comments:</div>
+                [l:comments]
+                    <div class="comment [c:l.is_reply]replycomment[/] reply-depth[v:l.depth] [c:l.depth>5]reply-depth-above5[/] [c:l.is_last]lastcomment[/]" id="[v:l.commentanchor]">
+                        <div class="commentleft">
+                            <p>
+                                [c:!l.isguest]
+                                    <span class="commentusername"><a href="[v:l.profilelink]">[v:l.authorname]</a></span>
+                                [/]
+                                [c:l.isguest]
+                                    <span class="commentusername">[v:l.authorname]</span> [c:l.authorname!=Guest](Guest)[/]
+                                [/]
+                            </p>
+
+                            <p>
+                                [c:l.pfp]<img src="[v:l.pfp]" width="[v:l.pfp_width]" height="[v:l.pfp_height]" class="avatar" alt="" />[/]
+                            </p>
+                        </div>
+
+                        <div class="commentright">
+                            <a href="#[v:l.commentanchor]" class="commenttime">[v:l.posttime]</a>
+                            <p class="commentcontent">
+                                [v:l.comment]
+                            </p>
+
+                            <p class="commentoptions">
+                                <span class="[v:l.editclass]">
+                                    <a href="[v:l.editlink]&notitle" onclick="showCommentActionForm(event, [v:l.edit_jsdata]);" target="_blank">edit</a>
+                                </span>
+
+                                <span class="[v:l.deleteclass]">
+                                    <a href="[v:l.deletelink]" onclick="showCommentActionForm(event, [v:l.delete_jsdata]);" target="_blank">delete</a>
+                                </span>
+
+                                <span>
+                                    <a href="[v:l.replylink_nopopup]&notitle" onclick="showCommentActionForm(event, [v:l.reply_jsdata]);" target="_blank">reply</a>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="replyform-placeholder">
+                        [v:l.replyform]
+                    </div>
+
+                    [c:!l.is_last]<div class="commentseperator [c:l.is_reply]replyseperator[/]"></div>[/]
+                [/]
+            </div>
+        [/]
+    [/]
+
+    [c:comments]
+        [c:allowcomments]
+            <a class="commentlink" href="#commentform">Post a Comment</a>
+        [/]
+    [/]
+</div>

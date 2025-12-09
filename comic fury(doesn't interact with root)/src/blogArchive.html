@@ -1,0 +1,70 @@
+<style>
+.main_inner {
+    width:900px;
+}
+</style>
+
+[c:hasblogs]
+    <div id="blogarchive">
+        <div class="blog-archive-title">Blog Archive</div>
+
+        <div class="blog-archive-content">
+            [l:blogs_paginated]
+                <div class="blogentry">
+                    <div class="bloglisthead">
+                        <a href="[v:l.bloglink]">[v:l.blogtitle]</a>
+                    </div>
+
+                    <div class="blogcontent">
+                        [c:l.pfp]
+                            <div class="blogavatar">
+                                <img src="[v:l.pfp]" width="[v:l.pfp_width]" height="[v:l.pfp_height]" alt="[v:l.authorname]" class="avatar" />
+                            </div>
+                        [/]
+
+                        <div class="blogtext">
+                            [v:l.blog]
+                            <div class="clear"></div>
+                        </div>
+
+                        [c:l.allowcomments]
+                            <div class="blogmeta">
+                                <a href="[v:l.bloglink]">[v:l.comments] Comments &gt;&gt;</a>
+                            </div>
+                        [/]
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            [/]
+        </div>
+
+        [c:lastpagenumber>1]
+            <div class="pages">
+                <div class="pageslabel">
+                    Pages:
+                </div>
+                [l:pages]
+                    [c:l.skipped_ahead]
+                        <span class="pageskip">...</span>
+                    [/]
+
+                    [c:l.is_current]
+                        <span class="currentpage">
+                    [/]
+
+                    <a href="[v:l.pagelink]" class="pagelink">[v:l.page]</a>
+
+                    [c:l.is_current]
+                        </span>
+                    [/]
+                [/]
+            </div>
+        [/]
+
+    </div>
+[/]
+
+[c:!hasblogs]
+    <h2>Error:</h2>
+    There are currently no blogs.
+[/]
