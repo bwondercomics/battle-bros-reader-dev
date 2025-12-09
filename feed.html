@@ -33,24 +33,24 @@
     }
 
     header {
-      background: linear-gradient(135deg, rgba(0, 217, 255, 0.16), rgba(255, 0, 234, 0.12));
-      border-bottom: 3px solid var(--primary);
-      padding: 12px 16px;
+      background: linear-gradient(135deg, rgba(0, 217, 255, 0.12), rgba(255, 0, 234, 0.08));
+      border-bottom: 2px solid var(--primary);
+      padding: 8px 12px;
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(4px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .header-brand {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
       min-width: 200px;
     }
 
@@ -67,9 +67,9 @@
       gap: 8px;
       color: var(--text);
       text-decoration: none;
-      border: 2px solid var(--text);
-      padding: 10px 14px;
-      border-radius: 6px;
+      border: 1.5px solid var(--text);
+      padding: 6px 10px;
+      border-radius: 5px;
       background: rgba(255, 255, 255, 0.08);
       transition: all 0.2s ease;
       font-weight: 600;
@@ -84,16 +84,16 @@
       font-family: 'Bebas Neue', cursive;
       color: var(--primary);
       margin: 0;
-      font-size: 2.8rem;
-      letter-spacing: 2px;
-      text-shadow: 2px 2px 0 var(--secondary);
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 0 var(--secondary);
     }
 
     .subhead {
       color: rgba(255, 255, 255, 0.75);
-      margin-top: 6px;
+      margin-top: 2px;
       letter-spacing: 1px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
     .container {
@@ -149,11 +149,29 @@
       animation: fadeIn 0.45s ease-out;
     }
 
+    .post-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .post-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 2px solid var(--primary);
+      background: #05050a;
+      object-fit: cover;
+      box-shadow: 0 0 12px rgba(0, 217, 255, 0.25);
+      margin-top: 2px;
+    }
+
     .post-title {
       font-family: 'Bebas Neue', cursive;
       color: var(--accent);
       font-size: 2.1rem;
-      margin: 0 0 6px;
+      margin: 0;
       letter-spacing: 1px;
     }
 
@@ -166,10 +184,13 @@
 
     .post-image {
       width: 100%;
+      max-height: min(85vh, calc(100vh - 140px));
       border-radius: 8px;
       border: 2px solid rgba(0, 217, 255, 0.5);
       margin-bottom: 14px;
       background: #05050a;
+      object-fit: contain;
+      object-position: center;
     }
 
     .post-content {
@@ -204,25 +225,6 @@
       background: rgba(26, 26, 46, 0.6);
     }
 
-    .comments {
-      margin-top: 40px;
-      padding: 24px;
-      border-radius: 12px;
-      border: 2px dashed rgba(255, 237, 0, 0.4);
-      background: rgba(255, 237, 0, 0.05);
-    }
-
-    .comments h2 {
-      margin: 0 0 8px;
-      font-family: 'Bebas Neue', cursive;
-      letter-spacing: 1px;
-      color: var(--accent);
-    }
-
-    .comments p {
-      margin: 0 0 12px;
-      color: rgba(255, 255, 255, 0.85);
-    }
 
     @keyframes fadeIn {
       from {
@@ -256,32 +258,76 @@
       <div class="empty-state">Loading updates...</div>
     </div>
 
-    <section class="comments" id="comments">
-      <h2>Comments</h2>
-      <p>Drop your comment widget here (Cusdis or Giscus recommended). This placeholder stays empty on static hosting.</p>
-      <div style="height: 120px; border: 1px dashed rgba(0, 217, 255, 0.3); border-radius: 8px; display: grid; place-items: center; color: rgba(255,255,255,0.65);">
-        Comment embed goes here.
-      </div>
-    </section>
   </div>
 
   <script>
     const feedContainer = document.getElementById('feedContainer');
 
-    function escapeHtml(str = '') {
-      return str.replace(/[&<>"']/g, (ch) => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      }[ch] || ch));
+    function sanitizeContent(html = '') {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const allowed = new Set(['b','strong','i','em','u','a','p','br','ul','ol','li','span','img','h1','h2','h3','blockquote']);
+      const cleanUrl = (url = '') => {
+        const trimmed = url.trim();
+        if (!trimmed) return '';
+        const lower = trimmed.toLowerCase();
+        if (lower.startsWith('javascript:')) return '';
+        return trimmed;
+      };
+      const walk = (node) => {
+        [...node.children].forEach(child => {
+          const tag = child.tagName.toLowerCase();
+          if (!allowed.has(tag)) {
+            child.replaceWith(...child.childNodes);
+          } else {
+            [...child.attributes].forEach(attr => {
+              const name = attr.name.toLowerCase();
+              const allowedAttrs = tag === 'a'
+                ? ['href','title','target','rel']
+                : tag === 'img'
+                  ? ['src','alt','title']
+                  : [];
+              if (!allowedAttrs.includes(name)) child.removeAttribute(attr.name);
+            });
+            if (tag === 'a') {
+              const href = cleanUrl(child.getAttribute('href') || '');
+              if (!href) child.removeAttribute('href');
+              else {
+                child.setAttribute('href', href);
+                child.setAttribute('target', '_blank');
+                child.setAttribute('rel', 'noopener noreferrer');
+              }
+            }
+            if (tag === 'img') {
+              const src = cleanUrl(child.getAttribute('src') || '');
+              if (!src) {
+                child.remove();
+                return;
+              }
+              child.setAttribute('src', src);
+              child.setAttribute('alt', child.getAttribute('alt') || '');
+            }
+            walk(child);
+          }
+        });
+      };
+      walk(doc.body);
+      return doc.body.innerHTML;
     }
 
     function renderPost(post) {
       const article = document.createElement('article');
       article.className = 'post';
       article.id = post.id || '';
+
+      const header = document.createElement('div');
+      header.className = 'post-header';
+
+      const icon = document.createElement('img');
+      icon.className = 'post-icon';
+      icon.src = 'boywondericon.png';
+      icon.alt = 'Boy Wonder icon';
+      icon.loading = 'lazy';
 
       const title = document.createElement('h2');
       title.className = 'post-title';
@@ -292,12 +338,20 @@
       const parsedDate = post.date ? new Date(post.date) : null;
       date.textContent = parsedDate && !Number.isNaN(parsedDate) ? parsedDate.toLocaleString() : 'Date not set';
 
-      article.appendChild(title);
-      article.appendChild(date);
+      const titleWrap = document.createElement('div');
+      titleWrap.appendChild(title);
+      titleWrap.appendChild(date);
+
+      header.appendChild(icon);
+      header.appendChild(titleWrap);
+      article.appendChild(header);
 
       if (post.image) {
         const img = document.createElement('img');
         img.className = 'post-image';
+        if (post.imageFocus) {
+          img.style.objectPosition = post.imageFocus;
+        }
         img.src = post.image;
         img.alt = post.title || 'Update image';
         img.loading = 'lazy';
@@ -318,8 +372,7 @@
 
       const content = document.createElement('div');
       content.className = 'post-content';
-      const safe = escapeHtml(post.content || '').replace(/\n/g, '<br>');
-      content.innerHTML = safe;
+      content.innerHTML = sanitizeContent(post.content || '');
       article.appendChild(content);
 
       feedContainer.appendChild(article);
@@ -330,14 +383,16 @@
         const response = await fetch('posts.json', { cache: 'no-cache' });
         if (!response.ok) throw new Error('Failed to load posts.json');
         const data = await response.json();
-        const posts = Array.isArray(data)
+        let posts = Array.isArray(data)
           ? data.map(p => ({
-            ...p,
-            imageTags: Array.isArray(p.imageTags)
-              ? p.imageTags
-              : (p.imageTags ? String(p.imageTags).split(',').map(t => t.trim()).filter(Boolean) : [])
-          }))
+              ...p,
+              imageTags: Array.isArray(p.imageTags)
+                ? p.imageTags
+                : (p.imageTags ? String(p.imageTags).split(',').map(t => t.trim()).filter(Boolean) : [])
+            }))
           : [];
+
+        posts = posts.filter(p => (p.status || 'published') !== 'draft');
 
         feedContainer.innerHTML = '';
 

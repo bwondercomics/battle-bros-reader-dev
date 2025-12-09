@@ -1,0 +1,97 @@
+<div id="overviewcomic">
+
+    <div class="webcomictitle">[v:webcomicname]</div>
+
+    [c:hascomics]
+        <div class="latestcomichead">Latest Comic: [v:comictitle]</div>
+
+
+        <div class="comicimage">[v:comicimage]</div>
+
+
+        <div class="comicnav bottomcomicnav">
+
+            <a href="[v:firstcomic]#content-start" rel="start" class="comicnavlink [c:isfirstcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/first-black.svg" alt="&lt;&lt;First" />
+            </a>
+
+            <a href="[v:prevcomic]#content-start" rel="prev" class="comicnavlink [c:isfirstcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/prev-black.svg" alt="&lt;Previous" />
+            </a>
+
+            <a href="[v:nextcomic]#content-start" rel="next" class="comicnavlink [c:islastcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/next-black.svg" alt="Next&gt;" />
+            </a>
+
+            <a href="[v:lastcomic]#content-start" rel="index" class="comicnavlink [c:islastcomic]comicnavlink-grayedout[/]">
+                <img src="https://comicfury.com/images/layouts/schroedinger/last-black.svg" alt="Latest&gt;&gt;" />
+            </a>
+
+        </div>
+
+        <div class="comic-options">
+            <div id="saveplace">
+                <a href="#" id="loadplace-link" onclick="loadPlace();return false;"><img src="https://comicfury.com/images/layouts/schroedinger/loadbookmark.svg" title="Load my Place" alt="Load my Place"></a>
+
+                <a href="#" id="saveplace-link" onclick="savePlace(this,[v:comicid]);return false;"><img src="https://comicfury.com/images/layouts/schroedinger/savebookmark.svg" title="Save my Place" alt="Save my Place"></a>
+            </div>
+        </div>
+
+        [c:allowcomments]
+            <div class="overviewcommentlink">
+                <a href="[v:lastcomic]#comments">[v:latestcomiccomments] Comment[c:latestcomiccomments!=1]s[/] &gt;&gt;</a>
+            </div>
+        [/]
+    [/]
+
+
+    [c:bannerads]
+        <!-- voluntary CF support ads, you can turn these off in your webcomic settings -->
+        <div class="cfvoa">
+            [v:banneradcode]
+        </div>
+    [/]
+</div>
+
+<div class="cflink"><a href="https://comicfury.com"><img src="https://comicfury.com/images/cf-diamond.png" alt="" width="225" height="150" /></a></div>
+
+[c:hasblogs]
+    <div id="overviewblogs">
+        <div class="overviewbloghead">Latest Blog Posts:</div>
+
+        <div class="blog-archive-content">
+
+            [l:latestblogs]
+                <div class="blogentry">
+                    <div class="bloglisthead overviewbloglisthead">
+                        <a href="[v:l.bloglink]">[v:l.blogtitle]</a>
+                    </div>
+
+                    <div class="blogcontent">
+                        [c:l.pfp]
+                            <div class="blogavatar">
+                                <img src="[v:l.pfp]" width="[v:l.pfp_width]" height="[v:l.pfp_height]" alt="[v:l.authorname]" class="avatar" />
+                            </div>
+                        [/]
+
+                        <div class="blogtext">
+                            [v:l.blog]
+                            <div class="clear"></div>
+                        </div>
+
+                        [c:l.allowcomments]
+                            <div class="blogmeta">
+                                <a href="[v:l.bloglink]">[v:l.comments] Comments &gt;&gt;</a>
+                            </div>
+                        [/]
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            [/]
+        </div>
+
+        <div class="blogarchivelink">
+            <a href="[v:blogarchivelink]">Blog Archive</a>
+        </div>
+    </div>
+[/]

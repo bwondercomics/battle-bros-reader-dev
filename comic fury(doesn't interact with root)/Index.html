@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Last Update: [v:lastupdatedmy] -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <meta name="robots" content="noai, noimageai">
+
+        [c:iscomicrelatedpage]
+            [c:!isfirstcomic]
+                <link rel="prev" href="[v:prevcomic]" />
+            [/]
+
+            [c:!islastcomic]
+                <link rel="next" href="[v:nextcomic]" />
+            [/]
+
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="[v:webcomicname]" />
+            <meta property="og:description" content="[v:pagetitle]" />
+            [c:iscomicpage]
+                <meta property="og:url" content="[v:permalink]" />
+            [/]
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content="[v:webcomicname]" />
+            <meta name="twitter:description" content="[v:pagetitle]" />
+
+            [c:previewimageurl]
+                <meta property="og:image" content="[v:previewimageurl]" />
+                <meta property="og:image:width" content="[v:previewimagewidth]" />
+                <meta property="og:image:height" content="[v:previewimageheight]" />
+                <meta name="twitter:image" content="[v:previewimageurl]" />
+            [/]
+        [/]
+
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss/" />
+
+        <title>[v:webcomicname] :: [v:pagetitle]</title>
+
+        [v:layoutcss]
+        [v:cfscriptcode]
+
+        [c:iscomicrelatedpage]
+            <script type="text/javascript">
+                activateKeyboardNavigation("[v:prevcomicjs]#content-start", "[v:nextcomicjs]#content-start", "ArrowLeft", "ArrowRight");
+            </script>
+        [/]
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function(e) {
+                //this checks if the current visitor has a place saved already, and if not, adds the "loadplace-inactive" class
+                //to the "load my place" link, to gray it out
+                var loadPlaceLink = document.getElementById('loadplace-link');
+                if(loadPlaceLink !== null && !comicfury.bookmark)
+                {
+                    loadPlaceLink.classList.add('loadplace-inactive');
+                }
+            });
+
+            var customOnSave = function(saveLink) {
+                //this overwrites the "save my place" image, once your place has been saved
+                saveLink.innerHTML = '<img src="https://comicfury.com/images/layouts/rainbowtables/savebookmark-saved.svg" alt="" />';
+            };
+
+            var selectElementText = function(element) {
+                if (window.getSelection && document.createRange)
+                {
+                    var selection = window.getSelection();
+                    var range = document.createRange();
+                    range.selectNodeContents(element);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            };
+        </script>
+    </head>
+    <body>
+        <div id="wrap">
+
+            <header id="topbar">
+                <div id="topbarleft">
+                    <a href="/" class="navbar link1">Home</a>
+                    <a href="/comics/" class="navbar link2">Latest</a>
+                    <a href="/comics/1/" class="navbar link3">First</a>
+                    <a href="/archive/" class="navbar link4">Archive</a>
+                    [c:infinitescrollenabled]
+                        <a href="[v:infinitescrolllink]" class="navbar link9">Scroll View</a>
+                    [/]
+                    [c:hasblogs]
+                        <a href="/blog/" class="navbar link5">Blog</a>
+                    [/]
+                    <a href="[v:addsubscriptionlink]" target="window2" class="navbar link6">Subscribe</a>
+                    [c:searchon]
+                        <a href="/search/" class="navbar link7">Search</a>
+                    [/]
+                    [l:extrapages]
+                        <a href="[v:l.link]" class="navbar link8">[v:l.title]</a>
+                    [/]
+                </div>
+                <div id="topbarright">
+                    <a href="https://www.comicfury.com" class="navbar"><img src="https://comicfury.com/images/gator-icon-white.png" height="22" style="height:22px; width:auto;" /> ComicFury</a>
+                </div>
+            </header>
+
+            <div id="main" class="[c:isextrapage]main_extrapage[/]">
+                <div class="main_inner" id="content-start">
+
+                    [c:isextrapage]
+                        <div class="extra-page-title">[v:pagetitle]</div>
+                        <div class="extra-page-content">
+                    [/]
+                    <!--layout:[content]-->
+                    [c:isextrapage]
+                            <div class="clear"></div>
+                        </div>
+                    [/]
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer>
+            <div>
+                <a href="/rss/">RSS Feed</a>
+
+                [c:!hidefromhost]
+                    |
+                    <a href="[v:comicprofile]">Comic Profile</a>
+                [/]
+
+                |
+                <a href="#">Top</a>
+            </div>
+
+            <div class="hostedby">
+                <span>Hosted by </span>
+                <a href="https://comicfury.com">
+                    <img src="https://comicfury.com/images/gator-icon-white.png" height="22" style="height:22px; width:auto;" />
+                    ComicFury
+                </a>
+            </div>
+
+            <div>
+                &copy; [v:copyrights]
+            </div>
+        </footer>
+
+    </body>
+</html>

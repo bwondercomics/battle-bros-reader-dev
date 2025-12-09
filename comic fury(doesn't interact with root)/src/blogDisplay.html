@@ -1,0 +1,128 @@
+<style>
+.main_inner {
+    width:900px;
+}
+</style>
+
+<div id="blogdisplay">
+    <div class="blogdisplaycontent">
+        <div class="blogdisplaytitle">
+            [v:blogtitle]
+        </div>
+
+        <div class="blognav">
+            <div class="prevblog">
+                [c:prevbloglink]
+                    <a href="[v:prevbloglink]">Previous Blog</a>
+                [/]
+            </div>
+            <div class="nextblog">
+                [c:nextbloglink]
+                    <a href="[v:nextbloglink]">Next Blog</a>
+                [/]
+            </div>
+        </div>
+
+
+
+        <div class="blogentry">
+            <div class="blogtime">[v:posttime]</div>
+            <div class="blogcontent">
+                [c:pfp]
+                    <div class="blogavatar">
+                        <img src="[v:pfp]" width="[v:pfp_width]" height="[v:pfp_height]" alt="[v:authorname]" class="avatar" />
+                    </div>
+                [/]
+
+                <div class="blogtext">
+                    [v:blog]
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+            </div>
+        </div>
+
+        <div class="blogarchivelink">
+            <a href="[v:blogarchivelink]">To Blog Archive</a>
+        </div>
+
+        [c:bannerads]
+            <!-- voluntary CF support ads, you can turn these off in your webcomic settings -->
+            <div class="cfvoa">
+                [v:banneradcode]
+            </div>
+        [/]
+    </div>
+
+
+
+
+    <a name="comments"></a>
+
+    [c:allowcomments]
+        <div id="commentform" class="commentbox">
+            [v:commentform]
+        </div>
+    [/]
+
+    [c:showcomments]
+        [c:comments]
+            <div class="commentbox">
+                <div class="commentboxhead">Comments:</div>
+                [l:comments]
+                    <div class="comment [c:l.is_reply]replycomment[/] reply-depth[v:l.depth] [c:l.depth>5]reply-depth-above5[/] [c:l.is_last]lastcomment[/]"  [c:l.is_last]lastcomment[/]" id="[v:l.commentanchor]">
+                        <div class="commentleft">
+                            <p>
+                                [c:!l.isguest]
+                                    <span class="commentusername"><a href="[v:l.profilelink]">[v:l.authorname]</a></span>
+                                [/]
+                                [c:l.isguest]
+                                    <span class="commentusername">[v:l.authorname]</span> [c:l.authorname!=Guest](Guest)[/]
+                                [/]
+                            </p>
+
+                            <p>
+                                [c:l.pfp]<img src="[v:l.pfp]" width="[v:l.pfp_width]" height="[v:l.pfp_height]" class="avatar" alt="" />[/]
+                            </p>
+                        </div>
+
+                        <div class="commentright">
+                            <a href="#[v:l.commentanchor]" class="commenttime">[v:l.posttime]</a>
+                            <p class="commentcontent">
+                                [v:l.comment]
+                            </p>
+
+                            <p class="commentoptions">
+                                <span class="[v:l.editclass]">
+                                    <a href="[v:l.editlink]&notitle" onclick="showCommentActionForm(event, [v:l.edit_jsdata]);" target="_blank">edit</a>
+                                </span>
+
+                                <span class="[v:l.deleteclass]">
+                                    <a href="[v:l.deletelink]" onclick="showCommentActionForm(event, [v:l.delete_jsdata]);" target="_blank">delete</a>
+                                </span>
+
+                                <span>
+                                    <a href="[v:l.replylink_nopopup]&notitle" onclick="showCommentActionForm(event, [v:l.reply_jsdata]);" target="_blank">reply</a>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="replyform-placeholder">
+                        [v:l.replyform]
+                    </div>
+
+                    [c:!l.is_last]<div class="commentseperator [c:l.is_reply]replyseperator[/]"></div>[/]
+                [/]
+            </div>
+        [/]
+    [/]
+
+    [c:comments]
+        [c:allowcomments]
+            <a class="commentlink" href="#commentform">Post a Comment</a>
+        [/]
+    [/]
+</div>
